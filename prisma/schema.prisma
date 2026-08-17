@@ -1,0 +1,293 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+model Category {
+  id           Int           @id @default(autoincrement())
+  categoryName String        @unique @db.VarChar(200)
+  subCategory  SubCategory[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("categoris")
+}
+
+model SubCategory {
+  id              Int       @id @default(autoincrement())
+  subCategoryName String    @unique @db.VarChar(200)
+  categoryId      Int
+  category        Category  @relation(fields: [categoryId], references: [id])
+  product         Product[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@map("sub_categoris")
+}
+
+model Unit {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(20)
+  RawMaterial RawMaterial[]
+  Product     Product[]
+  createdAt   DateTime      @default(now())
+  updateAt    DateTime      @updatedAt
+
+  @@map("units")
+}
+
+model AccountHead {
+  id           Int            @id @default(autoincrement())
+  pillerName   String
+  pillerId     String         @unique @db.VarChar(2)
+  accountsItem AccountsItem[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@map("account_pillers")
+}
+
+model AccountsItem {
+  id               Int         @id @default(autoincrement())
+  accountsItemName String
+  AccountHeadId    String      @db.VarChar(2)
+  accountsItemId   String      @db.VarChar(6)
+  journal          Journal[]
+  accountsPiler    AccountHead @relation(fields: [AccountHeadId], references: [pillerId])
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@map("account_items")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(30)
+  password  String
+  name      String   @db.VarChar(50)
+  phone     String   @db.VarChar(14)
+  role      UserRole @default(USER)
+  status    Status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@map("user")
+}
+
+model Employee {
+  id           Int      @id @default(autoincrement())
+  email        String?  @unique @db.VarChar(30)
+  name         String   @db.VarChar(50)
+  nid          String?  @db.VarChar(20)
+  dob          DateTime @db.Date
+  workingPlase String?
+  photo        String?
+  address      String
+  mobile       String   @db.VarChar(14)
+  status       Status   @default(ACTIVE)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+  @@map("employees")
+}
+
+model Party {
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(50)
+  contactNo        String            @db.VarChar(15)
+  address          String            @db.VarChar(200)
+  partyType        PartyType
+  openingDate      DateTime?         @default(now())
+  openingAmount    Float?            @default(0.00)
+  isDeleted        Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  transactionInfos TransactionInfo[]
+
+  @@map("parties")
+}
+
+model Product {
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(100)
+  description   String      @db.VarChar(250)
+  subCategoryId Int
+  minPrice      Int?
+  size          String?
+  quantity      Float
+  unitPrice     Float
+  unitId        Int
+  itemType      ItemType    @default(PRODUCT)
+  isDeleted     Boolean     @default(false)
+  status        Status      @default(ACTIVE)
+  unit          Unit        @relation(fields: [unitId], references: [id])
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+  inventory     Inventory[]
+  createdAt     DateTime    @default(now())
+  updateAt      DateTime    @updatedAt
+
+  @@index([subCategoryId, name])
+  @@map("products")
+}
+
+model RawMaterial {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(50)
+  description String?     @db.VarChar(250)
+  unitId      Int
+  amount      Float
+  quantity    Float
+  unitPrice   Float
+  itemType    ItemType    @default(RAW_MATERIAL)
+  isDeleted   Boolean     @default(false)
+  status      Status      @default(ACTIVE)
+  unit        Unit        @relation(fields: [unitId], references: [id])
+  inventory   Inventory[]
+  createdAt   DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+
+  @@map("raw_materials")
+}
+
+model BankAccount {
+  id              Int               @id @default(autoincrement())
+  bankName        String
+  branceName      String?
+  accountNumber   String
+  status          Status            @default(ACTIVE)
+  bankTransaction BankTransaction[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@unique([bankName, accountNumber])
+  @@map("bank_accounts")
+}
+
+model BankTransaction {
+  id              Int              @id @default(autoincrement())
+  date            DateTime
+  bankAccountId   Int
+  transectionId   Int?
+  debitAmount     Int?
+  creditAmount    Int?
+  isClosing       Boolean          @default(false)
+  bankAccount     BankAccount      @relation(fields: [bankAccountId], references: [id])
+  transactionInfo TransactionInfo? @relation(fields: [transectionId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@map("bank_transactions")
+}
+
+model Inventory {
+  id              Int              @id @default(autoincrement())
+  date            DateTime
+  productId       Int?
+  rawId           Int?
+  transactionId   Int?
+  unitPrice       Float            @default(0.00)
+  quantityAdd     Float?           @default(0.00)
+  quantityLess    Float?           @default(0.00)
+  discount        Float?           @default(0.00)
+  debitAmount     Float?           @default(0.00)
+  creditAmount    Float?           @default(0.00)
+  isClosing       Boolean          @default(false)
+  status          Status           @default(PENDING)
+  product         Product?         @relation(fields: [productId], references: [id])
+  raWMaterial     RawMaterial?     @relation(fields: [rawId], references: [id])
+  transactionInfo TransactionInfo? @relation(fields: [transactionId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([productId, rawId])
+  @@map("inventories")
+}
+
+model TransactionInfo {
+  id              Int               @id @default(autoincrement())
+  voucherNo       String            @unique
+  invoiceNo       String?
+  date            DateTime?         @default(now())
+  partyId         Int?
+  customerId      Int?
+  party           Party?            @relation(fields: [partyId], references: [id])
+  voucherType     VoucherType
+  bankTransaction BankTransaction[]
+  journal         Journal[]
+  inventory       Inventory[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([voucherNo, voucherType, partyId, customerId])
+  @@map("transaction_info")
+}
+
+model Journal {
+  id              Int              @id @default(autoincrement())
+  transectionId   Int?
+  accountsItemId  Int?
+  date            DateTime         @db.Date
+  creditAmount    Float?           @default(0.00)
+  debitAmount     Float?           @default(0.00)
+  narration       String?
+  isClosing       Boolean          @default(false)
+  transactionInfo TransactionInfo? @relation(fields: [transectionId], references: [id])
+  accountsItem    AccountsItem?    @relation(fields: [accountsItemId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([accountsItemId])
+  @@map("journals")
+}
+
+enum ItemType {
+  PRODUCT
+  RAW_MATERIAL
+}
+
+enum VoucherType {
+  SALES
+  PURCHASE
+  RECEIPT
+  PAYMENT
+  JOURNAL
+  CONTRA
+  LOGORDERS
+  CREATEPRODUCT
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum Status {
+  ACTIVE
+  DELETED
+  PUSH
+  BLOCK
+  PENDING
+  CHECKED
+  CLOSED
+  CONVERTED
+}
+
+enum PartyType {
+  VENDOR
+  CUSTOMER
+  PARTY
+}
+
+enum PaymentType {
+  PAID
+  DUE
+  PARTIAL
+}
