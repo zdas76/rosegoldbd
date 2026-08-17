@@ -1,9 +1,9 @@
 import { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
-import router from "./App/routes";
 import { StatusCodes } from "http-status-codes";
 import express from "express";
 import cookieParser from "cookie-parser";
+import router from "./App/routes";
 import globalErrorHandler from "./App/middlewares/globalErrorHandler";
 
 const app: Application = express();
