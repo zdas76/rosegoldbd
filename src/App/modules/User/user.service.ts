@@ -6,8 +6,7 @@ import config from "../../../config";
 // import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { Request } from "express";
 import { TUser } from "./user.validation";
-import { Status } from "../../../generated/prisma/enums";
-import { User } from "../../../generated/prisma/client";
+import { Status, User } from "@prisma/client";
 
 const creatUserToDB = async (payload: TUser) => {
   const hashedPassword = bcrypt.hashSync(

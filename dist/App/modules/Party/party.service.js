@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { PartySearchAbleFields } from "./party.constant";
 import AppError from "../../errors/AppError";
-import { PartyType } from "../../../generated/prisma/client";
+import { PartyType } from "@prisma/client";
 const getPertyLedgerInfo = async (params, paginat) => {
     const { page, limit, skip } = paginationHelper.Pagination(paginat);
     const { searchTerm, ...filterData } = params;

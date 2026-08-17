@@ -1,4 +1,4 @@
-import { VoucherType } from "../../../generated/prisma/client";
+import { VoucherType } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 
 const getAllVoucher = async (payload: {
