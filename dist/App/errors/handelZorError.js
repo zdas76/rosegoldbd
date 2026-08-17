@@ -1,0 +1,15 @@
+const handelZodError = (error) => {
+    let errorSources = error.issues.map((issue) => {
+        return {
+            path: issue?.path[issue.path.length - 1],
+            message: issue.message,
+        };
+    });
+    const statusCode = 400;
+    return {
+        statusCode,
+        message: "Validation error",
+        errorSources,
+    };
+};
+export default handelZodError;

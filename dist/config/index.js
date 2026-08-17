@@ -1,0 +1,26 @@
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.join(process.cwd(), ".env") });
+export default {
+    env: process.env.NODE_ENV,
+    port: process.env.PORT,
+    hash_round: process.env.HASHPSSWORD_ROUND,
+    jwt: {
+        jwt_secret: process.env.JWT_SECRET,
+        expires_in: process.env.EXPIRES_IN,
+        refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
+        refresh_token_expires_in: process.env.REFRESH_TOKEN_EXPIRES_IN,
+        reset_pass_secret: process.env.RESET_PASS_TOKEN,
+        reset_pass_token_expires_in: process.env.RESET_PASS_TOKEN_EXPIRES_IN,
+    },
+    reset_pass_link: process.env.RESET_PASS_LINK,
+    emailSender: {
+        email: process.env.EMAIL,
+        app_pass: process.env.APP_PASS,
+    },
+    DATABASE_HOST: process.env.DATABASE_HOST,
+    DATABASE_PORT: process.env.DATABASE_PORT,
+    DATABASE_USER: process.env.DATABASE_USER,
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+    DATABASE_NAME: process.env.DATABASE_NAME,
+};
