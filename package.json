@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "main": "index.js",
+  "engines": {
+    "node": "22.x"
+  },
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon --exec tsx src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && npx tsc",
     "start": "node dist/server.js",
     "postinstall": "prisma generate"
   },
@@ -15,11 +18,11 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^26.2.0",
+    "@types/node": "^22.10.0",
     "@types/nodemailer": "^8.0.1",
     "prisma": "^7.9.1",
     "tsx": "^4.23.12",
-    "typescript": "^7.0.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.9.1",
