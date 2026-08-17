@@ -1,22 +1,22 @@
 import { z } from "zod";
 const createEmployee = z.object({
-    email: z.string({ required_error: "Email is required" }),
-    name: z.string({ required_error: "Name is required" }),
-    nid: z.string({ required_error: "NID number required" }).optional(),
-    dob: z.string({ required_error: "Father name is required" }).optional(),
-    workingPlase: z.string({ required_error: "Working Place is required" }),
-    address: z.string({ required_error: "Address is required" }),
-    mobile: z.string({ required_error: "Mobile number is required" }),
+    email: z.string({ message: "Email is required" }),
+    name: z.string({ message: "Name is required" }),
+    nid: z.string({ message: "NID number required" }).optional(),
+    dob: z.string({ message: "Father name is required" }).optional(),
+    workingPlase: z.string({ message: "Working Place is required" }),
+    address: z.string({ message: "Address is required" }),
+    mobile: z.string({ message: "Mobile number is required" }),
 });
 const updateEmployee = z.object({
-    name: z.string({ required_error: "Name is required" }).optional(),
-    nid: z.string({ required_error: "NID number required" }).optional(),
-    dob: z.string({ required_error: "Father name is required" }).optional(),
+    name: z.string({ message: "Name is required" }).optional(),
+    nid: z.string({ message: "NID number required" }).optional(),
+    dob: z.string({ message: "Father name is required" }).optional(),
     workingPlase: z
-        .string({ required_error: "Working Place is required" })
+        .string({ message: "Working Place is required" })
         .optional(),
-    address: z.string({ required_error: "Address is required" }).optional(),
-    mobile: z.string({ required_error: "Working Place is required" }).optional(),
+    address: z.string({ message: "Address is required" }).optional(),
+    mobile: z.string({ message: "Working Place is required" }).optional(),
 });
 export const userValidaton = {
     createEmployee,

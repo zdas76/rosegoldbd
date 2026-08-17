@@ -1,4 +1,4 @@
-import { AccountsItem, Party, TransactionInfo, VoucherType } from "../../../../generated/prisma/browser";
+import { AccountsItem, Party, TransactionInfo, VoucherType } from "../../../generated/prisma/client";
 import prisma from "../../../shared/prisma";
 
 

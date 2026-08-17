@@ -14,7 +14,7 @@ const emailSender = async (email, html) => {
         }
     });
     const info = await transporter.sendMail({
-        from: '"PH Helth Care" <zdas76@gmail.com>', // sender address
+        from: '"Rose Gold" <[EMAIL_ADDRESS]>', // sender address
         to: email,
         subject: "Reset Password Link", // Subject line
         text: "Hello world?",

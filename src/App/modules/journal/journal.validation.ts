@@ -1,4 +1,4 @@
-import { PartyType } from "../../../../generated/prisma";
+import { PartyType } from "../../../generated/prisma/enums";
 import { z } from "zod";
 
 const CreatePurchestSchema = z.object({

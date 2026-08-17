@@ -1,5 +1,4 @@
-
-import { BankAccount } from "../../../../generated/prisma";
+import { BankAccount } from "../../../generated/prisma/client";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";

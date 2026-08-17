@@ -2,9 +2,9 @@ import z from "zod";
 
 const CreateProductValidationSchema = z.object({
   body: z.object({
-    name: z.string({ required_error: "Product name is required" }).trim(),
+    name: z.string({ message: "Product name is required" }).trim(),
     description: z.string({
-      required_error: "Product Description is required",
+      message: "Product Description is required",
     }),
     subCategoryId: z.number(),
     minPrice: z.number().optional(),
@@ -16,12 +16,12 @@ const CreateProductValidationSchema = z.object({
 const updateProductValidationSchema = z.object({
   body: z.object({
     name: z
-      .string({ required_error: "Product name is required" })
+      .string({ message: "Product name is required" })
       .trim()
       .optional(),
     description: z
       .string({
-        required_error: "Product Description is required",
+        message: "Product Description is required",
       })
       .optional(),
     subCategoryId: z.number().optional(),

@@ -1,4 +1,4 @@
-import { VoucherType } from "../../../../generated/prisma";
+import { VoucherType } from "../../../generated/prisma/client";
 import prisma from "../../../shared/prisma";
 
 const getAllVoucher = async (payload: {
@@ -49,7 +49,6 @@ const getAllVoucher = async (payload: {
     },
     include: {
       party: true,
-      customer: true,
     }
   });
   return voucher;
@@ -69,14 +68,7 @@ const getVoucherByVoucherNo = async (voucherNo: string) => {
           partyType: true,
         },
       },
-      customer: {
-        select: {
-          name: true,
-          contactNumber: true,
-          address: true,
-          status: true,
-        },
-      },
+
       bankTransaction: {
         select: {
           date: true,
@@ -106,26 +98,6 @@ const getVoucherByVoucherNo = async (voucherNo: string) => {
           },
         },
       },
-      logOrderItem: {
-        select: {
-          id: true,
-          radis: true,
-          height: true,
-          quantity: true,
-          u_price: true,
-          amount: true,
-          logGrades: {
-            select: {
-              gradeName: true,
-              logCategory: {
-                select: {
-                  name: true,
-                }
-              }
-            }
-          },
-        },
-      },
       inventory: {
         select: {
           id: true,
@@ -146,22 +118,6 @@ const getVoucherByVoucherNo = async (voucherNo: string) => {
           quantityLess: true,
           debitAmount: true,
           creditAmount: true,
-        },
-      },
-      logOrdByCategory: {
-        select: {
-          date: true,
-          unitPrice: true,
-          quantityAdd: true,
-          quantityLess: true,
-          debitAmount: true,
-          creditAmount: true,
-          logCategory: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
         },
       },
     },
@@ -217,34 +173,6 @@ const getVoucherByid = async (id: number) => {
           },
         },
       },
-
-      logOrderItem: {
-        select: {
-          id: true,
-          logGradeId: true,
-          radis: true,
-          height: true,
-          quantity: true,
-          u_price: true,
-          amount: true,
-        },
-      },
-      logOrdByCategory: {
-        select: {
-          date: true,
-          unitPrice: true,
-          quantityAdd: true,
-          quantityLess: true,
-          debitAmount: true,
-          creditAmount: true,
-          logCategory: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-        },
-      },
     },
   });
   return voucher;
@@ -270,14 +198,7 @@ const getDailyReport = async (date: string) => {
           partyType: true,
         },
       },
-      customer: {
-        select: {
-          name: true,
-          contactNumber: true,
-          address: true,
-          status: true,
-        },
-      },
+
       bankTransaction: {
         select: {
           date: true,
@@ -307,26 +228,7 @@ const getDailyReport = async (date: string) => {
           },
         },
       },
-      logOrderItem: {
-        select: {
-          id: true,
-          radis: true,
-          height: true,
-          quantity: true,
-          u_price: true,
-          amount: true,
-          logGrades: {
-            select: {
-              gradeName: true,
-              logCategory: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      },
+
       inventory: {
         select: {
           id: true,
@@ -347,22 +249,6 @@ const getDailyReport = async (date: string) => {
           quantityLess: true,
           debitAmount: true,
           creditAmount: true,
-        },
-      },
-      logOrdByCategory: {
-        select: {
-          date: true,
-          unitPrice: true,
-          quantityAdd: true,
-          quantityLess: true,
-          debitAmount: true,
-          creditAmount: true,
-          logCategory: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
         },
       },
     },

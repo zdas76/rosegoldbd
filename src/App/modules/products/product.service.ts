@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TcreateProduct } from "./product.type";
-import { Product } from "../../../../generated/prisma";
+import { Product } from "../../../generated/prisma/client";
 
 const createProduct = async (payload: TcreateProduct) => {
 
@@ -28,8 +28,8 @@ const createProduct = async (payload: TcreateProduct) => {
       subCategoryId: payload.subCategoryId,
       minPrice: payload.minPrice || 0,
       size: payload.size || "",
-      openingDate: payload.initialStock.date,
-      amount: Number(payload.initialStock.amount),
+      openingDate: new Date(payload.initialStock.date),
+      openingAmount: Number(payload.initialStock.amount),
       quantity: payload.initialStock.quantity,
       unitPrice: payload.initialStock.unitPrice,
       inventory: {
@@ -38,7 +38,7 @@ const createProduct = async (payload: TcreateProduct) => {
           unitPrice: payload.initialStock.unitPrice,
           quantityAdd: payload.initialStock.quantity,
           debitAmount: Number(payload.initialStock.amount),
-          isClosing: true,
+          isOpening: true,
         },
       },
     },

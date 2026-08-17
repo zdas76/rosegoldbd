@@ -22,7 +22,7 @@ const getInventoryAggValueById = async (query) => {
         const getDate = await prisma.inventory.findFirst({
             where: {
                 productId: Number(query.productId),
-                isClosing: true,
+                isOpening: true,
             },
             orderBy: [{ id: "desc" }],
         });
@@ -45,7 +45,7 @@ const getInventoryAggValueById = async (query) => {
         const getDate = await prisma.inventory.findFirst({
             where: {
                 rawId: Number(query.rawId),
-                isClosing: true,
+                isOpening: true,
             },
             orderBy: [{ id: "desc" }],
         });

@@ -4,7 +4,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 model Category {
@@ -43,22 +43,22 @@ model Unit {
 
 model AccountHead {
   id           Int            @id @default(autoincrement())
-  pillerName   String
-  pillerId     String         @unique @db.VarChar(2)
+  headName     String
+  headId       String         @unique @db.VarChar(2)
   accountsItem AccountsItem[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
-  @@map("account_pillers")
+  @@map("account_head")
 }
 
 model AccountsItem {
   id               Int         @id @default(autoincrement())
   accountsItemName String
-  AccountHeadId    String      @db.VarChar(2)
+  accountHeadId    String      @db.VarChar(2)
   accountsItemId   String      @db.VarChar(6)
   journal          Journal[]
-  accountsPiler    AccountHead @relation(fields: [AccountHeadId], references: [pillerId])
+  accountHead      AccountHead @relation(fields: [accountHeadId], references: [headId])
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 
@@ -124,6 +124,8 @@ model Product {
   quantity      Float
   unitPrice     Float
   unitId        Int
+  openingDate   DateTime
+  openingAmount Float
   itemType      ItemType    @default(PRODUCT)
   isDeleted     Boolean     @default(false)
   status        Status      @default(ACTIVE)
@@ -138,20 +140,21 @@ model Product {
 }
 
 model RawMaterial {
-  id          Int         @id @default(autoincrement())
-  name        String      @db.VarChar(50)
-  description String?     @db.VarChar(250)
-  unitId      Int
-  amount      Float
-  quantity    Float
-  unitPrice   Float
-  itemType    ItemType    @default(RAW_MATERIAL)
-  isDeleted   Boolean     @default(false)
-  status      Status      @default(ACTIVE)
-  unit        Unit        @relation(fields: [unitId], references: [id])
-  inventory   Inventory[]
-  createdAt   DateTime    @default(now())
-  updateAt    DateTime    @updatedAt
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(50)
+  description   String?     @db.VarChar(250)
+  unitId        Int
+  openingDate   DateTime
+  openingAmount Float
+  quantity      Float
+  unitPrice     Float
+  itemType      ItemType    @default(RAW_MATERIAL)
+  isDeleted     Boolean     @default(false)
+  status        Status      @default(ACTIVE)
+  unit          Unit        @relation(fields: [unitId], references: [id])
+  inventory     Inventory[]
+  createdAt     DateTime    @default(now())
+  updateAt      DateTime    @updatedAt
 
   @@map("raw_materials")
 }
@@ -198,7 +201,7 @@ model Inventory {
   discount        Float?           @default(0.00)
   debitAmount     Float?           @default(0.00)
   creditAmount    Float?           @default(0.00)
-  isClosing       Boolean          @default(false)
+  isOpening       Boolean          @default(false)
   status          Status           @default(PENDING)
   product         Product?         @relation(fields: [productId], references: [id])
   raWMaterial     RawMaterial?     @relation(fields: [rawId], references: [id])

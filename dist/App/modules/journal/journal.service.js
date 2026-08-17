@@ -1,4 +1,4 @@
-import { VoucherType } from "../../../../generated/prisma/browser";
+import { VoucherType } from "../../../generated/prisma/client";
 import prisma from "../../../shared/prisma";
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload) => {

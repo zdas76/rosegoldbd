@@ -1,12 +1,11 @@
-
-import { AccountMainPiller } from "../../../../generated/prisma";
 import prisma from "../../../shared/prisma";
+import { AccountHead } from "../../../generated/prisma/client";
 
 
 const createPliersItemIntoDB = async (
-  payLoad: AccountMainPiller[]
+  payLoad: AccountHead[]
 ) => {
-  const result = await prisma.accountMainPiller.createMany({
+  const result = await prisma.accountHead.createMany({
     data: payLoad,
   });
 
@@ -15,7 +14,7 @@ const createPliersItemIntoDB = async (
 
 
 const getAllPillerItem = async () => {
-  const result: AccountMainPiller[] = await prisma.accountMainPiller.findMany();
+  const result: AccountHead[] = await prisma.accountHead.findMany();
 
   return result;
 };

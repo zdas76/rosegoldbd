@@ -2,8 +2,8 @@ import z from "zod";
 
 const createParty = z.object({
   body: z.object({
-    name: z.string({ required_error: "Name is required" }).trim(),
-    contactNo: z.string({ required_error: "Contact Number is required" }),
+    name: z.string({ message: "Name is required" }).trim(),
+    contactNo: z.string({ message: "Contact Number is required" }),
     partyType: z.enum(["VENDOR", "PARTY", "CUSTOMER"]),
     address: z.string().optional(),
   }),
@@ -11,14 +11,12 @@ const createParty = z.object({
 
 const UpdateParty = z.object({
   body: z.object({
-    name: z.string({ required_error: "Name is required" }).trim().optional(),
+    name: z.string({ message: "Name is required" }).trim().optional(),
     contactNo: z
-      .string({ required_error: "Contact Number is required" })
+      .string({ message: "Contact Number is required" })
       .optional(),
     partyType: z
-      .enum(["VENDOR", "PARTY", "CUSTOMER"], {
-        required_error: "Party type is required",
-      })
+      .enum(["VENDOR", "PARTY", "CUSTOMER"])
       .optional(),
     address: z.string().optional(),
   }),

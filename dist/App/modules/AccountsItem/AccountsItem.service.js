@@ -2,7 +2,7 @@ import prisma from "../../../shared/prisma";
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errors/AppError";
 const createAccountsItemtoDB = async (payLoad) => {
-    const accountsItemId = Number(payLoad.accountMainPillerId) + payLoad.accountsItemId;
+    const accountsItemId = Number(payLoad.accountHeadId) + payLoad.accountsItemId;
     const isExistItemId = await prisma.accountsItem.findFirst({
         where: {
             accountsItemId: accountsItemId,
@@ -23,7 +23,7 @@ const createAccountsItemtoDB = async (payLoad) => {
         data: {
             accountsItemId: accountsItemId,
             accountsItemName: payLoad.accountsItemName,
-            accountMainPillerId: payLoad.accountMainPillerId,
+            accountHeadId: payLoad.accountHeadId,
         },
     });
     return result;
@@ -41,10 +41,10 @@ const getAccountsItemFromDB = async (payLoad) => {
     const result = await prisma.accountsItem.findMany({
         where: filerValue,
         orderBy: {
-            accountMainPillerId: "asc",
+            accountHeadId: "asc",
         },
         include: {
-            accountsPiler: true,
+            accountHead: true,
         },
     });
     return result;
@@ -53,7 +53,7 @@ const getAccountsItemByIdFromDB = async (id) => {
     const result = await prisma.accountsItem.findFirst({
         where: { id },
         include: {
-            accountsPiler: true,
+            accountHead: true,
         },
     });
     return result;
@@ -67,7 +67,7 @@ const updateAccountsItemFromDBbyId = async (id, payLoad) => {
     if (!isExistItemId) {
         throw new AppError(StatusCodes.BAD_REQUEST, "This item not found");
     }
-    const accountsItemId = Number(payLoad.accountMainPillerId) + isExistItemId.accountsItemId.toString().slice(-4);
+    const accountsItemId = Number(payLoad.accountHeadId) + isExistItemId.accountsItemId.toString().slice(-4);
     const checkName = await prisma.accountsItem.findFirst({
         where: {
             accountsItemName: payLoad.accountsItemName,
@@ -85,7 +85,7 @@ const updateAccountsItemFromDBbyId = async (id, payLoad) => {
         data: {
             accountsItemId: accountsItemId,
             accountsItemName: payLoad.accountsItemName,
-            accountMainPillerId: payLoad.accountMainPillerId,
+            accountHeadId: payLoad.accountHeadId,
         },
     });
     return result;

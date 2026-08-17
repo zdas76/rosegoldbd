@@ -3,7 +3,7 @@ import { date } from "zod";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
-import { Inventory } from "../../../../generated/prisma";
+import { Inventory } from "../../../generated/prisma/client";
 
 const getInventory = async () => {
   return await prisma.inventory.findMany({
@@ -27,7 +27,7 @@ const getInventoryAggValueById = async (query: any) => {
     const getDate = await prisma.inventory.findFirst({
       where: {
         productId: Number(query.productId),
-        isClosing: true,
+        isOpening: true,
       },
 
       orderBy: [{ id: "desc" }],
@@ -55,7 +55,7 @@ const getInventoryAggValueById = async (query: any) => {
     const getDate = await prisma.inventory.findFirst({
       where: {
         rawId: Number(query.rawId),
-        isClosing: true,
+        isOpening: true,
       },
 
       orderBy: [{ id: "desc" }],

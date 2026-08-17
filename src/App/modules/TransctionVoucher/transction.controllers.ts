@@ -3,7 +3,7 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { StatusCodes } from "http-status-codes";
 import { VoucherService } from "./transction.service";
-import { VoucherType } from "../../../../generated/prisma";
+import { VoucherType } from "../../../generated/prisma";
 
 const getAllVoucher = catchAsync(async (req: Request, res: Response) => {
   const { startDate, endDate } = req.query;

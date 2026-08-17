@@ -1,4 +1,4 @@
-import { ItemType, Status } from "../../../../generated/prisma";
+import { ItemType, Status } from "../../../generated/prisma/client";
 
 type Inventory = {
   date: string;

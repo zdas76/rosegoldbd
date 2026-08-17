@@ -13,7 +13,6 @@ import { RawMaterialRoute } from "../modules/rawMaterials/raw.route";
 import { JournalRoute } from "../modules/journal/journal.route";
 import { BankRoute } from "../modules/bank/bank.route";
 import { TransactionRoute } from "../modules/bankTransaction/transaction.route";
-import { CustomerRouter } from "../modules/customer/customer.route";
 import { createProductRoute } from "../modules/createProduce/createProduct.route";
 import { ReportRouter } from "../modules/Reports/report.route";
 import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
@@ -79,10 +78,6 @@ const moduleRoutes = [
     {
         path: "/transaction",
         route: TransactionRoute,
-    },
-    {
-        path: "/customer",
-        route: CustomerRouter,
     },
     {
         path: "/create-product",

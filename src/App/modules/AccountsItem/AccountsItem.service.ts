@@ -1,11 +1,12 @@
 import prisma from "../../../shared/prisma";
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errors/AppError";
-import { AccountsItem } from "../../../../generated/prisma";
+import { AccountsItem } from "../../../generated/prisma/client";
+
 
 const createAccountsItemtoDB = async (payLoad: AccountsItem) => {
 
-  const accountsItemId = Number(payLoad.accountMainPillerId) + payLoad.accountsItemId;
+  const accountsItemId = Number(payLoad.accountHeadId) + payLoad.accountsItemId;
 
 
   const isExistItemId = await prisma.accountsItem.findFirst({
@@ -32,7 +33,7 @@ const createAccountsItemtoDB = async (payLoad: AccountsItem) => {
     data: {
       accountsItemId: accountsItemId,
       accountsItemName: payLoad.accountsItemName,
-      accountMainPillerId: payLoad.accountMainPillerId,
+      accountHeadId: payLoad.accountHeadId,
     },
   });
 
@@ -56,10 +57,10 @@ const getAccountsItemFromDB = async (payLoad: string) => {
   const result = await prisma.accountsItem.findMany({
     where: filerValue,
     orderBy: {
-      accountMainPillerId: "asc",
+      accountHeadId: "asc",
     },
     include: {
-      accountsPiler: true,
+      accountHead: true,
     },
 
   });
@@ -70,7 +71,7 @@ const getAccountsItemByIdFromDB = async (id: number) => {
   const result = await prisma.accountsItem.findFirst({
     where: { id },
     include: {
-      accountsPiler: true,
+      accountHead: true,
     },
   });
   return result;
@@ -92,7 +93,7 @@ const updateAccountsItemFromDBbyId = async (
     throw new AppError(StatusCodes.BAD_REQUEST, "This item not found");
   }
 
-  const accountsItemId = Number(payLoad.accountMainPillerId) + isExistItemId.accountsItemId.toString().slice(-4);
+  const accountsItemId = Number(payLoad.accountHeadId) + isExistItemId.accountsItemId.toString().slice(-4);
 
   const checkName = await prisma.accountsItem.findFirst({
     where: {
@@ -113,7 +114,7 @@ const updateAccountsItemFromDBbyId = async (
     data: {
       accountsItemId: accountsItemId,
       accountsItemName: payLoad.accountsItemName,
-      accountMainPillerId: payLoad.accountMainPillerId,
+      accountHeadId: payLoad.accountHeadId,
     },
   });
   return result;

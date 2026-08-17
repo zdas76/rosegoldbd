@@ -1,6 +1,5 @@
 import prisma from "../../../shared/prisma";
-import { VoucherType, ItemType } from "../../../../generated/prisma/enums";
-import type { Prisma } from "../../../../generated/prisma/client";
+import { VoucherType, ItemType } from "../../../generated/prisma/enums";
 
 const createProductInfo = async (payLoad: any) => {
   const addProduct = await prisma.$transaction(async (tx) => {

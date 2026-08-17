@@ -6,7 +6,7 @@ import { IPaginationOptions } from "../../interfaces/pagination";
 import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { Request } from "express";
 import { UserSearchAbleFields } from "./employee.constant";
-import { Employee, Prisma, Status } from "../../../../generated/prisma/browser";
+import { Employee, Prisma, Status } from "../../../generated/prisma/client";
 
 
 const creatEmployeeToDB = async (req: Request): Promise<Partial<Employee>> => {

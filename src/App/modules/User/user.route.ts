@@ -1,6 +1,5 @@
 import { UserControllers } from "./user.controllers";
 import express, { NextFunction, Request, Response } from "express";
-import upload from "../../../helpars/uploads";
 import { userValidaton } from "./user.validation";
 import validationRequiest from "../../middlewares/validationRequest";
 

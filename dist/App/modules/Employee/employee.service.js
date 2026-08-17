@@ -1,7 +1,7 @@
 import prisma from "../../../shared/prisma";
 import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { UserSearchAbleFields } from "./employee.constant";
-import { Status } from "../../../../generated/prisma/browser";
+import { Status } from "../../../generated/prisma/client";
 const creatEmployeeToDB = async (req) => {
     const createEmployee = await prisma.employee.create({
         data: {

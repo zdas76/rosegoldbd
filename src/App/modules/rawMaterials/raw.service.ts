@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TrawMaterial } from "./raw.types";
-import { RawMaterial } from "../../../../generated/prisma";
+import { RawMaterial } from "../../../generated/prisma/client";
 
 const createRawMaterial = async (payload: TrawMaterial) => {
   const isExist = await prisma.rawMaterial.findFirst({
@@ -21,17 +21,17 @@ const createRawMaterial = async (payload: TrawMaterial) => {
       name: payload.name,
       description: payload.description,
       unitId: payload.unitId,
-      openingDate: new Date(payload.date),
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      amount: payload.amount,
+      openingDate: new Date(payload.date),
+      openingAmount: payload.amount,
       inventory: {
         create: {
           date: new Date(payload.date),
           unitPrice: payload.unitPrice,
           quantityAdd: payload.quantity,
           debitAmount: payload.amount,
-          isClosing: true,
+          isOpening: true,
         },
       },
     },
@@ -82,7 +82,7 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       description: payload.description,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      amount: payload.amount,
+      openingAmount: payload.openingAmount,
     },
   });
 
@@ -110,62 +110,7 @@ const deleteRawMaterial = async (id: number) => {
   return result;
 };
 
-const createLogtoRaw = async (payload: any) => {
-  const convertLog = await prisma.$transaction(async (tx) => {
-    const inventoryData = payload?.items.map(
-      (item: {
-        rawId: number;
-        unitPrice: number;
-        quantity: number;
-        date: Date;
-        amount: number;
-      }) => ({
-        rawId: item.rawId,
-        unitPrice: item.amount / item.quantity,
-        quantityAdd: item.quantity,
-        date: payload.date,
-        journal: {
-          create: {
-            debitAmount: item.amount,
-            narration: "Log converted to raw material",
-            date: payload.date,
-          },
-        },
-      })
-    );
 
-    const logCategoryData = payload?.items.map(
-      (item: {
-        logCategoryId: number;
-        unitPrice: number;
-        quantity: number;
-        date: Date;
-        amount: number;
-      }) => ({
-        logCategoryId: item.logCategoryId,
-        unitPrice: item.amount / item.quantity,
-        quantityLess: item.quantity,
-        date: payload.date,
-        creditAmount: item.amount,
-      })
-    );
-
-    const result = await prisma.logToRaw.create({
-      data: {
-        voucherNo: payload.voucherNo,
-        date: payload.date,
-        inventory: {
-          create: inventoryData,
-        },
-        logOrdByCategory: {
-          create: logCategoryData,
-        },
-      },
-    });
-
-    return result;
-  });
-};
 
 export const RowMaterialsService = {
   createRawMaterial,
@@ -173,5 +118,5 @@ export const RowMaterialsService = {
   getRawMaterialById,
   updateRawMaterial,
   deleteRawMaterial,
-  createLogtoRaw,
+
 };
