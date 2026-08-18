@@ -7,6 +7,9 @@ import pick from "../../../shared/pick";
 import { UserfiltersFields } from "./employee.constant";
 
 const createEmployee = catchAsync(async (req: Request, res: Response) => {
+  
+  console.log("req.body", req.body);
+
   const result = await EmployeeService.creatEmployeeToDB(req);
 
   sendResponse(res, {
