@@ -19,7 +19,7 @@ const creatEmployeeToDB = async (req: Request): Promise<Partial<Employee>> => {
       nid: req.body.nid,
       dob: req.body.dob,
       workingPlase: req.body.workingPlase,
-      photo: req.body.photo,
+      photo: req.file ? `/uploads/${req.file.filename}` : req.body.photo,
       address: req.body.address,
       mobile: req.body.mobile,
     },
@@ -120,13 +120,20 @@ const getEmployeeById = async (id: number) => {
   return result;
 };
 
-const updateEmployeeById = async (id: number, payload: Partial<Employee>) => {
+const updateEmployeeById = async (
+  id: number,
+  payload: Partial<Employee>,
+  file?: Express.Multer.File
+) => {
   const result = await prisma.employee.update({
     where: {
       id: id,
       status: Status.ACTIVE,
     },
-    data: payload,
+    data: {
+      ...payload,
+      ...(file && { photo: `/uploads/${file.filename}` }),
+    },
   });
 
   return result;

@@ -3,6 +3,7 @@ import cors from "cors";
 import { StatusCodes } from "http-status-codes";
 import express from "express";
 import cookieParser from "cookie-parser";
+import path from "path";
 import router from "./App/routes";
 import globalErrorHandler from "./App/middlewares/globalErrorHandler";
 
@@ -19,6 +20,8 @@ app.use(cookieParser());
 //parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
