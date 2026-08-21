@@ -1,5 +1,5 @@
 import prisma from "../../../shared/prisma";
-import { VoucherType, ItemType } from "@prisma/client";
+import { VoucherType } from "@prisma/client";
 const createProductInfo = async (payLoad) => {
     const addProduct = await prisma.$transaction(async (tx) => {
         // create Transaction
@@ -13,7 +13,6 @@ const createProductInfo = async (payLoad) => {
         const isProductExisted = await prisma.product.findFirst({
             where: {
                 id: payLoad.product.productId,
-                itemType: ItemType.PRODUCT,
                 isDeleted: false,
             },
         });
@@ -32,7 +31,6 @@ const createProductInfo = async (payLoad) => {
         const isRawMaterialExisted = payLoad.rawMaterials.map(async (item) => await prisma.product.findFirst({
             where: {
                 id: item.rawMaterialsId,
-                itemType: ItemType.RAW_MATERIAL,
                 isDeleted: false,
             },
         }));
