@@ -1,4 +1,4 @@
-import { ItemType, Status } from "@prisma/client";
+import { Status } from "@prisma/client";
 
 type Inventory = {
   date: string;
@@ -12,7 +12,6 @@ export type TrawMaterial = {
   id?: number;
   unitId: any;
   name: string;
-  itemType: ItemType;
   createdAt: Date;
   description: string | null;
   isDeleted?: boolean;

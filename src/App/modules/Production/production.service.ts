@@ -26,7 +26,7 @@ const createProduction = async (payload: any) => {
 
     const productInventory = {
       productId: payload.productId,
-      voucherNo: createProduction.voucherNo,
+      productionId: createProduction.id,
       date: new Date(payload.date),
       quantityAdd: payload.productQuantity,
       unitPrice: payload.unitCost,
@@ -36,15 +36,15 @@ const createProduction = async (payload: any) => {
     const rowMaterialInventory = payload.rawMaterials.map(
       (item: {
         rawMaterialsId: number;
-        rawUnitprice: number;
+        unitPrice: number;
         amount: number;
         quantity: number;
       }) => ({
         rawId: item.rawMaterialsId,
-        voucherNo: createProduction.voucherNo,
-        date: new Date(payload.date),
+        productionId: createProduction.id,
+        date: new Date(),
         quantityLess: item.quantity,
-        unitPrice: item.rawUnitprice,
+        unitPrice: item.unitPrice,
         creditAmount: item.amount,
       }),
     );
@@ -156,7 +156,7 @@ const deleteProduction = async (id: number) => {
 
   await prisma.$transaction(async (tx) => {
     await tx.inventory.deleteMany({
-      where: { voucherNo: isExist.voucherNo },
+      where: { productionId: isExist.id },
     });
 
     await tx.production.delete({
