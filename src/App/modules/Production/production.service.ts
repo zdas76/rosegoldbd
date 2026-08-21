@@ -1,25 +1,12 @@
-
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
-import { ItemType, VoucherType } from "@prisma/client";
 
 const createProduction = async (payload: any) => {
-
   const addProduction = await prisma.$transaction(async (tx) => {
-
-    const createTransaction = await tx.transactionInfo.create({
-      data: {
-        voucherNo: payload.voucherNo,
-        invoiceNo: payload.invoiceNo || "",
-        voucherType: VoucherType.CREATEPRODUCT,
-      },
-    });
-
     const isProductExisted = await tx.product.findFirst({
       where: {
-        id: payload.product.productId,
-        itemType: ItemType.PRODUCT,
+        id: payload.productId,
         isDeleted: false,
       },
     });
@@ -28,13 +15,22 @@ const createProduction = async (payload: any) => {
       throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
     }
 
+    const createProduction = await tx.production.create({
+      data: {
+        voucherNo: payload.voucherNo,
+        batchNo: payload.batchNo,
+        date: new Date(payload.date),
+        productId: payload.productId,
+      },
+    });
+
     const productInventory = {
-      productId: isProductExisted.id,
+      productId: payload.productId,
+      voucherNo: createProduction.voucherNo,
       date: new Date(payload.date),
-      transactionId: createTransaction.id,
-      quantityAdd: payload.product.quantity,
-      unitPrice: payload.product.unitcost,
-      debitAmount: payload.product.amount,
+      quantityAdd: payload.productQuantity,
+      unitPrice: payload.unitCost,
+      debitAmount: payload.amount,
     };
 
     const rowMaterialInventory = payload.rawMaterials.map(
@@ -45,12 +41,12 @@ const createProduction = async (payload: any) => {
         quantity: number;
       }) => ({
         rawId: item.rawMaterialsId,
-        transactionId: createTransaction.id,
+        voucherNo: createProduction.voucherNo,
         date: new Date(payload.date),
         quantityLess: item.quantity,
         unitPrice: item.rawUnitprice,
         creditAmount: item.amount,
-      })
+      }),
     );
 
     const inventoryItems = [...rowMaterialInventory, productInventory];
@@ -59,28 +55,15 @@ const createProduction = async (payload: any) => {
       data: inventoryItems,
     });
 
-    const costItemsJournal = payload.expenses.map((item: any) => ({
-      transectionId: createTransaction.id,
-      accountsItemId: item.accountsItemId,
-      date: new Date(payload.date),
-      debitAmount: item.amount,
-      narration: item.narration || "",
-    }));
-
-    await tx.journal.createMany({
-      data: costItemsJournal,
-    });
-
-    return createTransaction;
+    return createProduction;
   });
 
-  const getCreatedProduction = await prisma.transactionInfo.findFirst({
+  const getCreatedProduction = await prisma.production.findUnique({
     where: {
       id: addProduction.id,
     },
     include: {
-      journal: true,
-      inventory: {
+      inventories: {
         include: {
           product: true,
           raWMaterial: true,
@@ -92,21 +75,11 @@ const createProduction = async (payload: any) => {
   return getCreatedProduction;
 };
 
-
 const getProduction = async () => {
-  const result = await prisma.transactionInfo.findMany({
-    where: {
-      voucherType: VoucherType.CREATEPRODUCT,
-    },
+  const result = await prisma.production.findMany({
     include: {
-      party: true,
-      bankTransaction: true,
-      journal: {
-        include: {
-          accountsItem: true,
-        },
-      },
-      inventory: {
+      product: true,
+      inventories: {
         include: {
           product: true,
           raWMaterial: true,
@@ -122,20 +95,13 @@ const getProduction = async () => {
 };
 
 const getProductionById = async (id: number) => {
-  const result = await prisma.transactionInfo.findFirst({
+  const result = await prisma.production.findUnique({
     where: {
       id: id,
-      voucherType: VoucherType.CREATEPRODUCT,
     },
     include: {
-      party: true,
-      bankTransaction: true,
-      journal: {
-        include: {
-          accountsItem: true,
-        },
-      },
-      inventory: {
+      product: true,
+      inventories: {
         include: {
           product: true,
           raWMaterial: true,
@@ -152,10 +118,9 @@ const getProductionById = async (id: number) => {
 };
 
 const updateProduction = async (id: number, payload: any) => {
-  const isExist = await prisma.transactionInfo.findFirst({
+  const isExist = await prisma.production.findUnique({
     where: {
       id: id,
-      voucherType: VoucherType.CREATEPRODUCT,
     },
   });
 
@@ -163,14 +128,15 @@ const updateProduction = async (id: number, payload: any) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "Production not found");
   }
 
-  const result = await prisma.transactionInfo.update({
+  const result = await prisma.production.update({
     where: {
       id: id,
     },
     data: {
       voucherNo: payload.voucherNo,
-      invoiceNo: payload.invoiceNo,
+      batchNo: payload.batchNo,
       date: payload.date ? new Date(payload.date) : undefined,
+      productId: payload.productId,
     },
   });
 
@@ -178,10 +144,9 @@ const updateProduction = async (id: number, payload: any) => {
 };
 
 const deleteProduction = async (id: number) => {
-  const isExist = await prisma.transactionInfo.findFirst({
+  const isExist = await prisma.production.findUnique({
     where: {
       id: id,
-      voucherType: VoucherType.CREATEPRODUCT,
     },
   });
 
@@ -191,18 +156,10 @@ const deleteProduction = async (id: number) => {
 
   await prisma.$transaction(async (tx) => {
     await tx.inventory.deleteMany({
-      where: { transactionId: id },
+      where: { voucherNo: isExist.voucherNo },
     });
 
-    await tx.journal.deleteMany({
-      where: { transectionId: id },
-    });
-
-    await tx.bankTransaction.deleteMany({
-      where: { transectionId: id },
-    });
-
-    await tx.transactionInfo.delete({
+    await tx.production.delete({
       where: { id: id },
     });
   });
