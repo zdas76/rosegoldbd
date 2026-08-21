@@ -1,5 +1,5 @@
 import prisma from "../../../shared/prisma";
-import { VoucherType, ItemType } from "@prisma/client";
+import { VoucherType } from "@prisma/client";
 
 const createProductInfo = async (payLoad: any) => {
   const addProduct = await prisma.$transaction(async (tx) => {
@@ -15,7 +15,6 @@ const createProductInfo = async (payLoad: any) => {
     const isProductExisted = await prisma.product.findFirst({
       where: {
         id: payLoad.product.productId,
-        itemType: ItemType.PRODUCT,
         isDeleted: false,
       },
     });
@@ -44,10 +43,9 @@ const createProductInfo = async (payLoad: any) => {
         await prisma.product.findFirst({
           where: {
             id: item.rawMaterialsId,
-            itemType: ItemType.RAW_MATERIAL,
             isDeleted: false,
           },
-        })
+        }),
     );
 
     if (!isRawMaterialExisted) {
@@ -67,7 +65,7 @@ const createProductInfo = async (payLoad: any) => {
         quantityLess: item.quantity,
         unitPrice: item.rawUnitprice,
         creditAmount: item.amount,
-      })
+      }),
     );
     const InventoryItem = [...rowMaterialInventory, productInventory];
 
@@ -98,7 +96,6 @@ const createProductInfo = async (payLoad: any) => {
       journal: true,
     },
   });
-
 
   return getCreatedProduct;
 };

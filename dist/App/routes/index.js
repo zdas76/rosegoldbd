@@ -17,6 +17,7 @@ import { createProductRoute } from "../modules/createProduce/createProduct.route
 import { ReportRouter } from "../modules/Reports/report.route";
 import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
 import { UserRoute } from "../modules/User/user.route";
+import { ProductionRouter } from "../modules/Production/production.route";
 const router = express.Router();
 const moduleRoutes = [
     {
@@ -94,6 +95,10 @@ const moduleRoutes = [
     {
         path: "/user",
         route: UserRoute,
+    },
+    {
+        path: "/production",
+        route: ProductionRouter,
     }
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -194,7 +194,7 @@ model Inventory {
   productId       Int?
   rawId           Int?
   transactionId   Int?
-  voucherNo       String?          @db.VarChar(50)
+  productionId    Int?
   unitPrice       Float            @default(0.00)
   quantityAdd     Float?           @default(0.00)
   quantityLess    Float?           @default(0.00)
@@ -206,11 +206,11 @@ model Inventory {
   product         Product?         @relation(fields: [productId], references: [id])
   raWMaterial     RawMaterial?     @relation(fields: [rawId], references: [id])
   transactionInfo TransactionInfo? @relation(fields: [transactionId], references: [id])
-  production      Production?      @relation(fields: [voucherNo], references: [voucherNo])
+  production      Production?      @relation(fields: [productionId], references: [id])
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
-  @@index([productId, rawId, transactionId, voucherNo])
+  @@index([productId, rawId, transactionId, productionId])
   @@map("inventories")
 }
 

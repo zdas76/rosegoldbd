@@ -14,7 +14,7 @@ const createProductFromRowMaterial = catchAsync(
       message: "RowMaterial convented to product successfully",
       data: result,
     });
-  }
+  },
 );
 
 export const CreateProductControllers = {
