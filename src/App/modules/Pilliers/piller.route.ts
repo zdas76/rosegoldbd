@@ -7,4 +7,4 @@ router.post("/", PillersControllers.createPillers);
 
 router.get("/", PillersControllers.getPillers);
 
-export const PhillersRoute = router;
+export const AccountsHeadRoute = router;

@@ -16,6 +16,11 @@ const createRawMaterial = async (payload: TrawMaterial) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "This name is already used");
   }
 
+  const openingDate =
+    payload.date && !isNaN(new Date(payload.date).getTime())
+      ? new Date(payload.date)
+      : new Date();
+
   const rawMeterial = await prisma.rawMaterial.create({
     data: {
       name: payload.name,
@@ -23,11 +28,11 @@ const createRawMaterial = async (payload: TrawMaterial) => {
       unitId: payload.unitId,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      openingDate: new Date(payload.date),
+      openingDate,
       openingAmount: payload.amount,
       inventory: {
         create: {
-          date: new Date(payload.date),
+          date: openingDate,
           unitPrice: payload.unitPrice,
           quantityAdd: payload.quantity,
           debitAmount: payload.amount,
@@ -38,6 +43,68 @@ const createRawMaterial = async (payload: TrawMaterial) => {
   });
 
   return rawMeterial;
+};
+
+const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
+  if (!Array.isArray(payloads) || payloads.length === 0) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "At least one raw material is required"
+    );
+  }
+  const names = payloads.map((item) => item?.name?.trim());
+
+  const existing = await prisma.rawMaterial.findMany({
+    where: {
+      name: {
+        in: names,
+      },
+    },
+    select: {
+      name: true,
+    },
+  });
+
+  if (existing.length > 0) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `These names are already used: ${existing
+        .map((item) => item.name)
+        .join(", ")}`
+    );
+  }
+
+  const result = await prisma.$transaction(
+    payloads.map((payload) => {
+      const openingDate =
+        payload.date && !isNaN(new Date(payload.date).getTime())
+          ? new Date(payload.date)
+          : new Date();
+
+      return prisma.rawMaterial.create({
+        data: {
+          name: payload.name,
+          description: payload.description ?? null,
+          unitId: payload.unitId,
+          unitPrice: payload.unitPrice ?? 0,
+          quantity: payload.quantity ?? 0,
+          openingDate,
+          openingAmount: payload.amount ?? 0,
+          inventory: {
+            create: {
+              date: openingDate,
+              unitPrice: payload.unitPrice ?? 0,
+              quantityAdd: payload.quantity ?? 0,
+              debitAmount: payload.amount ?? 0,
+              isOpening: true,
+            },
+          },
+        },
+      });
+    })
+  );
+
+  return result;
 };
 
 const getAllRawMaterial = async () => {
@@ -114,6 +181,7 @@ const deleteRawMaterial = async (id: number) => {
 
 export const RowMaterialsService = {
   createRawMaterial,
+  createRawMaterialsMany,
   getAllRawMaterial,
   getRawMaterialById,
   updateRawMaterial,
