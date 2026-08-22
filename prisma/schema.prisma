@@ -85,7 +85,7 @@ model Employee {
   email        String?  @unique @db.VarChar(30)
   name         String   @db.VarChar(50)
   nid          String?  @db.VarChar(20)
-  dob          DateTime @db.Date
+  dob          DateTime? @db.Date
   workingPlase String?
   photo        String?
   address      String
@@ -140,20 +140,21 @@ model Product {
 }
 
 model RawMaterial {
-  id            Int         @id @default(autoincrement())
-  name          String      @db.VarChar(50)
-  description   String?     @db.VarChar(250)
+  id            Int           @id @default(autoincrement())
+  name          String        @db.VarChar(50)
+  description   String?       @db.VarChar(250)
   unitId        Int
   openingDate   DateTime
   openingAmount Float
   quantity      Float
   unitPrice     Float
-  isDeleted     Boolean     @default(false)
-  status        Status      @default(ACTIVE)
-  unit          Unit        @relation(fields: [unitId], references: [id])
+  itemType      String?       @db.VarChar(50)
+  isDeleted     Boolean       @default(false)
+  status        Status        @default(ACTIVE)
+  unit          Unit          @relation(fields: [unitId], references: [id])
   inventory     Inventory[]
-  createdAt     DateTime    @default(now())
-  updateAt      DateTime    @updatedAt
+  createdAt     DateTime      @default(now())
+  updateAt      DateTime      @updatedAt
 
   @@map("raw_materials")
 }

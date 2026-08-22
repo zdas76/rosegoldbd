@@ -35,14 +35,14 @@ const createProduction = async (payload: any) => {
 
     const rowMaterialInventory = payload.rawMaterials.map(
       (item: {
-        rawMaterialsId: number;
+        rawId: number;
         unitPrice: number;
         amount: number;
         quantity: number;
       }) => ({
-        rawId: item.rawMaterialsId,
+        rawId: item.rawId,
         productionId: createProduction.id,
-        date: new Date(),
+        date: new Date(payload.date),
         quantityLess: item.quantity,
         unitPrice: item.unitPrice,
         creditAmount: item.amount,

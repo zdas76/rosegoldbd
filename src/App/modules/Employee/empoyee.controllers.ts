@@ -7,7 +7,7 @@ import pick from "../../../shared/pick";
 import { UserfiltersFields } from "./employee.constant";
 
 const createEmployee = catchAsync(async (req: Request, res: Response) => {
-  
+
   console.log("req.body", req.body);
 
   const result = await EmployeeService.creatEmployeeToDB(req);
@@ -41,14 +41,18 @@ const getEmployeeById = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Employee retrived Successfully",
+    message: "Employee retrived Successfully", 
     data: result,
   });
 });
 
 const updateEmployeeById = catchAsync(async (req: Request, res: Response) => {
   const id = parseInt(req.params.id as string);
-  const result = await EmployeeService.updateEmployeeById(id, req.body);
+  const result = await EmployeeService.updateEmployeeById(
+    id,
+    req.body,
+    req.file
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

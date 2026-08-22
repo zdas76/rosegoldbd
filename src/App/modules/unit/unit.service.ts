@@ -59,6 +59,19 @@ const deleteUnit = async (id: number) => {
   if (!existUnit) {
     throw new AppError(StatusCodes.NOT_FOUND, "Unit not found");
   }
+
+  const [productCount, rawMaterialCount] = await prisma.$transaction([
+    prisma.product.count({ where: { unitId: id } }),
+    prisma.rawMaterial.count({ where: { unitId: id } }),
+  ]);
+
+  if (productCount > 0 || rawMaterialCount > 0) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `Cannot delete this unit because it is used by ${productCount} product(s) and ${rawMaterialCount} raw material(s)`
+    );
+  }
+
   const result = await prisma.unit.delete({
     where: {
       id: id
