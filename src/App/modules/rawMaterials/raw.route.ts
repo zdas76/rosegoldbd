@@ -5,6 +5,8 @@ const route = express.Router();
 
 route.post("/", RawMaterialControllers.createRawMaterial);
 
+route.post("/many", RawMaterialControllers.createRawMaterialsMany);
+
 route.get("/", RawMaterialControllers.getAllRawMaterial);
 
 route.get("/:id", RawMaterialControllers.getRawMaterialById);

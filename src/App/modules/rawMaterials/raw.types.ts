@@ -18,7 +18,7 @@ export type TrawMaterial = {
   quantity: number;
   unitPrice: number;
   amount: number;
-  date: Date;
+  date?: Date | string;
   status: Status;
   updateAt: Date;
   inventory: Inventory[]; // ✅ updated

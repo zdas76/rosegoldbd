@@ -5,7 +5,7 @@ import { SubCategoryRouter } from "../modules/SubCategory/subCategory.route";
 import { EmployeeRoute } from "../modules/Employee/employee.route";
 import { PartyRoute } from "../modules/Party/party.route";
 import { AccountItemRoute } from "../modules/AccountsItem/AccountsItem.route";
-import { PhillersRoute } from "../modules/Pilliers/piller.route";
+import { AccountsHeadRoute } from "../modules/Pilliers/piller.route";
 import { UnitRoute } from "../modules/unit/unit.route";
 import { ProductRoute } from "../modules/products/product.route";
 import { InventoryRoute } from "../modules/inventories/inventories.route";
@@ -35,8 +35,8 @@ const moduleRoutes = [
     route: SubCategoryRouter,
   },
   {
-    path: "/account_pillers",
-    route: PhillersRoute,
+    path: "/accounts_head",
+    route: AccountsHeadRoute,
   },
   {
     path: "/employee",

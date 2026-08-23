@@ -15,6 +15,18 @@ const createRawMaterial = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const createRawMaterialsMany = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await RowMaterialsService.createRawMaterialsMany(req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "RawMaterials create successfully",
+    data: result,
+  });
+});
+
 const getAllRawMaterial = catchAsync(async (req: Request, res: Response) => {
   const result = await RowMaterialsService.getAllRawMaterial();
 
@@ -70,6 +82,7 @@ const deleteRawMaterialById = catchAsync(
 
 export const RawMaterialControllers = {
   createRawMaterial,
+  createRawMaterialsMany,
   getAllRawMaterial,
   getRawMaterialById,
   updateRawMaterialById,

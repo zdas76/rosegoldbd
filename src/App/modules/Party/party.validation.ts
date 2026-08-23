@@ -4,7 +4,7 @@ const createParty = z.object({
   body: z.object({
     name: z.string({ message: "Name is required" }).trim(),
     contactNo: z.string({ message: "Contact Number is required" }),
-    partyType: z.enum(["VENDOR", "PARTY", "CUSTOMER"]),
+    partyType: z.enum(["VENDOR", "PARTY", "CUSTOMER", "SUPPLIER"]),
     address: z.string().optional(),
   }),
 });

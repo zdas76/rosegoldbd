@@ -99,7 +99,7 @@ CREATE TABLE `parties` (
     `name` VARCHAR(50) NOT NULL,
     `contactNo` VARCHAR(15) NOT NULL,
     `address` VARCHAR(200) NOT NULL,
-    `partyType` ENUM('VENDOR', 'CUSTOMER', 'PARTY') NOT NULL,
+    `partyType` ENUM('VENDOR', 'CUSTOMER', 'PARTY', 'SUPPLIER') NOT NULL,
     `openingDate` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `openingAmount` DOUBLE NULL DEFAULT 0.00,
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
