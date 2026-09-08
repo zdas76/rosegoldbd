@@ -1,17 +1,23 @@
-import prisma from "../../../shared/prisma";
-import AppError from "../../errors/AppError";
-import { StatusCodes } from "http-status-codes";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const http_status_codes_1 = require("http-status-codes");
 const createProduct = async (payload) => {
-    const isExist = await prisma.product.findFirst({
+    const isExist = await prisma_1.default.product.findFirst({
         where: {
             name: payload.name,
             isDeleted: false,
         },
     });
     if (isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This product is already existed");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This product is already existed");
     }
-    const result = await prisma.product.create({
+    const result = await prisma_1.default.product.create({
         data: {
             name: payload.name,
             description: payload.description,
@@ -37,7 +43,7 @@ const createProduct = async (payload) => {
     return result;
 };
 const gerProduct = async () => {
-    const result = await prisma.product.findMany({
+    const result = await prisma_1.default.product.findMany({
         include: {
             unit: {
                 select: {
@@ -54,7 +60,7 @@ const gerProduct = async () => {
     return result;
 };
 const gerProductById = async (id) => {
-    const result = await prisma.product.findFirst({
+    const result = await prisma_1.default.product.findFirst({
         where: {
             id: id,
         },
@@ -62,13 +68,13 @@ const gerProductById = async (id) => {
     return result;
 };
 const updateProductById = async (id, payload) => {
-    const isExist = await prisma.product.findFirst({
+    const isExist = await prisma_1.default.product.findFirst({
         where: { id: id },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No product found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No product found");
     }
-    const result = await prisma.product.update({
+    const result = await prisma_1.default.product.update({
         where: {
             id: id,
         },
@@ -84,13 +90,13 @@ const updateProductById = async (id, payload) => {
     return result;
 };
 const deleteProductById = async (id) => {
-    const isExist = await prisma.product.findFirst({
+    const isExist = await prisma_1.default.product.findFirst({
         where: { id: id },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No product found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No product found");
     }
-    const result = await prisma.product.update({
+    const result = await prisma_1.default.product.update({
         where: {
             id: id,
         },
@@ -100,7 +106,7 @@ const deleteProductById = async (id) => {
     });
     return result;
 };
-export const ProductService = {
+exports.ProductService = {
     createProduct,
     gerProduct,
     gerProductById,

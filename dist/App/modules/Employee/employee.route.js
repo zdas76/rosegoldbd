@@ -1,21 +1,29 @@
-import { EmployeeControllers } from "./empoyee.controllers";
-import express from "express";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmployeeRoute = void 0;
+const empoyee_controllers_1 = require("./empoyee.controllers");
+const express_1 = __importDefault(require("express"));
 // import upload from "../../../helpars/uploads";
-import { userValidaton } from "./employee.validation";
-const route = express.Router();
+const employee_validation_1 = require("./employee.validation");
+const route = express_1.default.Router();
 route.post("/create-employee", 
 // upload.single("photo"),
 (req, res, next) => {
-    req.body = userValidaton.createEmployee.parse(JSON.parse(req.body.data));
-    return EmployeeControllers.createEmployee(req, res, next);
+    const payload = req.body.data ? JSON.parse(req.body.data) : req.body;
+    req.body = employee_validation_1.userValidaton.createEmployee.parse(payload);
+    return empoyee_controllers_1.EmployeeControllers.createEmployee(req, res, next);
 });
-route.get("/", EmployeeControllers.getEmployee);
-route.get("/:id", EmployeeControllers.getEmployeeById);
+route.get("/", empoyee_controllers_1.EmployeeControllers.getEmployee);
+route.get("/:id", empoyee_controllers_1.EmployeeControllers.getEmployeeById);
 route.put("/:id", 
 // upload.single("photo"),
 (req, res, next) => {
-    req.body = userValidaton.updateEmployee.parse(JSON.parse(req.body.data));
-    return EmployeeControllers.updateEmployeeById(req, res, next);
+    const payload = req.body.data ? JSON.parse(req.body.data) : req.body;
+    req.body = employee_validation_1.userValidaton.updateEmployee.parse(payload);
+    return empoyee_controllers_1.EmployeeControllers.updateEmployeeById(req, res, next);
 });
-route.delete("/:id", EmployeeControllers.deleteEmployeeById);
-export const EmployeeRoute = route;
+route.delete("/:id", empoyee_controllers_1.EmployeeControllers.deleteEmployeeById);
+exports.EmployeeRoute = route;

@@ -1,18 +1,24 @@
-import prisma from "../../../shared/prisma";
-import AppError from "../../errors/AppError";
-import { StatusCodes } from "http-status-codes";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BankAccountService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const http_status_codes_1 = require("http-status-codes");
 const createBankAccount = async (payload) => {
     //check account number isExisted
-    const accountExisted = await prisma.bankAccount.findFirst({
+    const accountExisted = await prisma_1.default.bankAccount.findFirst({
         where: {
             bankName: payload.bankName,
             accountNumber: payload.accountNumber,
         },
     });
     if (accountExisted) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This account already existed");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This account already existed");
     }
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma_1.default.$transaction(async (tx) => {
         const result = await tx.bankAccount.create({
             data: {
                 bankName: payload.bankName,
@@ -32,42 +38,42 @@ const createBankAccount = async (payload) => {
     return result;
 };
 const getAllBankAccount = async () => {
-    const result = await prisma.bankAccount.findMany({});
+    const result = await prisma_1.default.bankAccount.findMany({});
     return result;
 };
 const getBankAccountById = async (id) => {
-    const result = await prisma.bankAccount.findFirst({
+    const result = await prisma_1.default.bankAccount.findFirst({
         where: { id },
     });
     return result;
 };
 const updateAccountInfo = async (id, payload) => {
     //check account number isExisted
-    const accountExisted = await prisma.bankAccount.findFirst({
+    const accountExisted = await prisma_1.default.bankAccount.findFirst({
         where: { id },
     });
     if (!accountExisted) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No Account Found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No Account Found");
     }
-    const result = await prisma.bankAccount.update({
+    const result = await prisma_1.default.bankAccount.update({
         where: { id },
         data: payload,
     });
     return result;
 };
 const getBankLedger = async (accountId, fromDate, toDate) => {
-    const accountIdObj = await prisma.bankAccount.findFirst({
+    const accountIdObj = await prisma_1.default.bankAccount.findFirst({
         where: { id: accountId },
     });
     if (!accountIdObj) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No Account Found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No Account Found");
     }
     const fromDateObj = new Date(fromDate);
     const toDateObj = new Date(toDate);
     // Adjust toDate to include the whole day
     toDateObj.setHours(23, 59, 59, 999);
     // Get initial balance (sum of all previous debit transactions)
-    const initialBalance = await prisma.bankTransaction.aggregate({
+    const initialBalance = await prisma_1.default.bankTransaction.aggregate({
         _sum: {
             debitAmount: true,
             creditAmount: true
@@ -80,7 +86,7 @@ const getBankLedger = async (accountId, fromDate, toDate) => {
         },
     });
     // Get all transactions within the date range
-    const transactions = await prisma.bankTransaction.findMany({
+    const transactions = await prisma_1.default.bankTransaction.findMany({
         where: {
             bankAccountId: accountId,
             date: {
@@ -112,7 +118,7 @@ const getBankLedger = async (accountId, fromDate, toDate) => {
         accountIdObj
     };
 };
-export const BankAccountService = {
+exports.BankAccountService = {
     createBankAccount,
     getAllBankAccount,
     getBankAccountById,

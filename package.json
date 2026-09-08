@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "engines": {
-    "node": "22.x"
-  },
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon --exec tsx src/server.ts",
     "build": "prisma generate && npx tsc",

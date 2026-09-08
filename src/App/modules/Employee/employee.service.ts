@@ -1,4 +1,3 @@
-
 import prisma from "../../../shared/prisma";
 import bcrypt from "bcryptjs";
 import config from "../../../config";
@@ -8,10 +7,7 @@ import { Request } from "express";
 import { UserSearchAbleFields } from "./employee.constant";
 import { Employee, Prisma, Status } from "../../../generated/prisma/client";
 
-
 const creatEmployeeToDB = async (req: Request): Promise<Partial<Employee>> => {
-
-
   const createEmployee = await prisma.employee.create({
     data: {
       email: req.body.email,
@@ -65,11 +61,11 @@ const getAllemployee = async (params: any, paginat: IPaginationOptions) => {
     orderBy:
       paginat.sortBy && paginat.sortOrder
         ? {
-          [paginat.sortBy]: paginat.sortOrder,
-        }
+            [paginat.sortBy]: paginat.sortOrder,
+          }
         : {
-          createdAt: "desc",
-        },
+            createdAt: "desc",
+          },
     select: {
       id: true,
       email: true,
@@ -123,7 +119,7 @@ const getEmployeeById = async (id: number) => {
 const updateEmployeeById = async (
   id: number,
   payload: Partial<Employee>,
-  file?: Express.Multer.File
+  file?: Express.Multer.File,
 ) => {
   const result = await prisma.employee.update({
     where: {
@@ -140,7 +136,6 @@ const updateEmployeeById = async (
 };
 
 const deleteEmployeeById = async (id: number) => {
-
   const result = await prisma.employee.update({
     where: {
       id: id,

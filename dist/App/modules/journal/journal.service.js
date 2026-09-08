@@ -1,8 +1,14 @@
-import { VoucherType } from "../../../generated/prisma/client";
-import prisma from "../../../shared/prisma";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JurnalService = void 0;
+const client_1 = require("../../../generated/prisma/client");
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload) => {
-    const createPurchestVoucher = await prisma.$transaction(async (tx) => {
+    const createPurchestVoucher = await prisma_1.default.$transaction(async (tx) => {
         const partyExists = await tx.party.findUnique({
             where: { id: payload.partyOrcustomerId },
         });
@@ -15,7 +21,7 @@ const createPurchestReceivedIntoDB = async (payload) => {
                 invoiceNo: payload.invoiceNo || null,
                 voucherNo: payload.voucherNo,
                 date: payload.date,
-                voucherType: VoucherType.PURCHASE,
+                voucherType: client_1.VoucherType.PURCHASE,
                 partyId: partyExists.id,
             },
         });
@@ -109,7 +115,7 @@ const createPurchestReceivedIntoDB = async (payload) => {
 };
 // create Salse Voucher
 const createSalesVoucher = async (payload) => {
-    const createSalseVoucher = await prisma.$transaction(async (tx) => {
+    const createSalseVoucher = await prisma_1.default.$transaction(async (tx) => {
         let isParty = null;
         if (payload.partyType === "VENDOR") {
             isParty = await tx.party.findFirst({
@@ -126,7 +132,7 @@ const createSalesVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.SALES,
+                voucherType: client_1.VoucherType.SALES,
                 partyId: isParty?.id || null,
                 date: payload.date,
             },
@@ -224,7 +230,7 @@ const createSalesVoucher = async (payload) => {
     return createSalseVoucher;
 };
 const createMaterialSaleVoucher = async (payload) => {
-    const createSalseVoucher = await prisma.$transaction(async (tx) => {
+    const createSalseVoucher = await prisma_1.default.$transaction(async (tx) => {
         let isParty = null;
         if (payload.partyType === "VENDOR") {
             isParty = await tx.party.findFirst({
@@ -241,7 +247,7 @@ const createMaterialSaleVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.SALES,
+                voucherType: client_1.VoucherType.SALES,
                 partyId: isParty?.id || null,
                 date: payload.date,
             },
@@ -340,7 +346,7 @@ const createMaterialSaleVoucher = async (payload) => {
 };
 // Create Payment Voucher
 const createPaymentVoucher = async (payload) => {
-    const createVoucher = await prisma.$transaction(async (tx) => {
+    const createVoucher = await prisma_1.default.$transaction(async (tx) => {
         let isParty = null;
         if (payload.partyType === "VENDOR" || "PARTY") {
             isParty = await tx.party.findFirst({
@@ -357,7 +363,7 @@ const createPaymentVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.PAYMENT,
+                voucherType: client_1.VoucherType.PAYMENT,
                 partyId: isParty?.id || null,
                 date: payload.date,
             },
@@ -409,13 +415,13 @@ const createPaymentVoucher = async (payload) => {
         });
         return createTransactionInfo.id;
     });
-    const result = await prisma.transactionInfo.findFirst({
+    const result = await prisma_1.default.transactionInfo.findFirst({
         where: { id: createVoucher },
     });
     return result;
 };
 const createReceiptVoucher = async (payload) => {
-    const createVoucher = await prisma.$transaction(async (tx) => {
+    const createVoucher = await prisma_1.default.$transaction(async (tx) => {
         let isParty = null;
         if (payload.partyType === "VENDOR" || "PARTY") {
             isParty = await tx.party.findFirst({
@@ -432,7 +438,7 @@ const createReceiptVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.RECEIPT,
+                voucherType: client_1.VoucherType.RECEIPT,
                 partyId: isParty?.id || null,
                 date: payload.date,
             },
@@ -486,7 +492,7 @@ const createReceiptVoucher = async (payload) => {
         });
         return createTransactionInfo.id;
     });
-    const result = await prisma.transactionInfo.findFirst({
+    const result = await prisma_1.default.transactionInfo.findFirst({
         where: {
             id: createVoucher,
         },
@@ -494,7 +500,7 @@ const createReceiptVoucher = async (payload) => {
     return result;
 };
 const createJournalVoucher = async (payload) => {
-    const createJournal = await prisma.$transaction(async (tx) => {
+    const createJournal = await prisma_1.default.$transaction(async (tx) => {
         let partyExists;
         //check party
         if (payload.party) {
@@ -505,7 +511,7 @@ const createJournalVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.JOURNAL,
+                voucherType: client_1.VoucherType.JOURNAL,
                 date: payload.date,
                 partyId: partyExists?.id || null,
             },
@@ -553,7 +559,7 @@ const createJournalVoucher = async (payload) => {
         });
         return createTransactionInfo;
     });
-    const result = await prisma.transactionInfo.findFirst({
+    const result = await prisma_1.default.transactionInfo.findFirst({
         where: {
             id: createJournal.id,
         },
@@ -561,7 +567,7 @@ const createJournalVoucher = async (payload) => {
     return result;
 };
 const createQantaVoucher = async (payload) => {
-    const createJournal = await prisma.$transaction(async (tx) => {
+    const createJournal = await prisma_1.default.$transaction(async (tx) => {
         let partyExists;
         //check party
         if (payload.party) {
@@ -572,7 +578,7 @@ const createQantaVoucher = async (payload) => {
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 voucherNo: payload.voucherNo,
-                voucherType: VoucherType.JOURNAL,
+                voucherType: client_1.VoucherType.JOURNAL,
                 partyId: partyExists?.id || null,
                 date: payload.date,
             },
@@ -619,7 +625,7 @@ const createQantaVoucher = async (payload) => {
         });
         return createTransactionInfo;
     });
-    const result = await prisma.transactionInfo.findFirst({
+    const result = await prisma_1.default.transactionInfo.findFirst({
         where: {
             id: createJournal.id,
         },
@@ -627,14 +633,14 @@ const createQantaVoucher = async (payload) => {
     return result;
 };
 const getItemTotalByAccountId = async (payLoad) => {
-    const getDate = await prisma.journal.findFirst({
+    const getDate = await prisma_1.default.journal.findFirst({
         where: {
             accountsItemId: Number(payLoad.productId),
             isClosing: true,
         },
         orderBy: [{ id: "desc" }],
     });
-    const result = await prisma.$queryRaw `
+    const result = await prisma_1.default.$queryRaw `
   
 SELECT 
 j.accountsItemId,
@@ -647,7 +653,7 @@ j.accountsItemId,
   GROUP BY j.accountsItemId`;
     return result[0];
 };
-export const JurnalService = {
+exports.JurnalService = {
     createPurchestReceivedIntoDB,
     createSalesVoucher,
     createMaterialSaleVoucher,

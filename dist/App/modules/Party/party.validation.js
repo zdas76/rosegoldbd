@@ -1,25 +1,31 @@
-import z from "zod";
-const createParty = z.object({
-    body: z.object({
-        name: z.string({ message: "Name is required" }).trim(),
-        contactNo: z.string({ message: "Contact Number is required" }),
-        partyType: z.enum(["VENDOR", "PARTY", "CUSTOMER"]),
-        address: z.string().optional(),
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.partyValidaton = void 0;
+const zod_1 = __importDefault(require("zod"));
+const createParty = zod_1.default.object({
+    body: zod_1.default.object({
+        name: zod_1.default.string({ message: "Name is required" }).trim(),
+        contactNo: zod_1.default.string({ message: "Contact Number is required" }),
+        partyType: zod_1.default.enum(["VENDOR", "PARTY", "CUSTOMER", "SUPPLIER"]),
+        address: zod_1.default.string().optional(),
     }),
 });
-const UpdateParty = z.object({
-    body: z.object({
-        name: z.string({ message: "Name is required" }).trim().optional(),
-        contactNo: z
+const UpdateParty = zod_1.default.object({
+    body: zod_1.default.object({
+        name: zod_1.default.string({ message: "Name is required" }).trim().optional(),
+        contactNo: zod_1.default
             .string({ message: "Contact Number is required" })
             .optional(),
-        partyType: z
+        partyType: zod_1.default
             .enum(["VENDOR", "PARTY", "CUSTOMER"])
             .optional(),
-        address: z.string().optional(),
+        address: zod_1.default.string().optional(),
     }),
 });
-export const partyValidaton = {
+exports.partyValidaton = {
     createParty,
     UpdateParty,
 };

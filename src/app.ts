@@ -11,7 +11,12 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173",],
+    origin: [
+      "http://localhost:5173",
+      "http://sahajerp.xyz",
+      "https://zdas.com.bd",
+      "http://zdas.com.bd",
+    ],
     credentials: true,
   }),
 );

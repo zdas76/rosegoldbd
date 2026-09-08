@@ -1,46 +1,52 @@
-import catchAsync from "../../../shared/catchAsync";
-import sendResponse from "../../../shared/sendResponse";
-import { StatusCodes } from "http-status-codes";
-import { ProductionService } from "./production.service";
-const createProduction = catchAsync(async (req, res) => {
-    const result = await ProductionService.createProduction(req.body);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductionController = void 0;
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const http_status_codes_1 = require("http-status-codes");
+const production_service_1 = require("./production.service");
+const createProduction = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await production_service_1.ProductionService.createProduction(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Production created successfully",
         data: result,
     });
 });
-const getProduction = catchAsync(async (req, res) => {
-    const result = await ProductionService.getProduction();
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+const getProduction = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await production_service_1.ProductionService.getProduction();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Production records retrieved successfully",
         data: result,
     });
 });
-const updateProduction = catchAsync(async (req, res) => {
+const updateProduction = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await ProductionService.updateProduction(id, req.body);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await production_service_1.ProductionService.updateProduction(id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Production updated successfully",
         data: result,
     });
 });
-const deleteProduction = catchAsync(async (req, res) => {
+const deleteProduction = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    await ProductionService.deleteProduction(id);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    await production_service_1.ProductionService.deleteProduction(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Production deleted successfully",
         data: null,
     });
 });
-export const ProductionController = {
+exports.ProductionController = {
     createProduction,
     getProduction,
     updateProduction,

@@ -1,56 +1,62 @@
-import catchAsync from "../../../shared/catchAsync";
-import { ProductService } from "./product.service";
-import sendResponse from "../../../shared/sendResponse";
-import { StatusCodes } from "http-status-codes";
-const createProduct = catchAsync(async (req, res) => {
-    const result = await ProductService.createProduct(req.body);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductControllers = void 0;
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const product_service_1 = require("./product.service");
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const http_status_codes_1 = require("http-status-codes");
+const createProduct = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await product_service_1.ProductService.createProduct(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Product create successfully",
         data: result,
     });
 });
-const getAllProduct = catchAsync(async (req, res) => {
-    const result = await ProductService.gerProduct();
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+const getAllProduct = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await product_service_1.ProductService.gerProduct();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Producties retrives successfully",
         data: result,
     });
 });
-const getProductById = catchAsync(async (req, res) => {
+const getProductById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await ProductService.gerProductById(id);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await product_service_1.ProductService.gerProductById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Product retrives successfully",
         data: result,
     });
 });
-const updateProductById = catchAsync(async (req, res) => {
+const updateProductById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await ProductService.updateProductById(id, req.body);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await product_service_1.ProductService.updateProductById(id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Product update successfully",
         data: result,
     });
 });
-const deleteProductById = catchAsync(async (req, res) => {
+const deleteProductById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await ProductService.deleteProductById(id);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await product_service_1.ProductService.deleteProductById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Product delete successfully",
         data: result,
     });
 });
-export const ProductControllers = {
+exports.ProductControllers = {
     createProduct,
     getAllProduct,
     getProductById,

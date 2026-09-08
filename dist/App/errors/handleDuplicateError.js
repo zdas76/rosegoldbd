@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const handleDuplicateError = (error) => {
     const match = error.message.match(/"([^"]*)"/);
     const errorMessage = match && match[1];
@@ -11,4 +13,4 @@ const handleDuplicateError = (error) => {
         errorSources,
     };
 };
-export default handleDuplicateError;
+exports.default = handleDuplicateError;

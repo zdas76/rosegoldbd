@@ -1,4 +1,10 @@
-import prisma from "../../../shared/prisma";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VoucherService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const getAllVoucher = async (payload) => {
     const { startDate, endDate, voucherType, searchTerm } = payload;
     const where = {};
@@ -35,7 +41,7 @@ const getAllVoucher = async (payload) => {
             },
         ];
     }
-    const voucher = await prisma.transactionInfo.findMany({
+    const voucher = await prisma_1.default.transactionInfo.findMany({
         where,
         orderBy: {
             date: "desc",
@@ -47,7 +53,7 @@ const getAllVoucher = async (payload) => {
     return voucher;
 };
 const getVoucherByVoucherNo = async (voucherNo) => {
-    const voucher = await prisma.transactionInfo.findFirst({
+    const voucher = await prisma_1.default.transactionInfo.findFirst({
         where: {
             voucherNo: voucherNo,
         },
@@ -120,7 +126,7 @@ const getVoucherByid = async (id) => {
     if (!id) {
         throw new Error("Invalid Voucher ID");
     }
-    const voucher = await prisma.transactionInfo.findFirst({
+    const voucher = await prisma_1.default.transactionInfo.findFirst({
         where: {
             id: id
         },
@@ -171,7 +177,7 @@ const getDailyReport = async (date) => {
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
-    const result = await prisma.transactionInfo.findMany({
+    const result = await prisma_1.default.transactionInfo.findMany({
         where: {
             date: {
                 gte: startOfDay,
@@ -245,7 +251,7 @@ const getDailyReport = async (date) => {
     });
     return result;
 };
-export const VoucherService = {
+exports.VoucherService = {
     getAllVoucher,
     getVoucherByVoucherNo,
     getVoucherByid,

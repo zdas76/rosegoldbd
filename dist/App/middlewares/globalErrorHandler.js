@@ -1,14 +1,19 @@
-import { StatusCodes } from "http-status-codes";
-import handelZodError from "../errors/handelZorError";
-import { ZodError } from "zod";
-import AppError from "../errors/AppError";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const http_status_codes_1 = require("http-status-codes");
+const handelZorError_1 = __importDefault(require("../errors/handelZorError"));
+const zod_1 = require("zod");
+const AppError_1 = __importDefault(require("../errors/AppError"));
 const globalErrorHandler = (err, req, res, next) => {
-    let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+    let statusCode = http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR;
     let success = false;
     let message = err.message || "Something went wrong!";
     let error = err;
-    if (err instanceof ZodError) {
-        const simplifedError = handelZodError(err);
+    if (err instanceof zod_1.ZodError) {
+        const simplifedError = (0, handelZorError_1.default)(err);
         statusCode = simplifedError?.statusCode;
         message = simplifedError?.message;
         error = simplifedError.errorSources;
@@ -21,7 +26,7 @@ const globalErrorHandler = (err, req, res, next) => {
         message = "Duplicate error";
         error = err.meta;
     }
-    else if (err instanceof AppError) {
+    else if (err instanceof AppError_1.default) {
         statusCode = err?.statusCode;
         message = err?.message;
         error = [
@@ -46,4 +51,4 @@ const globalErrorHandler = (err, req, res, next) => {
         error,
     });
 };
-export default globalErrorHandler;
+exports.default = globalErrorHandler;
