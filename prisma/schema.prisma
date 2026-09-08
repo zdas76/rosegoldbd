@@ -139,6 +139,21 @@ model Product {
   @@map("products")
 }
 
+model Package {
+  id          Int            @id @default(autoincrement())
+  batchNo     String         @db.VarChar(50)
+  date        DateTime
+  pcsPerPack  Int
+  type        ProductionType
+  voucherNo   String         @unique @db.VarChar(50)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  inventories Inventory[]
+  
+  @@index([batchNo, voucherNo])
+  @@map("packages")
+}
+
 model RawMaterial {
   id            Int         @id @default(autoincrement())
   name          String      @db.VarChar(50)
@@ -196,6 +211,7 @@ model Inventory {
   rawId           Int?
   transactionId   Int?
   productionId    Int?
+  packageId       Int?
   unitPrice       Float            @default(0.00)
   quantityAdd     Float?           @default(0.00)
   quantityLess    Float?           @default(0.00)
@@ -210,7 +226,7 @@ model Inventory {
   production      Production?      @relation(fields: [productionId], references: [id])
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
-
+  package         Package?         @relation(fields: [packageId], references: [id])
   @@index([productId, rawId, transactionId, productionId])
   @@map("inventories")
 }
@@ -299,4 +315,10 @@ enum PartyType {
   CUSTOMER
   SUPPLIER
   DISTRIBUTOR
+}
+
+enum ProductionType {
+  SOAP
+  DETERGENT
+  KITCHENBAR
 }

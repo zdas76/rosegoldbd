@@ -29,7 +29,6 @@ const getInventoryAggValueById = async (query: any) => {
         productId: Number(query.productId),
         isOpening: true,
       },
-
       orderBy: [{ id: "desc" }],
     });
 

@@ -15,4 +15,6 @@ route.put("/", InventoryControllers.updateInventory);
 
 route.put("/", InventoryControllers.deleteInventory);
 
+
+
 export const InventoryRoute = route;
