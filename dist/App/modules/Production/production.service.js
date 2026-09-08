@@ -1,8 +1,14 @@
-import prisma from "../../../shared/prisma";
-import AppError from "../../errors/AppError";
-import { StatusCodes } from "http-status-codes";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProductionService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const http_status_codes_1 = require("http-status-codes");
 const createProduction = async (payload) => {
-    const addProduction = await prisma.$transaction(async (tx) => {
+    const addProduction = await prisma_1.default.$transaction(async (tx) => {
         const isProductExisted = await tx.product.findFirst({
             where: {
                 id: payload.productId,
@@ -10,7 +16,7 @@ const createProduction = async (payload) => {
             },
         });
         if (!isProductExisted) {
-            throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
+            throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Product not found");
         }
         const createProduction = await tx.production.create({
             data: {
@@ -29,9 +35,9 @@ const createProduction = async (payload) => {
             debitAmount: payload.amount,
         };
         const rowMaterialInventory = payload.rawMaterials.map((item) => ({
-            rawId: item.rawMaterialsId,
+            rawId: item.rawId,
             productionId: createProduction.id,
-            date: new Date(),
+            date: new Date(payload.date),
             quantityLess: item.quantity,
             unitPrice: item.unitPrice,
             creditAmount: item.amount,
@@ -42,7 +48,7 @@ const createProduction = async (payload) => {
         });
         return createProduction;
     });
-    const getCreatedProduction = await prisma.production.findUnique({
+    const getCreatedProduction = await prisma_1.default.production.findUnique({
         where: {
             id: addProduction.id,
         },
@@ -58,7 +64,7 @@ const createProduction = async (payload) => {
     return getCreatedProduction;
 };
 const getProduction = async () => {
-    const result = await prisma.production.findMany({
+    const result = await prisma_1.default.production.findMany({
         include: {
             product: true,
             inventories: {
@@ -75,7 +81,7 @@ const getProduction = async () => {
     return result;
 };
 const getProductionById = async (id) => {
-    const result = await prisma.production.findUnique({
+    const result = await prisma_1.default.production.findUnique({
         where: {
             id: id,
         },
@@ -90,20 +96,20 @@ const getProductionById = async (id) => {
         },
     });
     if (!result) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Production not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Production not found");
     }
     return result;
 };
 const updateProduction = async (id, payload) => {
-    const isExist = await prisma.production.findUnique({
+    const isExist = await prisma_1.default.production.findUnique({
         where: {
             id: id,
         },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Production not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Production not found");
     }
-    const result = await prisma.production.update({
+    const result = await prisma_1.default.production.update({
         where: {
             id: id,
         },
@@ -117,15 +123,15 @@ const updateProduction = async (id, payload) => {
     return result;
 };
 const deleteProduction = async (id) => {
-    const isExist = await prisma.production.findUnique({
+    const isExist = await prisma_1.default.production.findUnique({
         where: {
             id: id,
         },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Production not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Production not found");
     }
-    await prisma.$transaction(async (tx) => {
+    await prisma_1.default.$transaction(async (tx) => {
         await tx.inventory.deleteMany({
             where: { productionId: isExist.id },
         });
@@ -135,7 +141,7 @@ const deleteProduction = async (id) => {
     });
     return isExist;
 };
-export const ProductionService = {
+exports.ProductionService = {
     createProduction,
     getProduction,
     getProductionById,

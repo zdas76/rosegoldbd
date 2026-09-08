@@ -1,11 +1,17 @@
-import prisma from "../../../shared/prisma";
-import { StatusCodes } from "http-status-codes";
-import { paginationHelper } from "../../../helpars/paginationHelpers";
-import { PartySearchAbleFields } from "./party.constant";
-import AppError from "../../errors/AppError";
-import { PartyType } from "@prisma/client";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PartyService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const http_status_codes_1 = require("http-status-codes");
+const paginationHelpers_1 = require("../../../helpars/paginationHelpers");
+const party_constant_1 = require("./party.constant");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const client_1 = require("@prisma/client");
 const getPertyLedgerInfo = async (params, paginat) => {
-    const { page, limit, skip } = paginationHelper.Pagination(paginat);
+    const { page, limit, skip } = paginationHelpers_1.paginationHelper.Pagination(paginat);
     const { searchTerm, ...filterData } = params;
     const andCondition = [];
     if (params.searchTerm) {
@@ -57,7 +63,7 @@ const getPertyLedgerInfo = async (params, paginat) => {
         }
     }
     const whereConditions = andCondition.length > 0 ? { AND: andCondition } : {};
-    const result = await prisma.transactionInfo.findMany({
+    const result = await prisma_1.default.transactionInfo.findMany({
         where: whereConditions,
         skip,
         take: limit,
@@ -72,7 +78,7 @@ const getPertyLedgerInfo = async (params, paginat) => {
     return result;
 };
 const createParty = async (payload) => {
-    const isExist = await prisma.party.findFirst({
+    const isExist = await prisma_1.default.party.findFirst({
         where: {
             name: payload.name,
             contactNo: payload.contactNo,
@@ -81,9 +87,9 @@ const createParty = async (payload) => {
         },
     });
     if (isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This User Already Exist");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This User Already Exist");
     }
-    const crateParty = await prisma.party.create({
+    const crateParty = await prisma_1.default.party.create({
         data: {
             name: payload.name,
             contactNo: payload.contactNo,
@@ -94,12 +100,12 @@ const createParty = async (payload) => {
     return crateParty;
 };
 const getAllParty = async (params, paginat) => {
-    const { page, limit, skip } = paginationHelper.Pagination(paginat);
+    const { page, limit, skip } = paginationHelpers_1.paginationHelper.Pagination(paginat);
     const { searchTerm, ...filterData } = params;
     const andCondition = [];
     if (params.searchTerm) {
         andCondition.push({
-            OR: PartySearchAbleFields.map((field) => ({
+            OR: party_constant_1.PartySearchAbleFields.map((field) => ({
                 [field]: {
                     contains: params.searchTerm,
                 },
@@ -116,7 +122,7 @@ const getAllParty = async (params, paginat) => {
             if (key === "partyType") {
                 return {
                     [key]: {
-                        equals: filterData[key] === PartyType.PARTY ? undefined : filterData[key],
+                        equals: filterData[key] === client_1.PartyType.PARTY ? undefined : filterData[key],
                     },
                 };
             }
@@ -133,7 +139,7 @@ const getAllParty = async (params, paginat) => {
         }
     }
     const whereConditions = andCondition.length > 0 ? { AND: andCondition } : { isDeleted: false };
-    const result = await prisma.party.findMany({
+    const result = await prisma_1.default.party.findMany({
         where: whereConditions,
         skip,
         take: limit,
@@ -148,7 +154,7 @@ const getAllParty = async (params, paginat) => {
     return result;
 };
 const getPartyById = async (id) => {
-    const result = await prisma.party.findFirst({
+    const result = await prisma_1.default.party.findFirst({
         where: {
             id: id,
         },
@@ -156,16 +162,16 @@ const getPartyById = async (id) => {
     return result;
 };
 const updatePartyById = async (id, payload) => {
-    const isExist = await prisma.party.findFirst({
+    const isExist = await prisma_1.default.party.findFirst({
         where: {
             id: id,
             isDeleted: false,
         },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No Party Found ");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No Party Found ");
     }
-    const result = await prisma.party.update({
+    const result = await prisma_1.default.party.update({
         where: {
             id: id,
         },
@@ -174,16 +180,16 @@ const updatePartyById = async (id, payload) => {
     return result;
 };
 const deletePartyById = async (id) => {
-    const isExist = await prisma.party.findFirst({
+    const isExist = await prisma_1.default.party.findFirst({
         where: {
             id: id,
             isDeleted: false,
         },
     });
     if (!isExist) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "No party found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "No party found");
     }
-    const result = await prisma.party.update({
+    const result = await prisma_1.default.party.update({
         where: {
             id: id,
         },
@@ -193,7 +199,7 @@ const deletePartyById = async (id) => {
     });
     return result;
 };
-export const PartyService = {
+exports.PartyService = {
     getPertyLedgerInfo,
     createParty,
     getAllParty,

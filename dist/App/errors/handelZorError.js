@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const handelZodError = (error) => {
     let errorSources = error.issues.map((issue) => {
         return {
@@ -12,4 +14,4 @@ const handelZodError = (error) => {
         errorSources,
     };
 };
-export default handelZodError;
+exports.default = handelZodError;

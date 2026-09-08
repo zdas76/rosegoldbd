@@ -1,16 +1,22 @@
-import prisma from "../../../shared/prisma";
-import { paginationHelper } from "../../../helpars/paginationHelpers";
-import { UserSearchAbleFields } from "./employee.constant";
-import { Status } from "../../../generated/prisma/client";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmployeeService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const paginationHelpers_1 = require("../../../helpars/paginationHelpers");
+const employee_constant_1 = require("./employee.constant");
+const client_1 = require("../../../generated/prisma/client");
 const creatEmployeeToDB = async (req) => {
-    const createEmployee = await prisma.employee.create({
+    const createEmployee = await prisma_1.default.employee.create({
         data: {
             email: req.body.email,
             name: req.body.name,
             nid: req.body.nid,
             dob: req.body.dob,
             workingPlase: req.body.workingPlase,
-            photo: req.body.photo,
+            photo: req.file ? `/uploads/${req.file.filename}` : req.body.photo,
             address: req.body.address,
             mobile: req.body.mobile,
         },
@@ -18,12 +24,12 @@ const creatEmployeeToDB = async (req) => {
     return createEmployee;
 };
 const getAllemployee = async (params, paginat) => {
-    const { page, limit, skip } = paginationHelper.Pagination(paginat);
+    const { page, limit, skip } = paginationHelpers_1.paginationHelper.Pagination(paginat);
     const { searchTerm, ...filterData } = params;
     const andCondition = [];
     if (params.searchTerm) {
         andCondition.push({
-            OR: UserSearchAbleFields.map((field) => ({
+            OR: employee_constant_1.UserSearchAbleFields.map((field) => ({
                 [field]: {
                     contains: params.searchTerm,
                     mode: "insensitive",
@@ -40,8 +46,8 @@ const getAllemployee = async (params, paginat) => {
             })),
         });
     }
-    const wehreConditions = andCondition.length > 0 ? { AND: andCondition } : { status: Status.ACTIVE };
-    const result = await prisma.employee.findMany({
+    const wehreConditions = andCondition.length > 0 ? { AND: andCondition } : { status: client_1.Status.ACTIVE };
+    const result = await prisma_1.default.employee.findMany({
         where: wehreConditions,
         skip,
         take: limit,
@@ -65,7 +71,7 @@ const getAllemployee = async (params, paginat) => {
             status: true,
         },
     });
-    const total = await prisma.employee.count({
+    const total = await prisma_1.default.employee.count({
         where: wehreConditions,
     });
     return {
@@ -78,10 +84,10 @@ const getAllemployee = async (params, paginat) => {
     };
 };
 const getEmployeeById = async (id) => {
-    const result = await prisma.employee.findFirst({
+    const result = await prisma_1.default.employee.findFirst({
         where: {
             id: id,
-            status: Status.ACTIVE,
+            status: client_1.Status.ACTIVE,
         },
         select: {
             id: true,
@@ -98,29 +104,32 @@ const getEmployeeById = async (id) => {
     });
     return result;
 };
-const updateEmployeeById = async (id, payload) => {
-    const result = await prisma.employee.update({
+const updateEmployeeById = async (id, payload, file) => {
+    const result = await prisma_1.default.employee.update({
         where: {
             id: id,
-            status: Status.ACTIVE,
+            status: client_1.Status.ACTIVE,
         },
-        data: payload,
+        data: {
+            ...payload,
+            ...(file && { photo: `/uploads/${file.filename}` }),
+        },
     });
     return result;
 };
 const deleteEmployeeById = async (id) => {
-    const result = await prisma.employee.update({
+    const result = await prisma_1.default.employee.update({
         where: {
             id: id,
-            status: Status.ACTIVE,
+            status: client_1.Status.ACTIVE,
         },
         data: {
-            status: Status.DELETED,
+            status: client_1.Status.DELETED,
         },
     });
     return result;
 };
-export const EmployeeService = {
+exports.EmployeeService = {
     creatEmployeeToDB,
     getAllemployee,
     getEmployeeById,

@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const validationRequiest = (schema) => async (req, res, next) => {
     try {
         await schema.parseAsync({
@@ -9,4 +11,4 @@ const validationRequiest = (schema) => async (req, res, next) => {
         next(error);
     }
 };
-export default validationRequiest;
+exports.default = validationRequiest;

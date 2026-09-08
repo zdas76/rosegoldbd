@@ -1,60 +1,67 @@
-import catchAsync from "../../../shared/catchAsync";
-import { EmployeeService } from "./employee.service";
-import sendResponse from "../../../shared/sendResponse";
-import { StatusCodes } from "http-status-codes";
-import pick from "../../../shared/pick";
-import { UserfiltersFields } from "./employee.constant";
-const createEmployee = catchAsync(async (req, res) => {
-    const result = await EmployeeService.creatEmployeeToDB(req);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmployeeControllers = void 0;
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const employee_service_1 = require("./employee.service");
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const http_status_codes_1 = require("http-status-codes");
+const pick_1 = __importDefault(require("../../../shared/pick"));
+const employee_constant_1 = require("./employee.constant");
+const createEmployee = (0, catchAsync_1.default)(async (req, res) => {
+    console.log("req.body", req.body);
+    const result = await employee_service_1.EmployeeService.creatEmployeeToDB(req);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Employee create successfully",
         data: result,
     });
 });
-const getEmployee = catchAsync(async (req, res) => {
-    const filters = pick(req.query, UserfiltersFields);
-    const paginat = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
-    const result = await EmployeeService.getAllemployee(filters, paginat);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+const getEmployee = (0, catchAsync_1.default)(async (req, res) => {
+    const filters = (0, pick_1.default)(req.query, employee_constant_1.UserfiltersFields);
+    const paginat = (0, pick_1.default)(req.query, ["page", "limit", "sortBy", "sortOrder"]);
+    const result = await employee_service_1.EmployeeService.getAllemployee(filters, paginat);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Employees retrived Successfully",
         data: result,
     });
 });
-const getEmployeeById = catchAsync(async (req, res) => {
+const getEmployeeById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await EmployeeService.getEmployeeById(id);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await employee_service_1.EmployeeService.getEmployeeById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Employee retrived Successfully",
         data: result,
     });
 });
-const updateEmployeeById = catchAsync(async (req, res) => {
+const updateEmployeeById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await EmployeeService.updateEmployeeById(id, req.body);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await employee_service_1.EmployeeService.updateEmployeeById(id, req.body, req.file);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Employee retrived Successfully",
         data: result,
     });
 });
-const deleteEmployeeById = catchAsync(async (req, res) => {
+const deleteEmployeeById = (0, catchAsync_1.default)(async (req, res) => {
     const id = parseInt(req.params.id);
-    const result = await EmployeeService.deleteEmployeeById(id);
-    sendResponse(res, {
-        statusCode: StatusCodes.OK,
+    const result = await employee_service_1.EmployeeService.deleteEmployeeById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Employee deleted Successfully",
         data: result,
     });
 });
-export const EmployeeControllers = {
+exports.EmployeeControllers = {
     getEmployee,
     getEmployeeById,
     updateEmployeeById,

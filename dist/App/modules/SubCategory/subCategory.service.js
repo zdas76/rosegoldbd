@@ -1,16 +1,22 @@
-import prisma from "../../../shared/prisma";
-import { StatusCodes } from "http-status-codes";
-import AppError from "../../errors/AppError";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SubCagetoryService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const http_status_codes_1 = require("http-status-codes");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
 const createSubCategoryToDB = async (payLoad) => {
-    const subCategory = await prisma.subCategory.findFirst({
+    const subCategory = await prisma_1.default.subCategory.findFirst({
         where: {
             subCategoryName: payLoad.subCategoryName,
         },
     });
     if (subCategory) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This Name already used");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This Name already used");
     }
-    const result = await prisma.subCategory.create({
+    const result = await prisma_1.default.subCategory.create({
         data: {
             subCategoryName: payLoad.subCategoryName,
             categoryId: payLoad.categoryId,
@@ -19,7 +25,7 @@ const createSubCategoryToDB = async (payLoad) => {
     return result;
 };
 const getSubCategory = async () => {
-    const result = await prisma.subCategory.findMany({
+    const result = await prisma_1.default.subCategory.findMany({
         include: {
             category: true,
         },
@@ -27,15 +33,15 @@ const getSubCategory = async () => {
     return result;
 };
 const subCategoryUpdate = async (payLoad, id) => {
-    const subCategory = await prisma.subCategory.findFirst({
+    const subCategory = await prisma_1.default.subCategory.findFirst({
         where: {
             id: id,
         },
     });
     if (!subCategory) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This Field is not founed");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This Field is not founed");
     }
-    const result = await prisma.subCategory.update({
+    const result = await prisma_1.default.subCategory.update({
         where: {
             id: subCategory.id,
         },
@@ -46,15 +52,15 @@ const subCategoryUpdate = async (payLoad, id) => {
     return result;
 };
 const getCategorybyId = async (payLoad) => {
-    const subCategory = await prisma.subCategory.findFirst({
+    const subCategory = await prisma_1.default.subCategory.findFirst({
         where: {
             id: payLoad.id,
         },
     });
     if (!subCategory) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This Name already used");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This Name already used");
     }
-    const result = await prisma.subCategory.findFirstOrThrow({
+    const result = await prisma_1.default.subCategory.findFirstOrThrow({
         where: {
             id: payLoad.id,
         },
@@ -63,14 +69,14 @@ const getCategorybyId = async (payLoad) => {
 };
 // delete subcategory
 const deleteSubService = async (id) => {
-    const deleteResult = await prisma.subCategory.delete({
+    const deleteResult = await prisma_1.default.subCategory.delete({
         where: {
             id: Number(id),
         }
     });
     return deleteResult;
 };
-export const SubCagetoryService = {
+exports.SubCagetoryService = {
     createSubCategoryToDB,
     getSubCategory,
     subCategoryUpdate,

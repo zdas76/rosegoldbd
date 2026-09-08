@@ -1,16 +1,22 @@
-import prisma from "../../../shared/prisma";
-import { VoucherType } from "@prisma/client";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateProductServices = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const client_1 = require("@prisma/client");
 const createProductInfo = async (payLoad) => {
-    const addProduct = await prisma.$transaction(async (tx) => {
+    const addProduct = await prisma_1.default.$transaction(async (tx) => {
         // create Transaction
         const createTransaction = await tx.transactionInfo.create({
             data: {
                 voucherNo: payLoad.voucherNo,
-                voucherType: VoucherType.CREATEPRODUCT,
+                voucherType: client_1.VoucherType.CREATEPRODUCT,
             },
         });
         // 2. check product item
-        const isProductExisted = await prisma.product.findFirst({
+        const isProductExisted = await prisma_1.default.product.findFirst({
             where: {
                 id: payLoad.product.productId,
                 isDeleted: false,
@@ -28,7 +34,7 @@ const createProductInfo = async (payLoad) => {
             debitAmount: payLoad.product.amount,
         };
         // 3. Check Raw Materials
-        const isRawMaterialExisted = payLoad.rawMaterials.map(async (item) => await prisma.product.findFirst({
+        const isRawMaterialExisted = payLoad.rawMaterials.map(async (item) => await prisma_1.default.product.findFirst({
             where: {
                 id: item.rawMaterialsId,
                 isDeleted: false,
@@ -62,7 +68,7 @@ const createProductInfo = async (payLoad) => {
         });
         return createTransaction;
     });
-    const getCreatedProduct = await prisma.transactionInfo.findFirst({
+    const getCreatedProduct = await prisma_1.default.transactionInfo.findFirst({
         where: {
             id: addProduct.id,
         },
@@ -72,6 +78,6 @@ const createProductInfo = async (payLoad) => {
     });
     return getCreatedProduct;
 };
-export const CreateProductServices = {
+exports.CreateProductServices = {
     createProductInfo,
 };

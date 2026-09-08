@@ -1,105 +1,110 @@
-import express from "express";
-import { AuthRoutes } from "../modules/Auth/auth.router";
-import { CategoryRouter } from "../modules/Category/category.route";
-import { SubCategoryRouter } from "../modules/SubCategory/subCategory.route";
-import { EmployeeRoute } from "../modules/Employee/employee.route";
-import { PartyRoute } from "../modules/Party/party.route";
-import { AccountItemRoute } from "../modules/AccountsItem/AccountsItem.route";
-import { PhillersRoute } from "../modules/Pilliers/piller.route";
-import { UnitRoute } from "../modules/unit/unit.route";
-import { ProductRoute } from "../modules/products/product.route";
-import { InventoryRoute } from "../modules/inventories/inventories.route";
-import { RawMaterialRoute } from "../modules/rawMaterials/raw.route";
-import { JournalRoute } from "../modules/journal/journal.route";
-import { BankRoute } from "../modules/bank/bank.route";
-import { TransactionRoute } from "../modules/bankTransaction/transaction.route";
-import { createProductRoute } from "../modules/createProduce/createProduct.route";
-import { ReportRouter } from "../modules/Reports/report.route";
-import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
-import { UserRoute } from "../modules/User/user.route";
-import { ProductionRouter } from "../modules/Production/production.route";
-const router = express.Router();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_router_1 = require("../modules/Auth/auth.router");
+const category_route_1 = require("../modules/Category/category.route");
+const subCategory_route_1 = require("../modules/SubCategory/subCategory.route");
+const employee_route_1 = require("../modules/Employee/employee.route");
+const party_route_1 = require("../modules/Party/party.route");
+const AccountsItem_route_1 = require("../modules/AccountsItem/AccountsItem.route");
+const piller_route_1 = require("../modules/Pilliers/piller.route");
+const unit_route_1 = require("../modules/unit/unit.route");
+const product_route_1 = require("../modules/products/product.route");
+const inventories_route_1 = require("../modules/inventories/inventories.route");
+const raw_route_1 = require("../modules/rawMaterials/raw.route");
+const journal_route_1 = require("../modules/journal/journal.route");
+const bank_route_1 = require("../modules/bank/bank.route");
+const transaction_route_1 = require("../modules/bankTransaction/transaction.route");
+const createProduct_route_1 = require("../modules/createProduce/createProduct.route");
+const report_route_1 = require("../modules/Reports/report.route");
+const transction_route_1 = require("../modules/TransctionVoucher/transction.route");
+const user_route_1 = require("../modules/User/user.route");
+const production_route_1 = require("../modules/Production/production.route");
+const router = express_1.default.Router();
 const moduleRoutes = [
     {
         path: "/auth",
-        route: AuthRoutes,
+        route: auth_router_1.AuthRoutes,
     },
     {
         path: "/category",
-        route: CategoryRouter,
+        route: category_route_1.CategoryRouter,
     },
     {
         path: "/sub-category",
-        route: SubCategoryRouter,
+        route: subCategory_route_1.SubCategoryRouter,
     },
     {
-        path: "/account_pillers",
-        route: PhillersRoute,
+        path: "/accounts_head",
+        route: piller_route_1.AccountsHeadRoute,
     },
     {
         path: "/employee",
-        route: EmployeeRoute,
+        route: employee_route_1.EmployeeRoute,
     },
     {
         path: "/user",
-        route: UserRoute,
+        route: user_route_1.UserRoute,
     },
     {
         path: "/party",
-        route: PartyRoute,
+        route: party_route_1.PartyRoute,
     },
     {
         path: "/accounts_item",
-        route: AccountItemRoute,
+        route: AccountsItem_route_1.AccountItemRoute,
     },
     {
         path: "/unit",
-        route: UnitRoute,
+        route: unit_route_1.UnitRoute,
     },
     {
         path: "/product",
-        route: ProductRoute,
+        route: product_route_1.ProductRoute,
     },
     {
         path: "/raw_material",
-        route: RawMaterialRoute,
+        route: raw_route_1.RawMaterialRoute,
     },
     {
         path: "/inventory",
-        route: InventoryRoute,
+        route: inventories_route_1.InventoryRoute,
     },
     {
         path: "/journal",
-        route: JournalRoute,
+        route: journal_route_1.JournalRoute,
     },
     {
         path: "/bank",
-        route: BankRoute,
+        route: bank_route_1.BankRoute,
     },
     {
         path: "/transaction",
-        route: TransactionRoute,
+        route: transaction_route_1.TransactionRoute,
     },
     {
         path: "/create-product",
-        route: createProductRoute,
+        route: createProduct_route_1.createProductRoute,
     },
     {
         path: "/report",
-        route: ReportRouter,
+        route: report_route_1.ReportRouter,
     },
     {
         path: "/voucher",
-        route: VoucherRoute,
+        route: transction_route_1.VoucherRoute,
     },
     {
         path: "/user",
-        route: UserRoute,
+        route: user_route_1.UserRoute,
     },
     {
         path: "/production",
-        route: ProductionRouter,
+        route: production_route_1.ProductionRouter,
     }
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
-export default router;
+exports.default = router;

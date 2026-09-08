@@ -1,25 +1,31 @@
-import prisma from "../../../shared/prisma";
-import { StatusCodes } from "http-status-codes";
-import AppError from "../../errors/AppError";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AccountItemService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const http_status_codes_1 = require("http-status-codes");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
 const createAccountsItemtoDB = async (payLoad) => {
     const accountsItemId = Number(payLoad.accountHeadId) + payLoad.accountsItemId;
-    const isExistItemId = await prisma.accountsItem.findFirst({
+    const isExistItemId = await prisma_1.default.accountsItem.findFirst({
         where: {
             accountsItemId: accountsItemId,
         },
     });
     if (isExistItemId) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This item already exist");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This item already exist");
     }
-    const checkName = await prisma.accountsItem.findFirst({
+    const checkName = await prisma_1.default.accountsItem.findFirst({
         where: {
             accountsItemName: payLoad.accountsItemName,
         },
     });
     if (checkName) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Accounts item name already exist");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Accounts item name already exist");
     }
-    const result = await prisma.accountsItem.create({
+    const result = await prisma_1.default.accountsItem.create({
         data: {
             accountsItemId: accountsItemId,
             accountsItemName: payLoad.accountsItemName,
@@ -38,7 +44,7 @@ const getAccountsItemFromDB = async (payLoad) => {
             OR: filer,
         };
     }
-    const result = await prisma.accountsItem.findMany({
+    const result = await prisma_1.default.accountsItem.findMany({
         where: filerValue,
         orderBy: {
             accountHeadId: "asc",
@@ -50,7 +56,7 @@ const getAccountsItemFromDB = async (payLoad) => {
     return result;
 };
 const getAccountsItemByIdFromDB = async (id) => {
-    const result = await prisma.accountsItem.findFirst({
+    const result = await prisma_1.default.accountsItem.findFirst({
         where: { id },
         include: {
             accountHead: true,
@@ -59,16 +65,16 @@ const getAccountsItemByIdFromDB = async (id) => {
     return result;
 };
 const updateAccountsItemFromDBbyId = async (id, payLoad) => {
-    const isExistItemId = await prisma.accountsItem.findFirst({
+    const isExistItemId = await prisma_1.default.accountsItem.findFirst({
         where: {
             id: id,
         },
     });
     if (!isExistItemId) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "This item not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This item not found");
     }
     const accountsItemId = Number(payLoad.accountHeadId) + isExistItemId.accountsItemId.toString().slice(-4);
-    const checkName = await prisma.accountsItem.findFirst({
+    const checkName = await prisma_1.default.accountsItem.findFirst({
         where: {
             accountsItemName: payLoad.accountsItemName,
             accountsItemId: isExistItemId.accountsItemId,
@@ -78,9 +84,9 @@ const updateAccountsItemFromDBbyId = async (id, payLoad) => {
         },
     });
     if (checkName) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Accounts item name already exist");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Accounts item name already exist");
     }
-    const result = await prisma.accountsItem.update({
+    const result = await prisma_1.default.accountsItem.update({
         where: { id },
         data: {
             accountsItemId: accountsItemId,
@@ -90,7 +96,7 @@ const updateAccountsItemFromDBbyId = async (id, payLoad) => {
     });
     return result;
 };
-export const AccountItemService = {
+exports.AccountItemService = {
     createAccountsItemtoDB,
     getAccountsItemFromDB,
     getAccountsItemByIdFromDB,

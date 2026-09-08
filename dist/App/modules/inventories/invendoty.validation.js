@@ -1,15 +1,21 @@
-import z from "zod";
-const createInventoryValidationSchema = z.object({
-    body: z.object({
-        name: z.string({ message: "Name is required" }).min(1).max(255),
-        category: z.string().max(255).optional(),
-        supplier: z.string().max(255).optional(),
-        unitPrice: z.number().nonnegative().default(0.0),
-        quantity: z.number().nonnegative().default(0.0),
-        totalCost: z.number().nonnegative().default(0.0),
-        closingStocks: z.any().optional(),
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InventoryValidation = void 0;
+const zod_1 = __importDefault(require("zod"));
+const createInventoryValidationSchema = zod_1.default.object({
+    body: zod_1.default.object({
+        name: zod_1.default.string({ message: "Name is required" }).min(1).max(255),
+        category: zod_1.default.string().max(255).optional(),
+        supplier: zod_1.default.string().max(255).optional(),
+        unitPrice: zod_1.default.number().nonnegative().default(0.0),
+        quantity: zod_1.default.number().nonnegative().default(0.0),
+        totalCost: zod_1.default.number().nonnegative().default(0.0),
+        closingStocks: zod_1.default.any().optional(),
     }),
 });
-export const InventoryValidation = {
+exports.InventoryValidation = {
     createInventoryValidationSchema,
 };

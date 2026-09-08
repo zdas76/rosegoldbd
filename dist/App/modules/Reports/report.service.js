@@ -1,21 +1,27 @@
-import prisma from "../../../shared/prisma";
-import AppError from "../../errors/AppError";
-import { StatusCodes } from "http-status-codes";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReportService = void 0;
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const http_status_codes_1 = require("http-status-codes");
 const getAccountLedgerReport = async (payload) => {
     const accountsItemId = Number(payload.accountsItemId);
     const { startDate, endDate } = payload;
-    const isExisted = await prisma.accountsItem.findFirst({
+    const isExisted = await prisma_1.default.accountsItem.findFirst({
         where: {
             id: accountsItemId,
         },
     });
     if (!isExisted) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Accounts Item not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Accounts Item not found");
     }
     const start = startDate ? new Date(startDate) : undefined;
     const end = endDate ? new Date(new Date(endDate).setHours(23, 59, 59, 999)) : undefined;
     if (start && end) {
-        const result = await prisma.journal.findMany({
+        const result = await prisma_1.default.journal.findMany({
             where: {
                 accountsItemId: accountsItemId,
                 date: {
@@ -37,7 +43,7 @@ const getAccountLedgerReport = async (payload) => {
         return result;
     }
     else {
-        const result = await prisma.journal.findMany({
+        const result = await prisma_1.default.journal.findMany({
             where: {
                 accountsItemId: accountsItemId,
             },
@@ -59,17 +65,17 @@ const partyLedgerReport = async (payload) => {
     const partyId = Number(payload.partyId);
     const { startDate, endDate } = payload;
     if (!partyId) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Party Id is required");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Party Id is required");
     }
-    const party = await prisma.party.findFirst({
+    const party = await prisma_1.default.party.findFirst({
         where: { id: partyId },
     });
     if (!party) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Party not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Party not found");
     }
     let accountsItemId;
     if (payload.partyType === 'PARTY') {
-        const accountsItem = await prisma.accountsItem.findFirst({
+        const accountsItem = await prisma_1.default.accountsItem.findFirst({
             where: {
                 accountsItemName: {
                     contains: "accounts receivable",
@@ -79,7 +85,7 @@ const partyLedgerReport = async (payload) => {
         accountsItemId = accountsItem?.id;
     }
     else if (payload.partyType === 'VENDOR') {
-        const accountsItems = await prisma.accountsItem.findFirst({
+        const accountsItems = await prisma_1.default.accountsItem.findFirst({
             where: {
                 accountsItemName: {
                     contains: "accounts payable",
@@ -89,9 +95,9 @@ const partyLedgerReport = async (payload) => {
         accountsItemId = accountsItems?.id;
     }
     if (!accountsItemId) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Accounts Item not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Accounts Item not found");
     }
-    const result = await prisma.journal.findMany({
+    const result = await prisma_1.default.journal.findMany({
         where: {
             transactionInfo: {
                 partyId: party.id,
@@ -119,19 +125,19 @@ const partyLedgerReport = async (payload) => {
 };
 // raw report
 const rawReport = async (payload) => {
-    const allrawMaterial = await prisma.rawMaterial.findMany({
+    const allrawMaterial = await prisma_1.default.rawMaterial.findMany({
         where: {
             isDeleted: false
         },
     });
     if (allrawMaterial.length < 1) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Raw Material not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Raw Material not found");
     }
     const result = Promise.all(allrawMaterial.map(async (rawMaterial) => {
         const startDate = payload?.startDate ? payload?.startDate : rawMaterial?.openingDate;
         const endDate = payload?.endDate ? payload?.endDate : new Date();
         console.log(startDate, endDate);
-        const total = await prisma.inventory.aggregate({
+        const total = await prisma_1.default.inventory.aggregate({
             _sum: {
                 debitAmount: true,
                 creditAmount: true,
@@ -151,17 +157,17 @@ const rawReport = async (payload) => {
     return result;
 };
 const getRawReportById = async (id, payload) => {
-    const rawMaterial = await prisma.rawMaterial.findUnique({
+    const rawMaterial = await prisma_1.default.rawMaterial.findUnique({
         where: {
             id: id,
         },
     });
     if (!rawMaterial) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Raw Material not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Raw Material not found");
     }
     const startDate = payload?.startDate ? payload?.startDate : rawMaterial?.openingDate;
     const endDate = payload?.endDate ? payload?.endDate : new Date();
-    const report = await prisma.inventory.findMany({
+    const report = await prisma_1.default.inventory.findMany({
         where: {
             rawId: rawMaterial.id,
             date: {
@@ -182,18 +188,18 @@ const getRawReportById = async (id, payload) => {
     return { rawMaterial, report };
 };
 const productReport = async (payload) => {
-    const allProduct = await prisma.product.findMany({
+    const allProduct = await prisma_1.default.product.findMany({
         where: {
             isDeleted: false
         },
     });
     if (allProduct.length < 1) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Product not found");
     }
     const result = Promise.all(allProduct.map(async (product) => {
         const startDate = payload?.startDate ? payload?.startDate : product?.openingDate || "";
         const endDate = payload?.endDate ? payload?.endDate : new Date();
-        const total = await prisma.inventory.aggregate({
+        const total = await prisma_1.default.inventory.aggregate({
             _sum: {
                 debitAmount: true,
                 creditAmount: true,
@@ -213,15 +219,15 @@ const productReport = async (payload) => {
     return result;
 };
 const getProductReportById = async (id, payload) => {
-    const product = await prisma.product.findUnique({
+    const product = await prisma_1.default.product.findUnique({
         where: {
             id: id,
         },
     });
     if (!product) {
-        throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Product not found");
     }
-    const report = await prisma.inventory.findMany({
+    const report = await prisma_1.default.inventory.findMany({
         where: {
             productId: product.id,
             date: {
@@ -236,12 +242,12 @@ const getBalanceSheet = async (date) => {
     const targetDate = date ? new Date(new Date(date).setHours(23, 59, 59, 999)) : new Date();
     // Helper to get total debit/credit for an account name up to the target date
     const getAccountBalance = async (accountNameContains) => {
-        const account = await prisma.accountsItem.findFirst({
+        const account = await prisma_1.default.accountsItem.findFirst({
             where: { accountsItemName: { contains: accountNameContains } },
         });
         if (!account)
             return { debit: 0, credit: 0, accountId: 0 };
-        const result = await prisma.journal.aggregate({
+        const result = await prisma_1.default.journal.aggregate({
             _sum: {
                 debitAmount: true,
                 creditAmount: true,
@@ -267,7 +273,7 @@ const getBalanceSheet = async (date) => {
     const cashAtBankData = await getAccountBalance("cash at bank");
     let cashAtBank = cashAtBankData.debit - cashAtBankData.credit;
     // If "cash at bank" isn't a single account, we can alternatively aggregate BankTransaction
-    const bankTransactions = await prisma.bankTransaction.aggregate({
+    const bankTransactions = await prisma_1.default.bankTransaction.aggregate({
         _sum: {
             debitAmount: true,
             creditAmount: true,
@@ -286,7 +292,7 @@ const getBalanceSheet = async (date) => {
     const accountsReceivable = accountsReceivableData.debit - accountsReceivableData.credit;
     // Closing Stock / Inventory (Asset: value of stock)
     // Value = (quantityAdd * unitPrice) - (quantityLess * unitPrice)
-    const inventoryData = await prisma.inventory.findMany({
+    const inventoryData = await prisma_1.default.inventory.findMany({
         where: {
             date: { lte: targetDate },
             status: "ACTIVE"
@@ -301,7 +307,7 @@ const getBalanceSheet = async (date) => {
         closingStock += (qtyAdded * price) - (qtyLess * price);
     }
     // Fallback if inventory logic is simpler in aggregate
-    const inventoryAggregate = await prisma.inventory.aggregate({
+    const inventoryAggregate = await prisma_1.default.inventory.aggregate({
         _sum: {
             debitAmount: true,
             creditAmount: true,
@@ -349,7 +355,7 @@ const getBalanceSheet = async (date) => {
         }
     };
 };
-export const ReportService = {
+exports.ReportService = {
     getAccountLedgerReport,
     partyLedgerReport,
     rawReport,
