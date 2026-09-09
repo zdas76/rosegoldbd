@@ -19,6 +19,7 @@ import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
 import { UserRoute } from "../modules/User/user.route";
 import { ProductionRouter } from "../modules/Production/production.route";
 import { PackageRouter } from "../modules/Package/package.route";
+import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
 
 const router = express.Router();
 
@@ -106,7 +107,10 @@ const moduleRoutes = [
   {
     path: "/package",
     route: PackageRouter,
-  }
+  }, {
+    path: "/purchase-order",
+    route: PurchaseOrderRoute,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -99,41 +99,43 @@ model Employee {
 }
 
 model Party {
-  id               Int               @id @default(autoincrement())
-  name             String            @db.VarChar(50)
-  contactNo        String            @db.VarChar(15)
-  address          String            @db.VarChar(200)
-  partyType        PartyType
-  openingDate      DateTime?         @default(now())
-  openingAmount    Float?            @default(0.00)
-  isDeleted        Boolean           @default(false)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  transactionInfos TransactionInfo[]
+  id                 Int                 @id @default(autoincrement())
+  name               String              @db.VarChar(50)
+  contactNo          String              @db.VarChar(15)
+  address            String              @db.VarChar(200)
+  partyType          PartyType
+  openingDate        DateTime?           @default(now())
+  openingAmount      Float?              @default(0.00)
+  isDeleted          Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  transactionInfos   TransactionInfo[]
+  purchaseOrderInfos PurchaseOrderInfo[]
 
   @@map("parties")
 }
 
 model Product {
-  id            Int          @id @default(autoincrement())
-  name          String       @db.VarChar(100)
-  description   String       @db.VarChar(250)
-  subCategoryId Int
-  minPrice      Int?
-  size          String?
-  quantity      Float
-  unitPrice     Float
-  unitId        Int
-  openingDate   DateTime
-  openingAmount Float
-  isDeleted     Boolean      @default(false)
-  status        Status       @default(ACTIVE)
-  unit          Unit         @relation(fields: [unitId], references: [id])
-  subCategory   SubCategory  @relation(fields: [subCategoryId], references: [id])
-  inventory     Inventory[]
-  createdAt     DateTime     @default(now())
-  updateAt      DateTime     @updatedAt
-  productions   Production[]
+  id                       Int                      @id @default(autoincrement())
+  name                     String                   @db.VarChar(100)
+  description              String                   @db.VarChar(250)
+  subCategoryId            Int
+  minPrice                 Int?
+  size                     String?
+  quantity                 Float
+  unitPrice                Float
+  unitId                   Int
+  openingDate              DateTime
+  openingAmount            Float
+  isDeleted                Boolean                  @default(false)
+  status                   Status                   @default(ACTIVE)
+  unit                     Unit                     @relation(fields: [unitId], references: [id])
+  subCategory              SubCategory              @relation(fields: [subCategoryId], references: [id])
+  inventory                Inventory[]
+  createdAt                DateTime                 @default(now())
+  updateAt                 DateTime                 @updatedAt
+  productions              Production[]
+  purchaseOrderInventories PurchaseOrderInventory[]
 
   @@index([subCategoryId, name])
   @@map("products")
@@ -155,23 +157,62 @@ model Package {
 }
 
 model RawMaterial {
-  id            Int         @id @default(autoincrement())
-  name          String      @db.VarChar(50)
-  description   String?     @db.VarChar(250)
-  unitId        Int
-  openingDate   DateTime
-  openingAmount Float
-  quantity      Float
-  unitPrice     Float
-  itemType      String?     @db.VarChar(50)
-  isDeleted     Boolean     @default(false)
-  status        Status      @default(ACTIVE)
-  unit          Unit        @relation(fields: [unitId], references: [id])
-  inventory     Inventory[]
-  createdAt     DateTime    @default(now())
-  updateAt      DateTime    @updatedAt
+  id                       Int                      @id @default(autoincrement())
+  name                     String                   @db.VarChar(50)
+  description              String?                  @db.VarChar(250)
+  unitId                   Int
+  openingDate              DateTime
+  openingAmount            Float
+  quantity                 Float
+  unitPrice                Float
+  itemType                 String?                  @db.VarChar(50)
+  isDeleted                Boolean                  @default(false)
+  status                   Status                   @default(ACTIVE)
+  unit                     Unit                     @relation(fields: [unitId], references: [id])
+  inventory                Inventory[]
+  createdAt                DateTime                 @default(now())
+  updateAt                 DateTime                 @updatedAt
+  purchaseOrderInventories PurchaseOrderInventory[]
 
   @@map("raw_materials")
+}
+
+model PurchaseOrderInfo {
+  id            Int                      @id @default(autoincrement())
+  orderNo       String                   @unique
+  date          DateTime?                @default(now())
+  partyId       Int?
+  party         Party?                   @relation(fields: [partyId], references: [id])
+  status        Status                   @default(PENDING)
+  purchaseOrder PurchaseOrderInventory[]
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+
+  @@index([orderNo, partyId])
+  @@index([partyId])
+  @@map("purchase_order_info")
+}
+
+model PurchaseOrderInventory {
+  id              Int               @id @default(autoincrement())
+  purchaseOrderId Int
+  productId       Int?
+  rawId           Int?
+  unitPrice       Float             @default(0.00)
+  quantity        Float             @default(0.00)
+  amount          Float?            @default(0.00)
+  status          Status            @default(PENDING)
+  purchaseOrder   PurchaseOrderInfo @relation(fields: [purchaseOrderId], references: [id])
+  product         Product?          @relation(fields: [productId], references: [id])
+  raWMaterial     RawMaterial?      @relation(fields: [rawId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([purchaseOrderId, rawId])
+  @@index([purchaseOrderId, productId])
+  @@index([productId])
+  @@index([rawId])
+  @@map("purchase_order_inventory")
 }
 
 model BankAccount {
