@@ -5,7 +5,7 @@ import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PartySearchAbleFields } from "./party.constant";
 import AppError from "../../errors/AppError";
-import { Party, PartyType, Prisma } from "@prisma/client";
+import { Party, Prisma } from "@prisma/client";
 
 
 const getPertyLedgerInfo = async (params: any, paginat: IPaginationOptions) => {
@@ -134,7 +134,7 @@ const getAllParty = async (params: any, paginat: IPaginationOptions) => {
       if (key === "partyType") {
         return {
           [key]: {
-            equals: filterData[key] === PartyType.PARTY ? undefined : (filterData[key] as Prisma.EnumPartyTypeFilter),
+            equals: filterData[key] === "PARTY" ? undefined : (filterData[key] as Prisma.EnumPartyTypeFilter),
           },
         };
       }
