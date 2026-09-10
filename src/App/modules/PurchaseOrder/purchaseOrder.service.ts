@@ -1,50 +1,87 @@
+import { Payload } from "./../../../generated/prisma/internal/prismaNamespace";
 import prisma from "../../../shared/prisma";
 import { StatusCodes } from "http-status-codes";
 import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PurchaseOrderSearchAbleFields } from "./purchaseOrder.constant";
 import AppError from "../../errors/AppError";
-import { Prisma, PurchaseOrderInfo, Status } from "@prisma/client";
+import { Prisma, Status } from "@prisma/client";
+import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
+import {
+  CreatePurchaseOrder,
+  UpdatePurchaseOrder,
+} from "./purchaseOrder.validation";
 
-const createPurchaseOrder = async (payload: PurchaseOrderInfo) => {
+const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
+  const orderNo = await GenerateVoucherNumber("PO");
+
   const isExist = await prisma.purchaseOrderInfo.findFirst({
     where: {
-      orderNo: payload.orderNo,
-      status: { not: Status.DELETED },
+      orderNo: orderNo,
     },
   });
 
   if (isExist) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "This Order Number Already Exist");
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "This Order Number Already Exist",
+    );
   }
 
-  const result = await prisma.purchaseOrderInfo.create({
-    data: {
-      orderNo: payload.orderNo,
-      date: payload.date,
-      partyId: payload.partyId,
-      status: payload.status,
-      purchaseOrder: {
-        create: (payload as any).purchaseOrder || [],
+  const PurchsedOrder = await prisma.$transaction(async (tx) => {
+    const orderInfo = await tx.purchaseOrderInfo.create({
+      data: {
+        orderNo: orderNo,
+        date: new Date(payload.date),
+        partyId: payload.partyId,
       },
+    });
+
+    if (payload.inventory?.length) {
+      await Promise.all(
+        payload.inventory.map(
+          async (item) =>
+            await tx.purchaseOrderInventory.create({
+              data: {
+                purchaseOrderId: orderInfo.id,
+                productId: item.productId || null,
+                rawId: item.rawId || null,
+                unitPrice: item.unitPrice,
+                quantity: item.quantity,
+                amount: item.quantity * item.unitPrice,
+              },
+            }),
+        ),
+      );
+    }
+
+    return orderInfo;
+  });
+
+  const resutl = await prisma.purchaseOrderInfo.findFirst({
+    where: {
+      id: PurchsedOrder.id,
     },
-    include: {
-      party: true,
+    select: {
       purchaseOrder: {
-        include: {
-          product: true,
-          raWMaterial: true,
+        select: {
+          productId: true,
+          rawId: true,
+          unitPrice: true,
+          quantity: true,
+          amount: true,
+          status: true,
         },
       },
     },
   });
 
-  return result;
+  return resutl;
 };
 
 const getAllPurchaseOrders = async (
   params: any,
-  paginat: IPaginationOptions
+  paginat: IPaginationOptions,
 ) => {
   const { page, limit, skip } = paginationHelper.Pagination(paginat);
 
@@ -74,16 +111,18 @@ const getAllPurchaseOrders = async (
     });
   }
 
-  const filterConditions = Object.keys(filterData).map((key) => {
-    if (key === "status" || key === "partyId") {
-      return undefined;
-    }
-    return {
-      [key]: {
-        equals: filterData[key],
-      },
-    };
-  }).filter((condition) => condition !== undefined);
+  const filterConditions = Object.keys(filterData)
+    .map((key) => {
+      if (key === "status" || key === "partyId") {
+        return undefined;
+      }
+      return {
+        [key]: {
+          equals: filterData[key],
+        },
+      };
+    })
+    .filter((condition) => condition !== undefined);
 
   if (filterConditions.length > 0) {
     andCondition.push({
@@ -96,7 +135,9 @@ const getAllPurchaseOrders = async (
   });
 
   const whereConditions: Prisma.PurchaseOrderInfoWhereInput =
-    andCondition.length > 0 ? { AND: andCondition } : { status: { not: Status.DELETED } };
+    andCondition.length > 0
+      ? { AND: andCondition }
+      : { status: { not: Status.DELETED } };
 
   const result = await prisma.purchaseOrderInfo.findMany({
     where: whereConditions,
@@ -111,10 +152,22 @@ const getAllPurchaseOrders = async (
             createdAt: "desc",
           },
     include: {
-      party: true,
+      party: {
+        select: {
+          id: true,
+          name: true,
+          contactNo: true,
+          address: true,
+        },
+      },
       purchaseOrder: {
         include: {
-          product: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
           raWMaterial: true,
         },
       },
@@ -131,10 +184,22 @@ const getPurchaseOrderById = async (id: number) => {
       status: { not: Status.DELETED },
     },
     include: {
-      party: true,
+      party: {
+        select: {
+          id: true,
+          name: true,
+          contactNo: true,
+          address: true,
+        },
+      },
       purchaseOrder: {
         include: {
-          product: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
           raWMaterial: true,
         },
       },
@@ -146,7 +211,7 @@ const getPurchaseOrderById = async (id: number) => {
 
 const updatePurchaseOrderById = async (
   id: number,
-  payload: Partial<PurchaseOrderInfo>
+  payload: Partial<UpdatePurchaseOrder>,
 ) => {
   const isExist = await prisma.purchaseOrderInfo.findFirst({
     where: {
