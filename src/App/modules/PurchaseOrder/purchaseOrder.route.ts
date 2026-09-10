@@ -9,34 +9,34 @@ const route = express.Router();
 
 route.post(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validationRequiest(purchaseOrderValidaton.createPurchaseOrder),
-  PurchaseOrderControllers.createPurchaseOrder
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validationRequiest(purchaseOrderValidaton.createPurchaseOrderSchema),
+  PurchaseOrderControllers.createPurchaseOrder,
 );
 
 route.get(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
-  PurchaseOrderControllers.getAllPurchaseOrders
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getAllPurchaseOrders,
 );
 
 route.get(
   "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
-  PurchaseOrderControllers.getPurchaseOrderById
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getPurchaseOrderById,
 );
 
 route.put(
   "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validationRequiest(purchaseOrderValidaton.updatePurchaseOrder),
-  PurchaseOrderControllers.updatePurchaseOrderById
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validationRequiest(purchaseOrderValidaton.updatePurchaseOrderSchema),
+  PurchaseOrderControllers.updatePurchaseOrderById,
 );
 
 route.delete(
   "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PurchaseOrderControllers.deletePurchaseOrderById
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  PurchaseOrderControllers.deletePurchaseOrderById,
 );
 
 export const PurchaseOrderRoute = route;
