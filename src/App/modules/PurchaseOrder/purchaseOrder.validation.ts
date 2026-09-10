@@ -34,7 +34,7 @@ const updatePurchaseOrderSchema = z.object({
       "CONVERTED",
     ])
     .optional(),
-  PurchaseOrderInventory: z.array(purchaseOrderInventoryItemSchema).optional(),
+  purchaseOrder: z.array(purchaseOrderInventoryItemSchema).optional(),
 });
 
 export type UpdatePurchaseOrder = z.infer<typeof updatePurchaseOrderSchema>;
