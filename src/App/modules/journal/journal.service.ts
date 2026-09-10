@@ -10,14 +10,11 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
     const partyExists = await tx.party.findUnique({
       where: { id: payload.partyOrcustomerId },
     });
-
-
     if (!partyExists) {
       throw new Error(
         `Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`
       );
     }
-
     // step 1. create transaction entries
     const createTransactionInfo: TransactionInfo =
       await tx.transactionInfo.create({

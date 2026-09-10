@@ -9,14 +9,14 @@ const route = express.Router();
 
 route.post(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   validationRequiest(purchaseOrderValidaton.createPurchaseOrder),
   PurchaseOrderControllers.createPurchaseOrder
 );
 
 route.get(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
   PurchaseOrderControllers.getAllPurchaseOrders
 );
 
