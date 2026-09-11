@@ -14,7 +14,6 @@ import {
 
 const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
   const orderNo = await GenerateVoucherNumber("PO");
-
   const isExist = await prisma.purchaseOrderInfo.findFirst({
     where: {
       orderNo: orderNo,

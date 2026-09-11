@@ -10,7 +10,7 @@ const route = express.Router();
 route.post(
   "/",
   // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validationRequiest(purchaseOrderValidaton.createPurchaseOrderSchema),
+  // validationRequiest(purchaseOrderValidaton.createPurchaseOrderSchema),
   PurchaseOrderControllers.createPurchaseOrder,
 );
 
