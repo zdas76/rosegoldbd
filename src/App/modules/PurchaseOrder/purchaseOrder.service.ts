@@ -223,6 +223,8 @@ const updatePurchaseOrderById = async (
     throw new AppError(StatusCodes.BAD_REQUEST, "No Purchase Order Found");
   }
 
+  console.log(payload);
+
   const { purchaseOrder, ...orderData } = payload as any;
 
   const result = await prisma.$transaction(async (tx) => {
