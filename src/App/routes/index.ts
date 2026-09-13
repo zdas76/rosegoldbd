@@ -18,6 +18,7 @@ import { ReportRouter } from "../modules/Reports/report.route";
 import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
 import { UserRoute } from "../modules/User/user.route";
 import { ProductionRouter } from "../modules/Production/production.route";
+import { PackageRouter } from "../modules/Package/package.route";
 import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
 
 const router = express.Router();
@@ -104,6 +105,9 @@ const moduleRoutes = [
     route: ProductionRouter,
   },
   {
+    path: "/package",
+    route: PackageRouter,
+  }, {
     path: "/purchase-order",
     route: PurchaseOrderRoute,
   },

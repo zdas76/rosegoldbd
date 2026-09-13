@@ -1,7 +1,17 @@
+import { VoucherType } from "@prisma/client";
 import prisma from "../shared/prisma";
 
 export const GenerateVoucherNumber = async (type: string) => {
   let voucherNo;
+
+  if (type === "PRV") {
+    const lastVoucher = await prisma.transactionInfo.findFirst({
+      where: { voucherType: VoucherType.PURCHASE },
+      orderBy: { id: "desc" },
+      select: { voucherNo: true },
+    });
+    voucherNo = lastVoucher?.voucherNo;
+  }
 
   if (type === "PO") {
     const lastVoucher = await prisma.purchaseOrderInfo.findFirst({

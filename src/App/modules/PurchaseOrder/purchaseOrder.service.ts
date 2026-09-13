@@ -14,7 +14,6 @@ import {
 
 const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
   const orderNo = await GenerateVoucherNumber("PO");
-
   const isExist = await prisma.purchaseOrderInfo.findFirst({
     where: {
       orderNo: orderNo,
@@ -111,9 +110,29 @@ const getAllPurchaseOrders = async (
     });
   }
 
+  if (params?.type) {
+    if (params.type === "RAW_MATERIAL") {
+      andCondition.push({
+        purchaseOrder: {
+          some: {
+            rawId: { not: null },
+          },
+        },
+      });
+    } else if (params.type === "PRODUCT") {
+      andCondition.push({
+        purchaseOrder: {
+          some: {
+            productId: { not: null },
+          },
+        },
+      });
+    }
+  }
+
   const filterConditions = Object.keys(filterData)
     .map((key) => {
-      if (key === "status" || key === "partyId") {
+      if (key === "status" || key === "partyId" || key === "type" || key === "searchTerm") {
         return undefined;
       }
       return {
