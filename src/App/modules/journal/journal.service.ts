@@ -1,10 +1,10 @@
 import { AccountsItem, Party, TransactionInfo, VoucherType } from "../../../generated/prisma/client";
+import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
 import prisma from "../../../shared/prisma";
 
 
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload: any) => {
-
 
   const createPurchestVoucher = await prisma.$transaction(async (tx) => {
     const partyExists = await tx.party.findUnique({
@@ -15,12 +15,13 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
         `Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`
       );
     }
+    const voucherNo = await GenerateVoucherNumber("PRV");
     // step 1. create transaction entries
     const createTransactionInfo: TransactionInfo =
       await tx.transactionInfo.create({
         data: {
           invoiceNo: payload.invoiceNo || null,
-          voucherNo: payload.voucherNo,
+          voucherNo: voucherNo,
           date: payload.date,
           voucherType: VoucherType.PURCHASE,
           partyId: partyExists.id,

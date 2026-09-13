@@ -178,7 +178,6 @@ const deleteRawMaterial = async (id: number) => {
 };
 
 
-
 export const RowMaterialsService = {
   createRawMaterial,
   createRawMaterialsMany,

@@ -1,5 +1,3 @@
-
-
 export const type TCreatePurchaseOrder = {
     orderNo: string;
         date: DateTime;

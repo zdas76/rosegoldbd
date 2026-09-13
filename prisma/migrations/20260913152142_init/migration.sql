@@ -99,7 +99,7 @@ CREATE TABLE `parties` (
     `name` VARCHAR(50) NOT NULL,
     `contactNo` VARCHAR(15) NOT NULL,
     `address` VARCHAR(200) NOT NULL,
-    `partyType` ENUM('VENDOR', 'CUSTOMER', 'PARTY', 'SUPPLIER') NOT NULL,
+    `partyType` ENUM('VENDOR', 'CUSTOMER', 'SUPPLIER', 'DISTRIBUTOR') NOT NULL,
     `openingDate` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `openingAmount` DOUBLE NULL DEFAULT 0.00,
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
@@ -132,6 +132,22 @@ CREATE TABLE `products` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `packages` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `batchNo` VARCHAR(50) NOT NULL,
+    `date` DATETIME(3) NOT NULL,
+    `pcsPerPack` INTEGER NOT NULL,
+    `type` ENUM('SOAP', 'DETERGENT', 'KITCHENBAR') NOT NULL,
+    `voucherNo` VARCHAR(50) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `packages_voucherNo_key`(`voucherNo`),
+    INDEX `packages_batchNo_voucherNo_idx`(`batchNo`, `voucherNo`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `raw_materials` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
@@ -147,6 +163,42 @@ CREATE TABLE `raw_materials` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
 
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `purchase_order_info` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `orderNo` VARCHAR(191) NOT NULL,
+    `date` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `partyId` INTEGER NULL,
+    `status` ENUM('ACTIVE', 'DELETED', 'PUSH', 'BLOCK', 'PENDING', 'CHECKED', 'CLOSED', 'CONVERTED') NOT NULL DEFAULT 'PENDING',
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `purchase_order_info_orderNo_key`(`orderNo`),
+    INDEX `purchase_order_info_orderNo_partyId_idx`(`orderNo`, `partyId`),
+    INDEX `purchase_order_info_partyId_idx`(`partyId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `purchase_order_inventory` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `purchaseOrderId` INTEGER NOT NULL,
+    `productId` INTEGER NULL,
+    `rawId` INTEGER NULL,
+    `unitPrice` DOUBLE NOT NULL DEFAULT 0.00,
+    `quantity` DOUBLE NOT NULL DEFAULT 0.00,
+    `amount` DOUBLE NULL DEFAULT 0.00,
+    `status` ENUM('ACTIVE', 'DELETED', 'PUSH', 'BLOCK', 'PENDING', 'CHECKED', 'CLOSED', 'CONVERTED') NOT NULL DEFAULT 'PENDING',
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `purchase_order_inventory_purchaseOrderId_rawId_idx`(`purchaseOrderId`, `rawId`),
+    INDEX `purchase_order_inventory_purchaseOrderId_productId_idx`(`purchaseOrderId`, `productId`),
+    INDEX `purchase_order_inventory_productId_idx`(`productId`),
+    INDEX `purchase_order_inventory_rawId_idx`(`rawId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -187,6 +239,7 @@ CREATE TABLE `inventories` (
     `rawId` INTEGER NULL,
     `transactionId` INTEGER NULL,
     `productionId` INTEGER NULL,
+    `packageId` INTEGER NULL,
     `unitPrice` DOUBLE NOT NULL DEFAULT 0.00,
     `quantityAdd` DOUBLE NULL DEFAULT 0.00,
     `quantityLess` DOUBLE NULL DEFAULT 0.00,
@@ -267,6 +320,18 @@ ALTER TABLE `products` ADD CONSTRAINT `products_subCategoryId_fkey` FOREIGN KEY 
 ALTER TABLE `raw_materials` ADD CONSTRAINT `raw_materials_unitId_fkey` FOREIGN KEY (`unitId`) REFERENCES `units`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `purchase_order_info` ADD CONSTRAINT `purchase_order_info_partyId_fkey` FOREIGN KEY (`partyId`) REFERENCES `parties`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `purchase_order_inventory` ADD CONSTRAINT `purchase_order_inventory_purchaseOrderId_fkey` FOREIGN KEY (`purchaseOrderId`) REFERENCES `purchase_order_info`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `purchase_order_inventory` ADD CONSTRAINT `purchase_order_inventory_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `products`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `purchase_order_inventory` ADD CONSTRAINT `purchase_order_inventory_rawId_fkey` FOREIGN KEY (`rawId`) REFERENCES `raw_materials`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `bank_transactions` ADD CONSTRAINT `bank_transactions_bankAccountId_fkey` FOREIGN KEY (`bankAccountId`) REFERENCES `bank_accounts`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -283,6 +348,9 @@ ALTER TABLE `inventories` ADD CONSTRAINT `inventories_transactionId_fkey` FOREIG
 
 -- AddForeignKey
 ALTER TABLE `inventories` ADD CONSTRAINT `inventories_productionId_fkey` FOREIGN KEY (`productionId`) REFERENCES `productions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `inventories` ADD CONSTRAINT `inventories_packageId_fkey` FOREIGN KEY (`packageId`) REFERENCES `packages`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `transaction_info` ADD CONSTRAINT `transaction_info_partyId_fkey` FOREIGN KEY (`partyId`) REFERENCES `parties`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

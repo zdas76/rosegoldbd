@@ -19,7 +19,7 @@ const createPurchaseOrder = catchAsync(async (req: Request, res: Response) => {
 
 const getAllPurchaseOrders = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, purchaseOrderFilterFields);
-  const paginat = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
+  const paginat = pick(req.query, ["page", "limit", "sortBy", "sortOrder", "type"]);
 
   const result = await PurchaseOrderService.getAllPurchaseOrders(
     filters,
@@ -38,7 +38,6 @@ const getPurchaseOrderById = catchAsync(async (req: Request, res: Response) => {
   const id = parseInt(req.params.id as string);
 
   const result = await PurchaseOrderService.getPurchaseOrderById(id);
-
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
