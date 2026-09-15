@@ -274,7 +274,7 @@ model Inventory {
 
 model TransactionInfo {
   id              Int               @id @default(autoincrement())
-  voucherNo       String            @unique
+  voucherNo       String            @unique 
   invoiceNo       String?
   date            DateTime?         @default(now())
   partyId         Int?

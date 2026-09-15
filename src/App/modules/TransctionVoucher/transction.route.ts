@@ -11,5 +11,7 @@ route.get("/dailyReport", VoucherController.getDailyReport);
 
 route.get("/:id", VoucherController.getVoucherbyid);
 
+
+
 export const VoucherRoute = route;
 

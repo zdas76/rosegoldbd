@@ -6,7 +6,9 @@ import prisma from "../../../shared/prisma";
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload: any) => {
 
+  console.log(payload, "payload console")
   const createPurchestVoucher = await prisma.$transaction(async (tx) => {
+
     const partyExists = await tx.party.findUnique({
       where: { id: payload.partyOrcustomerId },
     });
@@ -16,6 +18,9 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
       );
     }
     const voucherNo = await GenerateVoucherNumber("PRV");
+
+
+    console.log(voucherNo, "voucherNo console")
     // step 1. create transaction entries
     const createTransactionInfo: TransactionInfo =
       await tx.transactionInfo.create({

@@ -86,10 +86,31 @@ const updateInventory = async (id: number, payload: Inventory) => {
 //   return console.log("first");
 // };
 
+//get last rate of raw material
+const getLastRawMaterialRate = async (ids: number[]) => {
+  const result = await Promise.all(
+    ids.map(async (id) => {
+      return await prisma.inventory.findFirst({
+        where: {
+          rawId: id,
+        },
+        orderBy: [{ id: "desc" }],
+        select: {
+          rawId: true,
+          unitPrice: true,
+        }
+      });
+    })
+  );
+  return result;
+}
+
+
 export const InventoryService = {
   getInventory,
   getInventoryById,
   getInventoryAggValueById,
   updateInventory,
   // deleteInventory,
+  getLastRawMaterialRate
 };

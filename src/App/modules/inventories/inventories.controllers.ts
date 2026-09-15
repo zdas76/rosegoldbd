@@ -7,7 +7,6 @@ import { StatusCodes } from "http-status-codes";
 
 const getnventory = catchAsync(async (req: Request, res: Response) => {
   const result = await InventoryService.getInventory();
-
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -18,9 +17,7 @@ const getnventory = catchAsync(async (req: Request, res: Response) => {
 
 const getInventoryById = catchAsync(async (req: Request, res: Response) => {
   const id = Number(req.params.id);
-
   const result = await InventoryService.getInventoryById(id);
-
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -64,6 +61,18 @@ const getInventoryAggigetValue = catchAsync(
     });
   }
 );
+// get last rate of raw material
+const getLastRawMaterialRate = catchAsync(
+  async (req: Request, res: Response) => {
+    const ids = JSON.parse(req.query.ids as string);
+    const result: any = await InventoryService.getLastRawMaterialRate(ids);
+    return sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "Last rate of raw material retrived Successfully",
+      data: result,
+    });
+  });
 
 export const InventoryControllers = {
   getnventory,
@@ -71,4 +80,5 @@ export const InventoryControllers = {
   updateInventory,
   deleteInventory,
   getInventoryAggigetValue,
+  getLastRawMaterialRate
 };
