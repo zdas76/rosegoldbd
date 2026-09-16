@@ -105,7 +105,6 @@ const getLastRawMaterialRate = async (ids: number[]) => {
   return result;
 }
 
-
 export const InventoryService = {
   getInventory,
   getInventoryById,

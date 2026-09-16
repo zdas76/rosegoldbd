@@ -13,7 +13,7 @@ import {
 } from "./purchaseOrder.validation";
 
 const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
-  const orderNo = await GenerateVoucherNumber("PO");
+  const orderNo = await GenerateVoucherNumber("ReqO");
   const isExist = await prisma.purchaseOrderInfo.findFirst({
     where: {
       orderNo: orderNo,
@@ -45,15 +45,12 @@ const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
                 purchaseOrderId: orderInfo.id,
                 productId: item.productId || null,
                 rawId: item.rawId || null,
-                unitPrice: item.unitPrice,
                 quantity: item.quantity,
-                amount: item.quantity * item.unitPrice,
               },
             }),
         ),
       );
     }
-
     return orderInfo;
   });
 
@@ -66,10 +63,7 @@ const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
         select: {
           productId: true,
           rawId: true,
-          unitPrice: true,
           quantity: true,
-          amount: true,
-          status: true,
         },
       },
     },
@@ -165,11 +159,11 @@ const getAllPurchaseOrders = async (
     orderBy:
       paginat.sortBy && paginat.sortOrder
         ? {
-            [paginat.sortBy]: paginat.sortOrder,
-          }
+          [paginat.sortBy]: paginat.sortOrder,
+        }
         : {
-            createdAt: "desc",
-          },
+          createdAt: "desc",
+        },
     include: {
       party: {
         select: {
@@ -228,6 +222,38 @@ const getPurchaseOrderById = async (id: number) => {
   return result;
 };
 
+const getPurchaseOrderByOrderNo = async (orderNo: string) => {
+  const result = await prisma.purchaseOrderInfo.findFirst({
+    where: {
+      orderNo,
+      status: { not: Status.DELETED },
+    },
+    include: {
+      party: {
+        select: {
+          id: true,
+          name: true,
+          contactNo: true,
+          address: true,
+        },
+      },
+      purchaseOrder: {
+        include: {
+          product: {
+            select: {
+              id: true,
+              name: true,
+              quantity: true,
+            },
+          },
+          raWMaterial: true,
+        },
+      },
+    },
+  });
+
+  return result;
+};
 const updatePurchaseOrderById = async (
   id: number,
   payload: Partial<UpdatePurchaseOrder>,
@@ -243,7 +269,6 @@ const updatePurchaseOrderById = async (
     throw new AppError(StatusCodes.BAD_REQUEST, "No Purchase Order Found");
   }
 
-  console.log(payload);
 
   const { purchaseOrder, ...orderData } = payload as any;
 
@@ -316,4 +341,5 @@ export const PurchaseOrderService = {
   getPurchaseOrderById,
   updatePurchaseOrderById,
   deletePurchaseOrderById,
+  getPurchaseOrderByOrderNo,
 };

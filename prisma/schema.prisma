@@ -277,6 +277,7 @@ model TransactionInfo {
   voucherNo       String            @unique 
   invoiceNo       String?
   date            DateTime?         @default(now())
+  requisitionNo   String?
   partyId         Int?
   party           Party?            @relation(fields: [partyId], references: [id])
   voucherType     VoucherType
