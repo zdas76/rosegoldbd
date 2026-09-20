@@ -9,7 +9,6 @@ const http_status_codes_1 = require("http-status-codes");
 const paginationHelpers_1 = require("../../../helpars/paginationHelpers");
 const party_constant_1 = require("./party.constant");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
-const client_1 = require("@prisma/client");
 const getPertyLedgerInfo = async (params, paginat) => {
     const { page, limit, skip } = paginationHelpers_1.paginationHelper.Pagination(paginat);
     const { searchTerm, ...filterData } = params;
@@ -122,7 +121,7 @@ const getAllParty = async (params, paginat) => {
             if (key === "partyType") {
                 return {
                     [key]: {
-                        equals: filterData[key] === client_1.PartyType.PARTY ? undefined : filterData[key],
+                        equals: filterData[key] === "PARTY" ? undefined : filterData[key],
                     },
                 };
             }

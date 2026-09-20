@@ -24,11 +24,11 @@ const createPackage = async (payload: any) => {
         batchNo: payload.batchNo,
         date: new Date(payload.date),
         pcsPerPack: payload.pcsPerPack,
-        totalPacks: payload.totalPacks,
-        totalPcs: payload.totalPcs,
+        // totalPacks: payload.totalPacks,
+        // totalPcs: payload.totalPcs,
         type: payload.type,
         voucherNo: payload.voucherNo,
-        productId: payload.productId,
+        // productId: payload.productId,
       },
     });
 
@@ -91,11 +91,11 @@ const updatePackage = async (id: number, payload: any) => {
       batchNo: payload.batchNo,
       date: payload.date ? new Date(payload.date) : undefined,
       pcsPerPack: payload.pcsPerPack,
-      totalPacks: payload.totalPacks,
-      totalPcs: payload.totalPcs,
+      // totalPacks: payload.totalPacks,
+      // totalPcs: payload.totalPcs,
       type: payload.type,
       voucherNo: payload.voucherNo,
-      productId: payload.productId,
+      // productId: payload.productId,
     },
   });
 

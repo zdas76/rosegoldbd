@@ -47,6 +47,7 @@ const gerProduct = async () => {
         include: {
             unit: {
                 select: {
+                    id: true,
                     name: true,
                 },
             },

@@ -23,7 +23,7 @@ const createPurchaseOrder = async (payload: CreatePurchaseOrder) => {
   if (isExist) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
-      "This Order Number Already Exist",
+      "This Requisition Number Already Exist",
     );
   }
 

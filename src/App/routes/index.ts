@@ -20,6 +20,7 @@ import { UserRoute } from "../modules/User/user.route";
 import { ProductionRouter } from "../modules/Production/production.route";
 import { PackageRouter } from "../modules/Package/package.route";
 import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
+import { ProductionIngredientRoute } from "../modules/productionIngredient/productionIngredient.route";
 
 const router = express.Router();
 
@@ -107,9 +108,14 @@ const moduleRoutes = [
   {
     path: "/package",
     route: PackageRouter,
-  }, {
+  },
+  {
     path: "/purchase-order",
     route: PurchaseOrderRoute,
+  },
+  {
+    path: "/production-ingredient",
+    route: ProductionIngredientRoute,
   },
 ];
 

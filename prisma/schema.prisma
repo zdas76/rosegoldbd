@@ -115,6 +115,17 @@ model Party {
   @@map("parties")
 }
 
+model ProductionIngradient {
+  id             Int            @id @default(autoincrement())
+  productionName String
+  type           ProductionType @default(SOAP)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  rawMaterials   RawMaterial[]
+
+  @@map("product_ingradients")
+}
+
 model Product {
   id                       Int                      @id @default(autoincrement())
   name                     String                   @db.VarChar(100)
@@ -151,7 +162,7 @@ model Package {
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   inventories Inventory[]
-  
+
   @@index([batchNo, voucherNo])
   @@map("packages")
 }
@@ -173,6 +184,8 @@ model RawMaterial {
   createdAt                DateTime                 @default(now())
   updateAt                 DateTime                 @updatedAt
   purchaseOrderInventories PurchaseOrderInventory[]
+  productionIngradient     ProductionIngradient?    @relation(fields: [productionIngradientId], references: [id])
+  productionIngradientId   Int?
 
   @@map("raw_materials")
 }
@@ -268,13 +281,14 @@ model Inventory {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   package         Package?         @relation(fields: [packageId], references: [id])
+
   @@index([productId, rawId, transactionId, productionId])
   @@map("inventories")
 }
 
 model TransactionInfo {
   id              Int               @id @default(autoincrement())
-  voucherNo       String            @unique 
+  voucherNo       String            @unique
   invoiceNo       String?
   date            DateTime?         @default(now())
   requisitionNo   String?
