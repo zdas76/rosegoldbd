@@ -46,6 +46,18 @@ const getPurchaseOrderById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getPurchaseOrderByOrderNo = catchAsync(async (req: Request, res: Response) => {
+  const orderNo = req.params.orderNo as string;
+  console.log("orderNo from controller: ", orderNo);
+  const result = await PurchaseOrderService.getPurchaseOrderByOrderNo(orderNo);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Purchase Order retrived Successfully",
+    data: result,
+  });
+});
+
 const updatePurchaseOrderById = catchAsync(
   async (req: Request, res: Response) => {
     const id = parseInt(req.params.id as string);
@@ -85,4 +97,5 @@ export const PurchaseOrderControllers = {
   getPurchaseOrderById,
   updatePurchaseOrderById,
   deletePurchaseOrderById,
+  getPurchaseOrderByOrderNo
 };

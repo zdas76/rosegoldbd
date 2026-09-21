@@ -43,7 +43,6 @@ const createProduct = async (payload: TcreateProduct) => {
       },
     },
   });
-
   return result;
 };
 
@@ -52,6 +51,7 @@ const gerProduct = async () => {
     include: {
       unit: {
         select: {
+          id: true,
           name: true,
         },
       },

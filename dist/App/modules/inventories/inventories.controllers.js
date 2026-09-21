@@ -54,10 +54,22 @@ const getInventoryAggigetValue = (0, catchAsync_1.default)(async (req, res) => {
         data: result[0],
     });
 });
+// get last rate of raw material
+const getLastRawMaterialRate = (0, catchAsync_1.default)(async (req, res) => {
+    const ids = JSON.parse(req.query.ids);
+    const result = await inventories_service_1.InventoryService.getLastRawMaterialRate(ids);
+    return (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Last rate of raw material retrived Successfully",
+        data: result,
+    });
+});
 exports.InventoryControllers = {
     getnventory,
     getInventoryById,
     updateInventory,
     deleteInventory,
     getInventoryAggigetValue,
+    getLastRawMaterialRate
 };

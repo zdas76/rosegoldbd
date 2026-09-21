@@ -23,6 +23,9 @@ const report_route_1 = require("../modules/Reports/report.route");
 const transction_route_1 = require("../modules/TransctionVoucher/transction.route");
 const user_route_1 = require("../modules/User/user.route");
 const production_route_1 = require("../modules/Production/production.route");
+const package_route_1 = require("../modules/Package/package.route");
+const purchaseOrder_route_1 = require("../modules/PurchaseOrder/purchaseOrder.route");
+const productionIngredient_route_1 = require("../modules/productionIngredient/productionIngredient.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -104,7 +107,19 @@ const moduleRoutes = [
     {
         path: "/production",
         route: production_route_1.ProductionRouter,
-    }
+    },
+    {
+        path: "/package",
+        route: package_route_1.PackageRouter,
+    },
+    {
+        path: "/purchase-order",
+        route: purchaseOrder_route_1.PurchaseOrderRoute,
+    },
+    {
+        path: "/production-ingredient",
+        route: productionIngredient_route_1.ProductionIngredientRoute,
+    },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
 exports.default = router;

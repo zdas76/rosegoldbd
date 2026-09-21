@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JurnalService = void 0;
 const client_1 = require("../../../generated/prisma/client");
+const generateVoucherNumber_1 = require("../../../helpars/generateVoucherNumber");
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload) => {
@@ -15,14 +16,16 @@ const createPurchestReceivedIntoDB = async (payload) => {
         if (!partyExists) {
             throw new Error(`Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`);
         }
+        const voucherNo = await (0, generateVoucherNumber_1.GenerateVoucherNumber)("PRV");
         // step 1. create transaction entries
         const createTransactionInfo = await tx.transactionInfo.create({
             data: {
                 invoiceNo: payload.invoiceNo || null,
-                voucherNo: payload.voucherNo,
+                voucherNo: voucherNo,
                 date: payload.date,
                 voucherType: client_1.VoucherType.PURCHASE,
                 partyId: partyExists.id,
+                requisitionNo: payload.requisitionNo || null,
             },
         });
         // 2. create bank transaction

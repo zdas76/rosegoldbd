@@ -20,10 +20,17 @@ route.get(
   PurchaseOrderControllers.getAllPurchaseOrders,
 );
 
+
 route.get(
   "/:id",
   // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
   PurchaseOrderControllers.getPurchaseOrderById,
+);
+
+route.get(
+  "/requisition/:orderNo",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getPurchaseOrderByOrderNo,
 );
 
 route.put(

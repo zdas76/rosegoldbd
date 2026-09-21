@@ -7,6 +7,7 @@ import prisma from "../../../shared/prisma";
 const createPurchestReceivedIntoDB = async (payload: any) => {
 
   const createPurchestVoucher = await prisma.$transaction(async (tx) => {
+
     const partyExists = await tx.party.findUnique({
       where: { id: payload.partyOrcustomerId },
     });
@@ -16,6 +17,7 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
       );
     }
     const voucherNo = await GenerateVoucherNumber("PRV");
+
     // step 1. create transaction entries
     const createTransactionInfo: TransactionInfo =
       await tx.transactionInfo.create({
@@ -25,6 +27,7 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
           date: payload.date,
           voucherType: VoucherType.PURCHASE,
           partyId: partyExists.id,
+          requisitionNo: payload.requisitionNo || null, 
         },
       });
 

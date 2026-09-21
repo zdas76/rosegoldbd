@@ -9,7 +9,9 @@ const express_1 = __importDefault(require("express"));
 const route = express_1.default.Router();
 route.get("/", inventories_controllers_1.InventoryControllers.getnventory);
 route.get("/inventorytotal", inventories_controllers_1.InventoryControllers.getInventoryAggigetValue);
-route.get("/:id", inventories_controllers_1.InventoryControllers.getInventoryById);
 route.put("/", inventories_controllers_1.InventoryControllers.updateInventory);
 route.put("/", inventories_controllers_1.InventoryControllers.deleteInventory);
+// get  last raw material rate
+route.get("/lastRate", inventories_controllers_1.InventoryControllers.getLastRawMaterialRate);
+route.get("/:id", inventories_controllers_1.InventoryControllers.getInventoryById);
 exports.InventoryRoute = route;
