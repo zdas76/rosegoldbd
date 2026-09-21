@@ -27,10 +27,10 @@ const createProductionIngredient = async (payload: any) => {
         ...(payload.type ? { type: payload.type } : {}),
         ...(rawIds && rawIds.length > 0
           ? {
-              rawMaterials: {
-                connect: rawIds.map((id) => ({ id })),
-              },
-            }
+            rawMaterials: {
+              connect: rawIds.map((id) => ({ id })),
+            },
+          }
           : {}),
       },
       include: {
