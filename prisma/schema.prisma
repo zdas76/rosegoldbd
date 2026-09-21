@@ -31,12 +31,13 @@ model SubCategory {
 }
 
 model Unit {
-  id          Int           @id @default(autoincrement())
-  name        String        @db.VarChar(20)
-  RawMaterial RawMaterial[]
-  Product     Product[]
-  createdAt   DateTime      @default(now())
-  updateAt    DateTime      @updatedAt
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(20)
+  RawMaterial      RawMaterial[]
+  Product          Product[]
+  createdAt        DateTime          @default(now())
+  updateAt         DateTime          @updatedAt
+  packingMaterials PackingMaterial[]
 
   @@map("units")
 }
@@ -115,13 +116,13 @@ model Party {
   @@map("parties")
 }
 
-model ProductionIngradient {
-  id             Int            @id @default(autoincrement())
-  productionName String
-  type           ProductionType @default(SOAP)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  rawMaterials   RawMaterial[]
+model ProductIngradient {
+  id               Int               @id @default(autoincrement())
+  productId        Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  rawMaterials     RawMaterial[]
+  packingMaterials PackingMaterial[]
 
   @@map("product_ingradients")
 }
@@ -152,31 +153,17 @@ model Product {
   @@map("products")
 }
 
-model Package {
-  id          Int            @id @default(autoincrement())
-  batchNo     String         @db.VarChar(50)
-  date        DateTime
-  pcsPerPack  Int
-  type        ProductionType
-  voucherNo   String         @unique @db.VarChar(50)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  inventories Inventory[]
-
-  @@index([batchNo, voucherNo])
-  @@map("packages")
-}
-
 model RawMaterial {
   id                       Int                      @id @default(autoincrement())
   name                     String                   @db.VarChar(50)
-  description              String?                  @db.VarChar(250)
+  productIngradientId      Int?
   unitId                   Int
+  description              String?                  @db.VarChar(250)
   openingDate              DateTime
   openingAmount            Float
   quantity                 Float
+  ingredienteQty           Float
   unitPrice                Float
-  itemType                 String?                  @db.VarChar(50)
   isDeleted                Boolean                  @default(false)
   status                   Status                   @default(ACTIVE)
   unit                     Unit                     @relation(fields: [unitId], references: [id])
@@ -184,10 +171,32 @@ model RawMaterial {
   createdAt                DateTime                 @default(now())
   updateAt                 DateTime                 @updatedAt
   purchaseOrderInventories PurchaseOrderInventory[]
-  productionIngradient     ProductionIngradient?    @relation(fields: [productionIngradientId], references: [id])
-  productionIngradientId   Int?
+  productIngradient        ProductIngradient?       @relation(fields: [productIngradientId], references: [id])
 
   @@map("raw_materials")
+}
+
+model PackingMaterial {
+  id                       Int                      @id @default(autoincrement())
+  name                     String                   @db.VarChar(50)
+  productIngradientId      Int?
+  unitId                   Int
+  description              String?                  @db.VarChar(250)
+  openingDate              DateTime
+  quantity                 Float
+  openingAmount            Float
+  ingredienteQty           Float
+  unitPrice                Float
+  isDeleted                Boolean                  @default(false)
+  status                   Status                   @default(ACTIVE)
+  unit                     Unit                     @relation(fields: [unitId], references: [id])
+  inventory                Inventory[]
+  purchaseOrderInventories PurchaseOrderInventory[]
+  productIngradient        ProductIngradient?       @relation(fields: [productIngradientId], references: [id])
+  createdAt                DateTime                 @default(now())
+  updateAt                 DateTime                 @updatedAt
+
+  @@map("packing_materials")
 }
 
 model PurchaseOrderInfo {
@@ -207,19 +216,21 @@ model PurchaseOrderInfo {
 }
 
 model PurchaseOrderInventory {
-  id              Int               @id @default(autoincrement())
-  purchaseOrderId Int
-  productId       Int?
-  rawId           Int?
-  unitPrice       Float             @default(0.00)
-  quantity        Float             @default(0.00)
-  amount          Float?            @default(0.00)
-  status          Status            @default(PENDING)
-  purchaseOrder   PurchaseOrderInfo @relation(fields: [purchaseOrderId], references: [id])
-  product         Product?          @relation(fields: [productId], references: [id])
-  raWMaterial     RawMaterial?      @relation(fields: [rawId], references: [id])
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id                Int               @id @default(autoincrement())
+  purchaseOrderId   Int
+  productId         Int?
+  rawId             Int?
+  unitPrice         Float             @default(0.00)
+  quantity          Float             @default(0.00)
+  amount            Float?            @default(0.00)
+  status            Status            @default(PENDING)
+  purchaseOrder     PurchaseOrderInfo @relation(fields: [purchaseOrderId], references: [id])
+  product           Product?          @relation(fields: [productId], references: [id])
+  raWMaterial       RawMaterial?      @relation(fields: [rawId], references: [id])
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  packingMaterial   PackingMaterial?  @relation(fields: [packingMaterialId], references: [id])
+  packingMaterialId Int?
 
   @@index([purchaseOrderId, rawId])
   @@index([purchaseOrderId, productId])
@@ -258,15 +269,22 @@ model BankTransaction {
   @@map("bank_transactions")
 }
 
-model Inventory {
+enum Department {
+  PURCHASE
+  PRODUCTION
+  RM_STORE
+  MP_STORE
+  FG_STORE
+}
+
+model PMInventory {
   id              Int              @id @default(autoincrement())
   date            DateTime
-  productId       Int?
-  rawId           Int?
   transactionId   Int?
   productionId    Int?
-  packageId       Int?
+  department      Department
   unitPrice       Float            @default(0.00)
+  ingredienteQty  Float
   quantityAdd     Float?           @default(0.00)
   quantityLess    Float?           @default(0.00)
   discount        Float?           @default(0.00)
@@ -274,15 +292,43 @@ model Inventory {
   creditAmount    Float?           @default(0.00)
   isOpening       Boolean          @default(false)
   status          Status           @default(PENDING)
-  product         Product?         @relation(fields: [productId], references: [id])
-  raWMaterial     RawMaterial?     @relation(fields: [rawId], references: [id])
   transactionInfo TransactionInfo? @relation(fields: [transactionId], references: [id])
   production      Production?      @relation(fields: [productionId], references: [id])
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
-  package         Package?         @relation(fields: [packageId], references: [id])
 
-  @@index([productId, rawId, transactionId, productionId])
+  @@index([productionId])
+  @@map("pm_inventories")
+}
+
+model Inventory {
+  id                Int              @id @default(autoincrement())
+  date              DateTime
+  productId         Int?
+  rawId             Int?
+  transactionId     Int?
+  productionId      Int?
+  Department        Department
+  unitPrice         Float            @default(0.00)
+  quantityAdd       Float?           @default(0.00)
+  quantityLess      Float?           @default(0.00)
+  discount          Float?           @default(0.00)
+  debitAmount       Float?           @default(0.00)
+  creditAmount      Float?           @default(0.00)
+  isOpening         Boolean          @default(false)
+  status            Status           @default(PENDING)
+  product           Product?         @relation(fields: [productId], references: [id])
+  raWMaterial       RawMaterial?     @relation(fields: [rawId], references: [id])
+  transactionInfo   TransactionInfo? @relation(fields: [transactionId], references: [id])
+  production        Production?      @relation(fields: [productionId], references: [id])
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  packingMaterial   PackingMaterial? @relation(fields: [packingMaterialId], references: [id])
+  packingMaterialId Int?
+
+  @@index([productId, transactionId])
+  @@index([rawId])
+  @@index([productionId])
   @@map("inventories")
 }
 
@@ -300,6 +346,7 @@ model TransactionInfo {
   inventory       Inventory[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  pminventories   PMInventory[]
 
   @@index([voucherNo, voucherType, partyId])
   @@map("transaction_info")
@@ -324,18 +371,42 @@ model Journal {
 }
 
 model Production {
-  id          Int         @id @default(autoincrement())
-  voucherNo   String      @unique
-  batchNo     String      @unique @db.VarChar(50)
-  date        DateTime    @default(now())
-  productId   Int
-  product     Product     @relation(fields: [productId], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  inventories Inventory[]
+  id                 Int                  @id @default(autoincrement())
+  voucherNo          String               @unique
+  batchNo            String               @unique @db.VarChar(50)
+  date               DateTime             @default(now())
+  productId          Int
+  product            Product              @relation(fields: [productId], references: [id])
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  inventories        Inventory[]
+  pminventories      PMInventory[]
+  productionExpenses ProductionExpenses[]
 
   @@index([productId])
   @@map("productions")
+}
+
+model ProductionExpenseItem {
+  id          Int      @id @default(autoincrement())
+  expItemName String
+  expDuration Float?   @default(0.00)
+  unitRate    Float    @default(0.00)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ProductionExpenses {
+  id           Int      @id @default(autoincrement())
+  productionId Int
+  date         DateTime
+  unitRate     Float    @default(0.00)
+  expDuration  Float    @default(0.00)
+  amount       Float    @default(0.00)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  production Production @relation(fields: [productionId], references: [id])
 }
 
 enum VoucherType {
