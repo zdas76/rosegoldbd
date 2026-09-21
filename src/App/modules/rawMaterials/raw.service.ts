@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TrawMaterial } from "./raw.types";
-import { RawMaterial } from "@prisma/client";
+import { Department, RawMaterial } from "@prisma/client";
 
 const createRawMaterial = async (payload: TrawMaterial) => {
   const isExist = await prisma.rawMaterial.findFirst({
@@ -28,11 +28,14 @@ const createRawMaterial = async (payload: TrawMaterial) => {
       unitId: payload.unitId,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
+      ingredienteQty: payload.ingredienteQty ?? 0,
+      productIngradientId: payload.productIngradientId ?? null,
       openingDate,
       openingAmount: payload.amount,
       inventory: {
         create: {
           date: openingDate,
+          Department: Department.RM_STORE,
           unitPrice: payload.unitPrice,
           quantityAdd: payload.quantity,
           debitAmount: payload.amount,
@@ -88,11 +91,14 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
           unitId: payload.unitId,
           unitPrice: payload.unitPrice ?? 0,
           quantity: payload.quantity ?? 0,
+          ingredienteQty: payload.ingredienteQty ?? 0,
+          productIngradientId: payload.productIngradientId ?? null,
           openingDate,
           openingAmount: payload.amount ?? 0,
           inventory: {
             create: {
               date: openingDate,
+              Department: Department.RM_STORE,
               unitPrice: payload.unitPrice ?? 0,
               quantityAdd: payload.quantity ?? 0,
               debitAmount: payload.amount ?? 0,
@@ -149,6 +155,8 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       description: payload.description,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
+      ingredienteQty: payload.ingredienteQty,
+      productIngradientId: payload.productIngradientId,
       openingAmount: payload.openingAmount,
     },
   });

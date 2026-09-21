@@ -20,7 +20,9 @@ import { UserRoute } from "../modules/User/user.route";
 import { ProductionRouter } from "../modules/Production/production.route";
 import { PackageRouter } from "../modules/Package/package.route";
 import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
-import { ProductionIngredientRoute } from "../modules/productionIngredient/productionIngredient.route";
+import { ProductIngradientRoute } from "../modules/ProductIngradient/productIngradient.route";
+import { PackingMaterialRoute } from "../modules/PackingMaterial/packingMaterials.route";
+import { ProductionExpenseItemRoute } from "../modules/ProductionExpenseItem/productionExpenseItem.route";
 
 const router = express.Router();
 
@@ -114,10 +116,19 @@ const moduleRoutes = [
     route: PurchaseOrderRoute,
   },
   {
-    path: "/production-ingredient",
-    route: ProductionIngredientRoute,
+    path: "/product-ingredient",
+    route: ProductIngradientRoute,
+  },
+  {
+    path: "/packing_material",
+    route: PackingMaterialRoute,
+  },
+  {
+    path: "/production-expense-item",
+    route: ProductionExpenseItemRoute,
   },
 ];
+
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
 
