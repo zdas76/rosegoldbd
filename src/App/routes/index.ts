@@ -22,7 +22,7 @@ import { PackageRouter } from "../modules/Package/package.route";
 import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
 import { ProductIngradientRoute } from "../modules/ProductIngradient/productIngradient.route";
 import { PackingMaterialRoute } from "../modules/PackingMaterial/packingMaterials.route";
-import { ProductionExpenseItemRoute } from "../modules/ProductionExpenseItem/productionExpenseItem.route";
+import { ProductionExpItemRoute } from "../modules/ProductionExpItem/ProductionExpItem.route";
 
 const router = express.Router();
 
@@ -116,7 +116,7 @@ const moduleRoutes = [
     route: PurchaseOrderRoute,
   },
   {
-    path: "/product-ingredient",
+    path: "/product-ingradient",
     route: ProductIngradientRoute,
   },
   {
@@ -124,8 +124,8 @@ const moduleRoutes = [
     route: PackingMaterialRoute,
   },
   {
-    path: "/production-expense-item",
-    route: ProductionExpenseItemRoute,
+    path: "/production-exp-item",
+    route: ProductionExpItemRoute,
   },
 ];
 

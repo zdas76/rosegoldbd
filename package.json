@@ -8,7 +8,9 @@
     "dev": "nodemon --exec tsx src/server.ts",
     "build": "prisma generate && npx tsc",
     "start": "node dist/server.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:migrate": "node scripts/run-migrations.mjs",
+    "db:push": "prisma db push"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

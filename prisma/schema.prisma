@@ -119,10 +119,10 @@ model Party {
 model ProductIngradient {
   id               Int               @id @default(autoincrement())
   productId        Int
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
   rawMaterials     RawMaterial[]
   packingMaterials PackingMaterial[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   @@map("product_ingradients")
 }
@@ -163,6 +163,7 @@ model RawMaterial {
   openingAmount            Float
   quantity                 Float
   ingredienteQty           Float
+  ingredienteRate          Float?
   unitPrice                Float
   isDeleted                Boolean                  @default(false)
   status                   Status                   @default(ACTIVE)
@@ -390,7 +391,7 @@ model Production {
 model ProductionExpenseItem {
   id          Int      @id @default(autoincrement())
   expItemName String
-  expDuration Float?   @default(0.00)
+  // expDuration Float?   @default(0.00)
   unitRate    Float    @default(0.00)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

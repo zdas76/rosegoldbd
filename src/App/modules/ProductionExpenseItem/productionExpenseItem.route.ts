@@ -4,11 +4,13 @@ import { ProductionExpenseItemControllers } from "./productionExpenseItem.contro
 const router = express.Router();
 
 router.post("/", ProductionExpenseItemControllers.createProductionExpenseItem);
+
 router.post(
   "/many",
   ProductionExpenseItemControllers.createProductionExpenseItemsMany
 );
 router.get("/", ProductionExpenseItemControllers.getAllProductionExpenseItems);
+
 router.get(
   "/:id",
   ProductionExpenseItemControllers.getProductionExpenseItemById
