@@ -22,7 +22,6 @@ export const GenerateVoucherNumber = async (type: string) => {
     voucherNo = lastVoucher?.orderNo;
   }
 
-
   if (voucherNo) {
     const nextNumber = getNextNumber(voucherNo);
     const result = type + "-" + currentDate + "/" + nextNumber;
@@ -40,7 +39,6 @@ const getNextNumber = (voucherNo: string) => {
   const nextNumber = (lastNumber + 1).toString().padStart(4, "0");
   return nextNumber;
 };
-
 
 const currectDate = new Date().getDate().toString().padStart(2, "0");
 const currectMonth = (new Date().getMonth() + 1).toString().padStart(2, "0");

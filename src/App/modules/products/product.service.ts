@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TcreateProduct } from "./product.type";
-import { Product } from "@prisma/client";
+import { Department, Product } from "@prisma/client";
 
 const createProduct = async (payload: TcreateProduct) => {
 
@@ -35,6 +35,7 @@ const createProduct = async (payload: TcreateProduct) => {
       inventory: {
         create: {
           date: payload.initialStock.date,
+          Department: Department.FG_STORE,
           unitPrice: payload.initialStock.unitPrice,
           quantityAdd: payload.initialStock.quantity,
           debitAmount: Number(payload.initialStock.amount),

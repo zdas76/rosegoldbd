@@ -22,4 +22,6 @@ export type TrawMaterial = {
   status: Status;
   updateAt: Date;
   inventory: Inventory[]; // ✅ updated
+  ingredienteQty?: number;
+  productIngradientId?: number | null;
 };
