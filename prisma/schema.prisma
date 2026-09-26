@@ -126,7 +126,7 @@ model ProductIngradient {
   updatedAt                  DateTime                    @updatedAt
   ingredientRawMaterials     IngredientRawMaterial[]
   ingredientPackingMaterials IngredientPackingMaterial[]
-  ingredientExpnese          IngredientExpnese[]
+  ingredientExpneseItems     IngredientExpneseItems[]
 
   @@map("product_ingradients")
 }
@@ -153,12 +153,13 @@ model IngredientPackingMaterial {
   @@map("product_packing_materials")
 }
 
-model IngredientExpnese {
-  id                   Int               @id @default(autoincrement())
-  productIngradientId  Int
-  createdAt            DateTime          @default(now())
-  updatedAt            DateTime          @updatedAt
-  productionIngredient ProductIngradient @relation(fields: [productIngradientId], references: [id])
+model IngredientExpneseItems {
+  id                     Int                     @id @default(autoincrement())
+  productIngradientId    Int
+  productionExpenseItems ProductionExpenseItem[]
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  productionIngredient   ProductIngradient       @relation(fields: [productIngradientId], references: [id])
 
   @@map("ingredient_expnese")
 }
@@ -195,6 +196,7 @@ model RawMaterial {
   productIngradientId      Int?
   unitId                   Int
   description              String?                  @db.VarChar(250)
+  productRawMaterialId     Int?
   openingDate              DateTime
   openingAmount            Float
   quantity                 Float
@@ -210,7 +212,6 @@ model RawMaterial {
   purchaseOrderInventories PurchaseOrderInventory[]
   productIngradient        ProductIngradient?       @relation(fields: [productIngradientId], references: [id])
   productRawMaterial       IngredientRawMaterial?   @relation(fields: [productRawMaterialId], references: [id])
-  productRawMaterialId     Int?
 
   @@map("raw_materials")
 }
@@ -429,27 +430,27 @@ model Production {
 }
 
 model ProductionExpenseItem {
-  id                     Int               @id @default(autoincrement())
+  id                     Int                    @id @default(autoincrement())
   expItemName            String
   productionIngradientId Int
-  productionIngradient   ProductIngradient @relation(fields: [productionIngradientId], references: [id])
-  // expDuration Float?   @default(0.00)
-  unitRate               Float             @default(0.00)
-  createdAt              DateTime          @default(now())
-  updatedAt              DateTime          @updatedAt
+  ingradientExpenssId    Int
+  productionIngradient   ProductIngradient      @relation(fields: [productionIngradientId], references: [id])
+  ingredientExpneseItems IngredientExpneseItems @relation(fields: [ingradientExpenssId], references: [id])
+  unitRate               Float                  @default(0.00)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
 }
 
 model ProductionExpenses {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   productionId Int
   date         DateTime
-  unitRate     Float    @default(0.00)
-  expDuration  Float    @default(0.00)
-  amount       Float    @default(0.00)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  production Production @relation(fields: [productionId], references: [id])
+  unitRate     Float      @default(0.00)
+  expDuration  Float      @default(0.00)
+  amount       Float      @default(0.00)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  production   Production @relation(fields: [productionId], references: [id])
 }
 
 enum VoucherType {
