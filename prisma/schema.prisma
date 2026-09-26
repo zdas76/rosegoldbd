@@ -117,14 +117,50 @@ model Party {
 }
 
 model ProductIngradient {
-  id               Int               @id @default(autoincrement())
-  productId        Int
-  rawMaterials     RawMaterial[]
-  packingMaterials PackingMaterial[]
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  id                         Int                         @id @default(autoincrement())
+  productId                  Int
+  rawMaterials               RawMaterial[]
+  packingMaterials           PackingMaterial[]
+  productionExpenseItems     ProductionExpenseItem[]
+  createdAt                  DateTime                    @default(now())
+  updatedAt                  DateTime                    @updatedAt
+  ingredientRawMaterials     IngredientRawMaterial[]
+  ingredientPackingMaterials IngredientPackingMaterial[]
+  ingredientExpnese          IngredientExpnese[]
 
   @@map("product_ingradients")
+}
+
+model IngredientRawMaterial {
+  id                  Int                @id @default(autoincrement())
+  productIngradientId Int?
+  rawMaterials        RawMaterial[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  productIngradient   ProductIngradient? @relation(fields: [productIngradientId], references: [id])
+
+  @@map("product_raw_materials")
+}
+
+model IngredientPackingMaterial {
+  id                  Int                @id @default(autoincrement())
+  productIngradientId Int
+  packingMaterials    PackingMaterial[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  productIngradient   ProductIngradient? @relation(fields: [productIngradientId], references: [id])
+
+  @@map("product_packing_materials")
+}
+
+model IngredientExpnese {
+  id                   Int               @id @default(autoincrement())
+  productIngradientId  Int
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  productionIngredient ProductIngradient @relation(fields: [productIngradientId], references: [id])
+
+  @@map("ingredient_expnese")
 }
 
 model Product {
@@ -173,29 +209,33 @@ model RawMaterial {
   updateAt                 DateTime                 @updatedAt
   purchaseOrderInventories PurchaseOrderInventory[]
   productIngradient        ProductIngradient?       @relation(fields: [productIngradientId], references: [id])
+  productRawMaterial       IngredientRawMaterial?   @relation(fields: [productRawMaterialId], references: [id])
+  productRawMaterialId     Int?
 
   @@map("raw_materials")
 }
 
 model PackingMaterial {
-  id                       Int                      @id @default(autoincrement())
-  name                     String                   @db.VarChar(50)
+  id                       Int                        @id @default(autoincrement())
+  name                     String                     @db.VarChar(50)
   productIngradientId      Int?
   unitId                   Int
-  description              String?                  @db.VarChar(250)
+  description              String?                    @db.VarChar(250)
   openingDate              DateTime
   quantity                 Float
   openingAmount            Float
   ingredienteQty           Float
   unitPrice                Float
-  isDeleted                Boolean                  @default(false)
-  status                   Status                   @default(ACTIVE)
-  unit                     Unit                     @relation(fields: [unitId], references: [id])
+  isDeleted                Boolean                    @default(false)
+  status                   Status                     @default(ACTIVE)
+  unit                     Unit                       @relation(fields: [unitId], references: [id])
   inventory                Inventory[]
   purchaseOrderInventories PurchaseOrderInventory[]
-  productIngradient        ProductIngradient?       @relation(fields: [productIngradientId], references: [id])
-  createdAt                DateTime                 @default(now())
-  updateAt                 DateTime                 @updatedAt
+  productIngradient        ProductIngradient?         @relation(fields: [productIngradientId], references: [id])
+  createdAt                DateTime                   @default(now())
+  updateAt                 DateTime                   @updatedAt
+  productPackingMaterial   IngredientPackingMaterial? @relation(fields: [productPackingMaterialId], references: [id])
+  productPackingMaterialId Int?
 
   @@map("packing_materials")
 }
@@ -389,12 +429,14 @@ model Production {
 }
 
 model ProductionExpenseItem {
-  id          Int      @id @default(autoincrement())
-  expItemName String
+  id                     Int               @id @default(autoincrement())
+  expItemName            String
+  productionIngradientId Int
+  productionIngradient   ProductIngradient @relation(fields: [productionIngradientId], references: [id])
   // expDuration Float?   @default(0.00)
-  unitRate    Float    @default(0.00)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  unitRate               Float             @default(0.00)
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
 }
 
 model ProductionExpenses {
