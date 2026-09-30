@@ -1,74 +1,210 @@
+import { Department, Status, VoucherType } from "@prisma/client";
+import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
+import { Production } from "./productionTypes";
 
-const createProduction = async (payload: any) => {
+const createProduction = async (
+  id: number | undefined,
+  payload: Production,
+) => {
+  const isProductExisted = await prisma.product.findFirst({
+    where: {
+      id: payload.productinfo.productId,
+      isDeleted: false,
+    },
+  });
+
+  if (!isProductExisted) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
+  }
+
   const addProduction = await prisma.$transaction(async (tx) => {
-    const isProductExisted = await tx.product.findFirst({
+    const VoucherNo = await GenerateVoucherNumber("PROD");
+
+    const transactionInfo = await tx.transactionInfo.upsert({
       where: {
-        id: payload.productId,
-        isDeleted: false,
+        id,
       },
-    });
-
-    if (!isProductExisted) {
-      throw new AppError(StatusCodes.BAD_REQUEST, "Product not found");
-    }
-
-    const createProduction = await tx.production.create({
-      data: {
-        voucherNo: payload.voucherNo,
+      update: {
+        date: new Date(payload.date),
+      },
+      create: {
+        voucherNo: VoucherNo!,
         batchNo: payload.batchNo,
         date: new Date(payload.date),
-        productId: payload.productId,
+        voucherType: VoucherType.PRODUCTION,
       },
     });
 
     const productInventory = {
-      productId: payload.productId,
-      productionId: createProduction.id,
-      date: new Date(payload.date),
-      quantityAdd: payload.productQuantity,
-      unitPrice: payload.unitCost,
-      debitAmount: payload.amount,
+      productId: payload.productinfo.productId,
+      transectionId: transactionInfo.id,
+      date: new Date(payload.date) || "",
+      department: Department.PRODUCTION,
+      quantityAdd: payload.productinfo.quantity || 0,
+      unitPrice: payload.productinfo.unitPrice || 0,
+      debitAmount:
+        (payload.productinfo.quantity || 0) *
+        (payload.productinfo.unitPrice || 0),
     };
 
-    const rowMaterialInventory = payload.rawMaterials.map(
-      (item: {
-        rawId: number;
-        unitPrice: number;
-        amount: number;
-        quantity: number;
-      }) => ({
-        rawId: item.rawId,
-        productionId: createProduction.id,
-        date: new Date(payload.date),
-        quantityLess: item.quantity,
-        unitPrice: item.unitPrice,
-        creditAmount: item.amount,
-      }),
-    );
-
-    const inventoryItems = [...rowMaterialInventory, productInventory];
-
-    await tx.inventory.createMany({
-      data: inventoryItems,
+    await tx.inventory.upsert({
+      where: { id, productId: payload.productinfo.productId },
+      update: productInventory,
+      create: productInventory,
     });
 
-    return createProduction;
+    if (payload?.rawMaterials) {
+      const rawMaterialInventory = await Promise.all(
+        payload.rawMaterials.map(
+          async (item: {
+            rawId: number;
+            quantity: number;
+            unitPrice: number;
+          }) => {
+            const rawMaterial = await tx.rawMaterial.findFirst({
+              where: {
+                id: item.rawId,
+                status: Status.ACTIVE,
+              },
+            });
+
+            if (!rawMaterial) {
+              throw new Error("Raw Material not found");
+            }
+
+            await tx.inventory.upsert({
+              where: {
+                id,
+                rawId: rawMaterial.id,
+              },
+              update: {
+                rawId: rawMaterial.id,
+                transactionId: transactionInfo.id,
+                date: new Date(payload.date),
+                department: Department.PRODUCTION,
+                quantityLess: item.quantity,
+                unitPrice: item.unitPrice,
+                creditAmount: item.quantity * item.unitPrice,
+              },
+              create: {
+                rawId: rawMaterial.id,
+                transactionId: transactionInfo.id,
+                date: new Date(payload.date),
+                department: Department.PRODUCTION,
+                quantityLess: item.quantity | 0,
+                unitPrice: item.unitPrice | 0,
+                creditAmount: (item.quantity * item.unitPrice) | 0,
+              },
+            });
+          },
+        ),
+      );
+    }
+
+    if (payload?.productionExpenses) {
+      await Promise.all(
+        payload.productionExpenses.map(
+          async (Item: {
+            proExpencesItemId: number;
+            unitRate: number;
+            expDuration: number;
+            amount: number;
+          }) => {
+            const expencesItem = await tx.productionExpenseItem.findFirst({
+              where: {
+                id: Item.proExpencesItemId,
+              },
+            });
+            if (!expencesItem) {
+              throw new Error("Product Expencess Item not found");
+            }
+
+            await tx.productionExpensesInventory.upsert({
+              where: {
+                id,
+                proExpencesItemId: Item.proExpencesItemId,
+              },
+              update: {
+                date: new Date(payload.date),
+                proExpencesItemId: expencesItem.id,
+                transactionId: transactionInfo.id,
+                unitRate: Item.unitRate,
+                expDuration: Item.expDuration,
+                amount: Item.unitRate * Item.expDuration,
+              },
+              create: {
+                date: new Date(payload.date),
+                proExpencesItemId: expencesItem.id,
+                transactionId: transactionInfo.id,
+                unitRate: Item.unitRate,
+                expDuration: Item.expDuration,
+                amount: Item.unitRate * Item.expDuration,
+              },
+            });
+          },
+        ),
+      );
+    }
+
+    if (payload?.packingMaterials) {
+      await Promise.all(
+        payload.packingMaterials.map(
+          async (packmaterial: {
+            packingMaterialId: number;
+            unitPrice: number;
+            Qty: number;
+            perUnitQty: number;
+            perUnitCost: number;
+          }) => {
+            const packmaterials = await tx.packingMaterial.findFirst({
+              where: {
+                id: packmaterial.packingMaterialId,
+              },
+            });
+
+            if (!packmaterials) {
+              throw new Error("Packing Material Item not found");
+            }
+
+            await tx.pMInventory.upsert({
+              where: {
+                id,
+                packingMaterialId: packmaterial.packingMaterialId,
+              },
+              update: {
+                date: new Date(payload.date),
+                packingMaterialId: packmaterials.id,
+                transactionId: transactionInfo.id,
+                department: Department.PRODUCTION,
+                perUnitQty: packmaterial.perUnitQty,
+                perUnitCost: packmaterial.perUnitCost,
+                unitPrice: packmaterial.unitPrice,
+                quantityLess: packmaterial.Qty,
+              },
+              create: {
+                date: new Date(payload.date),
+                packingMaterialId: packmaterial.packingMaterialId,
+                transactionId: transactionInfo.id,
+                department: Department.PRODUCTION,
+                perUnitQty: packmaterial.perUnitQty,
+                perUnitCost: packmaterial.perUnitCost,
+                unitPrice: packmaterial.unitPrice,
+                quantityLess: packmaterial.Qty,
+              },
+            });
+          },
+        ),
+      );
+    }
+    return transactionInfo;
   });
 
-  const getCreatedProduction = await prisma.production.findUnique({
+  const getCreatedProduction = await prisma.transactionInfo.findUnique({
     where: {
       id: addProduction.id,
-    },
-    include: {
-      inventories: {
-        include: {
-          product: true,
-          raWMaterial: true,
-        },
-      },
     },
   });
 
@@ -76,13 +212,45 @@ const createProduction = async (payload: any) => {
 };
 
 const getProduction = async () => {
-  const result = await prisma.production.findMany({
+  const result = await prisma.transactionInfo.findMany({
+    where: {
+      voucherType: VoucherType.PRODUCTION,
+    },
     include: {
-      product: true,
-      inventories: {
+      inventory: {
         include: {
-          product: true,
-          raWMaterial: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          raWMaterial: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        pminventories: {
+          include: {
+            packingMaterial: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+        productionExpensesInventory: {
+          include: {
+            productionExpenseItem: {
+              selece: {
+                id: true,
+                expItemName: true,
+              },
+            },
+          },
         },
       },
     },
@@ -95,16 +263,45 @@ const getProduction = async () => {
 };
 
 const getProductionById = async (id: number) => {
-  const result = await prisma.production.findUnique({
+  const result = await prisma.transactionInfo.findUnique({
     where: {
       id: id,
     },
     include: {
-      product: true,
-      inventories: {
+      inventory: {
         include: {
-          product: true,
-          raWMaterial: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          raWMaterial: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        pminventories: {
+          include: {
+            packingMaterial: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+        productionExpensesInventory: {
+          include: {
+            productionExpenseItem: {
+              selece: {
+                id: true,
+                expItemName: true,
+              },
+            },
+          },
         },
       },
     },
@@ -117,34 +314,8 @@ const getProductionById = async (id: number) => {
   return result;
 };
 
-const updateProduction = async (id: number, payload: any) => {
-  const isExist = await prisma.production.findUnique({
-    where: {
-      id: id,
-    },
-  });
-
-  if (!isExist) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "Production not found");
-  }
-
-  const result = await prisma.production.update({
-    where: {
-      id: id,
-    },
-    data: {
-      voucherNo: payload.voucherNo,
-      batchNo: payload.batchNo,
-      date: payload.date ? new Date(payload.date) : undefined,
-      productId: payload.productId,
-    },
-  });
-
-  return result;
-};
-
 const deleteProduction = async (id: number) => {
-  const isExist = await prisma.production.findUnique({
+  const isExist = await prisma.transactionInfo.findUnique({
     where: {
       id: id,
     },
@@ -156,10 +327,10 @@ const deleteProduction = async (id: number) => {
 
   await prisma.$transaction(async (tx) => {
     await tx.inventory.deleteMany({
-      where: { productionId: isExist.id },
+      where: { id: isExist.id },
     });
 
-    await tx.production.delete({
+    await tx.transactionInfo.delete({
       where: { id: id },
     });
   });
@@ -171,6 +342,5 @@ export const ProductionService = {
   createProduction,
   getProduction,
   getProductionById,
-  updateProduction,
   deleteProduction,
 };

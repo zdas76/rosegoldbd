@@ -33,7 +33,7 @@ const createProduct = async (payload) => {
             inventory: {
                 create: {
                     date: payload.initialStock.date,
-                    Department: client_1.Department.FG_STORE,
+                    department: client_1.Department.FG_STORE,
                     unitPrice: payload.initialStock.unitPrice,
                     quantityAdd: payload.initialStock.quantity,
                     debitAmount: Number(payload.initialStock.amount),

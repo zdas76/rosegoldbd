@@ -7,34 +7,6 @@ interface MaterialInput {
   ingredienteQty?: number;
 }
 
-const extractMaterials = (items: any): MaterialInput[] => {
-  if (!Array.isArray(items)) {
-    return [];
-  }
-
-  const result: MaterialInput[] = [];
-  for (const item of items) {
-    if (typeof item === "number") {
-      result.push({ id: item });
-    } else if (item && typeof item === "object") {
-      const id = item.id ?? item.rawId ?? item.packingId;
-      if (typeof id === "number") {
-        result.push({
-          id,
-          ingredienteQty:
-            typeof item.ingredienteQty === "number"
-              ? item.ingredienteQty
-              : typeof item.quantity === "number"
-                ? item.quantity
-                : undefined,
-        });
-      }
-    }
-  }
-
-  return result;
-};
-
 const ingredientInclude = {
   ingredientRawMaterials: {
     select: {

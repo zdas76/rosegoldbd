@@ -39,7 +39,7 @@ const createRawMaterial = async (payload) => {
             inventory: {
                 create: {
                     date: openingDate,
-                    Department: client_1.Department.RM_STORE,
+                    department: client_1.Department.RM_STORE,
                     unitPrice: payload.unitPrice,
                     quantityAdd: payload.quantity,
                     debitAmount: payload.amount,
@@ -103,7 +103,7 @@ const createRawMaterialsMany = async (payloads) => {
                 inventory: {
                     create: {
                         date: openingDate,
-                        Department: client_1.Department.RM_STORE,
+                        department: client_1.Department.RM_STORE,
                         unitPrice: payload.unitPrice ?? 0,
                         quantityAdd: payload.quantity ?? 0,
                         debitAmount: payload.amount ?? 0,

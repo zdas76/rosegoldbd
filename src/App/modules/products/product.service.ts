@@ -35,7 +35,7 @@ const createProduct = async (payload: TcreateProduct) => {
       inventory: {
         create: {
           date: payload.initialStock.date,
-          Department: Department.FG_STORE,
+          department: Department.FG_STORE,
           unitPrice: payload.initialStock.unitPrice,
           quantityAdd: payload.initialStock.quantity,
           debitAmount: Number(payload.initialStock.amount),

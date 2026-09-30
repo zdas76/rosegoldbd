@@ -7,8 +7,6 @@ router.get("/", ProductionController.getProduction);
 
 router.post("/", ProductionController.createProduction);
 
-router.put("/:id", ProductionController.updateProduction);
-
 router.delete("/:id", ProductionController.deleteProduction);
 
 export const ProductionRouter = router;
