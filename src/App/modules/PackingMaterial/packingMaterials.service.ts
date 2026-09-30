@@ -16,6 +16,17 @@ const createPackingMaterial = async (payload: TpackingMaterial) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "This name is already used");
   }
 
+  const isUnitExist = await prisma.unit.findUnique({
+    where: { id: Number(payload.unitId) },
+  });
+
+  if (!isUnitExist) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `Unit with ID ${payload.unitId} does not exist.`
+    );
+  }
+
   const openingDate =
     payload.date && !isNaN(new Date(payload.date).getTime())
       ? new Date(payload.date)
@@ -29,7 +40,6 @@ const createPackingMaterial = async (payload: TpackingMaterial) => {
       unitPrice: Number(payload.unitPrice) || 0,
       quantity: Number(payload.quantity) || 0,
       ingredienteQty: Number(payload.ingredienteQty) || 0,
-      productIngradientId: payload.productIngradientId ? Number(payload.productIngradientId) : null,
       openingDate,
       openingAmount: Number(payload.amount) || 0,
       inventory: {
@@ -45,7 +55,6 @@ const createPackingMaterial = async (payload: TpackingMaterial) => {
     },
     include: {
       unit: true,
-      productIngradient: true,
     },
   });
 
@@ -82,6 +91,29 @@ const createPackingMaterialsMany = async (payloads: TpackingMaterial[]) => {
     );
   }
 
+  const unitIds = [
+    ...new Set(payloads.map((item) => Number(item.unitId)).filter(Boolean)),
+  ];
+
+  const existingUnits = await prisma.unit.findMany({
+    where: {
+      id: { in: unitIds },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const existingUnitIdSet = new Set(existingUnits.map((u) => u.id));
+  const missingUnits = unitIds.filter((id) => !existingUnitIdSet.has(id));
+
+  if (missingUnits.length > 0) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `Unit ID(s) not found in database: ${missingUnits.join(", ")}. Please create unit(s) first.`
+    );
+  }
+
   const result = await prisma.$transaction(
     payloads.map((payload) => {
       const openingDate =
@@ -97,7 +129,6 @@ const createPackingMaterialsMany = async (payloads: TpackingMaterial[]) => {
           unitPrice: Number(payload.unitPrice) || 0,
           quantity: Number(payload.quantity) || 0,
           ingredienteQty: Number(payload.ingredienteQty) || 0,
-          productIngradientId: payload.productIngradientId ? Number(payload.productIngradientId) : null,
           openingDate,
           openingAmount: Number(payload.amount) || 0,
           inventory: {
@@ -133,7 +164,6 @@ const getAllPackingMaterial = async (filters?: { search?: string }) => {
     where,
     include: {
       unit: true,
-      productIngradient: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -150,7 +180,6 @@ const getPackingMaterialById = async (id: number) => {
     },
     include: {
       unit: true,
-      productIngradient: true,
     },
   });
 
@@ -184,7 +213,6 @@ const updatePackingMaterial = async (
       unitPrice: payload.unitPrice !== undefined ? Number(payload.unitPrice) : undefined,
       quantity: payload.quantity !== undefined ? Number(payload.quantity) : undefined,
       ingredienteQty: payload.ingredienteQty !== undefined ? Number(payload.ingredienteQty) : undefined,
-      productIngradientId: payload.productIngradientId !== undefined ? payload.productIngradientId : undefined,
       openingAmount:
         payload.openingAmount !== undefined
           ? Number(payload.openingAmount)
@@ -194,7 +222,6 @@ const updatePackingMaterial = async (
     },
     include: {
       unit: true,
-      productIngradient: true,
     },
   });
 

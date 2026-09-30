@@ -23,5 +23,5 @@ export type TpackingMaterial = {
   updateAt?: Date;
   inventory?: Inventory[];
   ingredienteQty?: number;
-  productIngradientId?: number | null;
 };
+
