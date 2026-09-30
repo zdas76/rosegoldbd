@@ -35,6 +35,45 @@ const extractMaterials = (items: any): MaterialInput[] => {
   return result;
 };
 
+const ingredientInclude = {
+  ingredientRawMaterials: {
+    select: {
+      id: true,
+      rawId: true,
+      rawMaterials: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  },
+  ingredientPackingMaterial: {
+    select: {
+      id: true,
+      packingMaterialId: true,
+      packingMaterial: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  },
+  ingredientExpneseItems: {
+    select: {
+      id: true,
+      productionExpenssItemId: true,
+      productionExpenseItem: {
+        select: {
+          id: true,
+          expItemName: true,
+        },
+      },
+    },
+  },
+};
+
 const createProductIngradient = async (payload: {
   productId: number;
   packingMaterials: [];
@@ -88,43 +127,7 @@ const createProductIngradient = async (payload: {
 
     const finalResult = await tx.productionIngradient.findUnique({
       where: { id: created.id },
-      include: {
-        ingredientRawMaterials: {
-          select: {
-            id: true,
-            rawId: true,
-            rawMaterials: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-        ingredientPackingMaterial: {
-          select: {
-            id: true,
-            packingMaterialId: true,
-            packingMaterial: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-        },
-        ingredientExpneseItems: {
-          select: {
-            id: true,
-            productionExpenssItemId: true,
-            productionExpenseItem: {
-              select: {
-                id: true,
-                expItemName: true,
-              },
-            },
-          },
-        },
-      },
+      include: ingredientInclude,
     });
     return {
       ...finalResult,
@@ -143,11 +146,7 @@ const getAllProductIngradients = async (filters?: { productId?: number }) => {
 
   const result = await prisma.productionIngradient.findMany({
     where,
-    include: {
-      ingredientRawMaterials: true,
-      ingredientPackingMaterial: true,
-      ingredientExpneseItems: true,
-    },
+    include: ingredientInclude,
     orderBy: {
       createdAt: "desc",
     },
@@ -172,11 +171,7 @@ const getAllProductIngradients = async (filters?: { productId?: number }) => {
 const getProductIngradientById = async (id: number) => {
   const result = await prisma.productionIngradient.findUnique({
     where: { id },
-    include: {
-      ingredientRawMaterials: true,
-      ingredientPackingMaterial: true,
-      ingredientExpneseItems: true,
-    },
+    include: ingredientInclude,
   });
 
   if (!result) {
@@ -200,11 +195,7 @@ const getProductIngradientById = async (id: number) => {
 const getProductionIngradientByProductId = async (productId: number) => {
   const result = await prisma.productionIngradient.findFirst({
     where: { productId },
-    include: {
-      ingredientRawMaterials: true,
-      ingredientPackingMaterial: true,
-      ingredientExpneseItems: true,
-    },
+    include: ingredientInclude,
   });
 
   if (!result) {
