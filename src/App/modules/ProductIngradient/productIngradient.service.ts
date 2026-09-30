@@ -89,9 +89,41 @@ const createProductIngradient = async (payload: {
     const finalResult = await tx.productionIngradient.findUnique({
       where: { id: created.id },
       include: {
-        ingredientRawMaterials: true,
-        ingredientPackingMaterial: true,
-        ingredientExpneseItems: true,
+        ingredientRawMaterials: {
+          select: {
+            id: true,
+            rawId: true,
+            rawMaterials: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        ingredientPackingMaterial: {
+          select: {
+            id: true,
+            packingMaterialId: true,
+            packingMaterial: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+        ingredientExpneseItems: {
+          select: {
+            id: true,
+            productionExpenssItemId: true,
+            productionExpenseItem: {
+              select: {
+                id: true,
+                expItemName: true,
+              },
+            },
+          },
+        },
       },
     });
     return {
