@@ -16,6 +16,17 @@ const createRawMaterial = async (payload: TrawMaterial) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "This name is already used");
   }
 
+  const isUnitExist = await prisma.unit.findUnique({
+    where: { id: Number(payload.unitId) },
+  });
+
+  if (!isUnitExist) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `Unit with ID ${payload.unitId} does not exist. Please create the unit first.`
+    );
+  }
+
   const openingDate =
     payload.date && !isNaN(new Date(payload.date).getTime())
       ? new Date(payload.date)
@@ -25,11 +36,10 @@ const createRawMaterial = async (payload: TrawMaterial) => {
     data: {
       name: payload.name,
       description: payload.description,
-      unitId: payload.unitId,
+      unitId: Number(payload.unitId),
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
       ingredienteQty: payload.ingredienteQty ?? 0,
-      productIngradientId: payload.productIngradientId ?? null,
       openingDate,
       openingAmount: payload.amount,
       inventory: {
@@ -77,6 +87,29 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
     );
   }
 
+  const unitIds = [
+    ...new Set(payloads.map((item) => Number(item.unitId)).filter(Boolean)),
+  ];
+
+  const existingUnits = await prisma.unit.findMany({
+    where: {
+      id: { in: unitIds },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const existingUnitIdSet = new Set(existingUnits.map((u) => u.id));
+  const missingUnits = unitIds.filter((id) => !existingUnitIdSet.has(id));
+
+  if (missingUnits.length > 0) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      `Unit ID(s) not found in database: ${missingUnits.join(", ")}. Please create unit(s) first.`
+    );
+  }
+
   const result = await prisma.$transaction(
     payloads.map((payload) => {
       const openingDate =
@@ -88,11 +121,10 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
         data: {
           name: payload.name,
           description: payload.description ?? null,
-          unitId: payload.unitId,
+          unitId: Number(payload.unitId),
           unitPrice: payload.unitPrice ?? 0,
           quantity: payload.quantity ?? 0,
           ingredienteQty: payload.ingredienteQty ?? 0,
-          productIngradientId: payload.productIngradientId ?? null,
           openingDate,
           openingAmount: payload.amount ?? 0,
           inventory: {
@@ -156,7 +188,6 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
       ingredienteQty: payload.ingredienteQty,
-      productIngradientId: payload.productIngradientId,
       openingAmount: payload.openingAmount,
     },
   });

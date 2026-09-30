@@ -25,8 +25,8 @@ const extractMaterials = (items: any): MaterialInput[] => {
             typeof item.ingredienteQty === "number"
               ? item.ingredienteQty
               : typeof item.quantity === "number"
-              ? item.quantity
-              : undefined,
+                ? item.quantity
+                : undefined,
         });
       }
     }
@@ -57,35 +57,27 @@ const createProductIngradient = async (payload: any) => {
   );
 
   const result = await prisma.$transaction(async (tx) => {
-    const created = await tx.productIngradient.create({
+    const created = await tx.productionIngradient.create({
       data: {
         productId,
         ...(rawMaterials.length > 0
           ? {
-              rawMaterials: {
-                connect: rawMaterials.map((item) => ({ id: item.id })),
-              },
-            }
+            rawMaterials: {
+              connect: rawMaterials.map((item) => ({ id: item.id })),
+            },
+          }
           : {}),
         ...(packingMaterials.length > 0
           ? {
-              packingMaterials: {
-                connect: packingMaterials.map((item) => ({ id: item.id })),
-              },
-            }
+            packingMaterials: {
+              connect: packingMaterials.map((item) => ({ id: item.id })),
+            },
+          }
           : {}),
       },
       include: {
-        rawMaterials: {
-          include: {
-            unit: true,
-          },
-        },
-        packingMaterials: {
-          include: {
-            unit: true,
-          },
-        },
+        ingredientRawMaterials: true,
+        ingredientPackingMaterial: true,
       },
     });
 
@@ -107,22 +99,14 @@ const createProductIngradient = async (payload: any) => {
       }
     }
 
-    const finalResult = await tx.productIngradient.findUnique({
+    const finalResult = await tx.productionIngradient.findUnique({
       where: { id: created.id },
       include: {
-        rawMaterials: {
-          include: {
-            unit: true,
-          },
-        },
-        packingMaterials: {
-          include: {
-            unit: true,
-          },
-        },
+        ingredientRawMaterials: true,
+        ingredientPackingMaterial: true,
+        ingredientExpneseItems: true
       },
     });
-
     return {
       ...finalResult,
       product,
@@ -138,19 +122,12 @@ const getAllProductIngradients = async (filters?: { productId?: number }) => {
     where.productId = Number(filters.productId);
   }
 
-  const result = await prisma.productIngradient.findMany({
+  const result = await prisma.productionIngradient.findMany({
     where,
     include: {
-      rawMaterials: {
-        include: {
-          unit: true,
-        },
-      },
-      packingMaterials: {
-        include: {
-          unit: true,
-        },
-      },
+      ingredientRawMaterials: true,
+      ingredientPackingMaterial: true,
+      ingredientExpneseItems: true
     },
     orderBy: {
       createdAt: "desc",
@@ -174,19 +151,12 @@ const getAllProductIngradients = async (filters?: { productId?: number }) => {
 };
 
 const getProductIngradientById = async (id: number) => {
-  const result = await prisma.productIngradient.findUnique({
+  const result = await prisma.productionIngradient.findUnique({
     where: { id },
     include: {
-      rawMaterials: {
-        include: {
-          unit: true,
-        },
-      },
-      packingMaterials: {
-        include: {
-          unit: true,
-        },
-      },
+      ingredientRawMaterials: true,
+      ingredientPackingMaterial: true,
+      ingredientExpneseItems: true
     },
   });
 
@@ -208,20 +178,13 @@ const getProductIngradientById = async (id: number) => {
   };
 };
 
-const getProductIngradientByProductId = async (productId: number) => {
-  const result = await prisma.productIngradient.findFirst({
+const getProductionIngradientByProductId = async (productId: number) => {
+  const result = await prisma.productionIngradient.findFirst({
     where: { productId },
     include: {
-      rawMaterials: {
-        include: {
-          unit: true,
-        },
-      },
-      packingMaterials: {
-        include: {
-          unit: true,
-        },
-      },
+      ingredientRawMaterials: true,
+      ingredientPackingMaterial: true,
+      ingredientExpneseItems: true
     },
   });
 
@@ -246,8 +209,8 @@ const getProductIngradientByProductId = async (productId: number) => {
   };
 };
 
-const updateProductIngradientById = async (id: number, payload: any) => {
-  const isExist = await prisma.productIngradient.findUnique({
+const updateProductionIngradientById = async (id: number, payload: any) => {
+  const isExist = await prisma.productionIngradient.findUnique({
     where: { id },
   });
 
@@ -279,124 +242,100 @@ const updateProductIngradientById = async (id: number, payload: any) => {
     ? extractMaterials(payload.packingMaterials ?? payload.packingMaterialIds)
     : undefined;
 
-  const result = await prisma.$transaction(async (tx) => {
-    if (rawMaterials !== undefined) {
-      await tx.rawMaterial.updateMany({
-        where: { productIngradientId: id },
-        data: { productIngradientId: null },
-      });
+  // const result = await prisma.$transaction(async (tx) => {
+  //   if (rawMaterials !== undefined) {
+  //     await tx.rawMaterial.updateMany({
+  //       where: { production: id },
+  //       data: { productionIngradientId: null },
+  //     });
 
-      if (rawMaterials.length > 0) {
-        const rawIds = rawMaterials.map((item) => item.id);
-        await tx.rawMaterial.updateMany({
-          where: { id: { in: rawIds } },
-          data: { productIngradientId: id },
-        });
+  //     if (rawMaterials.length > 0) {
+  //       const rawIds = rawMaterials.map((item) => item.id);
+  //       await tx.rawMaterial.updateMany({
+  //         where: { id: { in: rawIds } },
+  //         data: { productIngradientId: id },
+  //       });
 
-        for (const raw of rawMaterials) {
-          if (raw.ingredienteQty !== undefined) {
-            await tx.rawMaterial.update({
-              where: { id: raw.id },
-              data: { ingredienteQty: raw.ingredienteQty },
-            });
-          }
-        }
-      }
-    }
+  //       for (const raw of rawMaterials) {
+  //         if (raw.ingredienteQty !== undefined) {
+  //           await tx.rawMaterial.update({
+  //             where: { id: raw.id },
+  //             data: { ingredienteQty: raw.ingredienteQty },
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }
 
-    if (packingMaterials !== undefined) {
-      await tx.packingMaterial.updateMany({
-        where: { productIngradientId: id },
-        data: { productIngradientId: null },
-      });
+  //   if (packingMaterials !== undefined) {
+  //     await tx.packingMaterial.updateMany({
+  //       where: { productIngradientId: id },
+  //       data: { productIngradientId: null },
+  //     });
 
-      if (packingMaterials.length > 0) {
-        const packIds = packingMaterials.map((item) => item.id);
-        await tx.packingMaterial.updateMany({
-          where: { id: { in: packIds } },
-          data: { productIngradientId: id },
-        });
+  //     if (packingMaterials.length > 0) {
+  //       const packIds = packingMaterials.map((item) => item.id);
+  //       await tx.packingMaterial.updateMany({
+  //         where: { id: { in: packIds } },
+  //         data: { productIngradientId: id },
+  //       });
 
-        for (const pack of packingMaterials) {
-          if (pack.ingredienteQty !== undefined) {
-            await tx.packingMaterial.update({
-              where: { id: pack.id },
-              data: { ingredienteQty: pack.ingredienteQty },
-            });
-          }
-        }
-      }
-    }
+  //       for (const pack of packingMaterials) {
+  //         if (pack.ingredienteQty !== undefined) {
+  //           await tx.packingMaterial.update({
+  //             where: { id: pack.id },
+  //             data: { ingredienteQty: pack.ingredienteQty },
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }
 
-    const updated = await tx.productIngradient.update({
-      where: { id },
-      data: {
-        ...(payload.productId ? { productId } : {}),
-      },
-      include: {
-        rawMaterials: {
-          include: {
-            unit: true,
-          },
-        },
-        packingMaterials: {
-          include: {
-            unit: true,
-          },
-        },
-      },
-    });
+  //   const updated = await tx.productIngradient.update({
+  //     where: { id },
+  //     data: {
+  //       productId,
+  //     },
+  //     include: {
+  //       rawMaterials: {
+  //         include: {
+  //           unit: true,
+  //         },
+  //       },
+  //       packingMaterials: {
+  //         include: {
+  //           unit: true,
+  //         },
+  //       },
+  //     },
+  //   });
 
-    const product = await tx.product.findUnique({
-      where: { id: updated.productId },
-      include: {
-        unit: true,
-        subCategory: true,
-      },
-    });
+  //   const finalResult = await tx.productIngradient.findUnique({
+  //     where: { id },
+  //     include: {
+  //       rawMaterials: {
+  //         include: {
+  //           unit: true,
+  //         },
+  //       },
+  //       packingMaterials: {
+  //         include: {
+  //           unit: true,
+  //         },
+  //       },
+  //     },
+  //   });
+  //   return {
+  //     ...finalResult,
+  //     product,
+  //   };
+  // });
 
-    return {
-      ...updated,
-      product: product || null,
-    };
-  });
-
-  return result;
-};
-
-const deleteProductIngradientById = async (id: number) => {
-  const isExist = await prisma.productIngradient.findUnique({
-    where: { id },
-  });
-
-  if (!isExist) {
-    throw new AppError(StatusCodes.NOT_FOUND, "Product ingradient not found");
-  }
-
-  const result = await prisma.$transaction(async (tx) => {
-    await tx.rawMaterial.updateMany({
-      where: { productIngradientId: id },
-      data: { productIngradientId: null },
-    });
-
-    await tx.packingMaterial.updateMany({
-      where: { productIngradientId: id },
-      data: { productIngradientId: null },
-    });
-
-    return await tx.productIngradient.delete({
-      where: { id },
-    });
-  });
-
-  return result;
+  // return result;
 };
 
 export const ProductIngradientService = {
   createProductIngradient,
   getAllProductIngradients,
   getProductIngradientById,
-  getProductIngradientByProductId,
-  updateProductIngradientById,
-  deleteProductIngradientById,
 };

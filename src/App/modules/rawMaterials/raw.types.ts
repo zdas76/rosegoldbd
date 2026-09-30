@@ -20,8 +20,8 @@ export type TrawMaterial = {
   amount: number;
   date?: Date | string;
   status: Status;
-  updateAt: Date;
-  inventory: Inventory[]; // ✅ updated
+  updateAt?: Date;
+  inventory?: Inventory[];
   ingredienteQty?: number;
-  productIngradientId?: number | null;
 };
+

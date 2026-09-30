@@ -425,12 +425,11 @@ model IngredientExpneseItems {
 }
 
 model ProductionExpenseItem {
-  id                     Int      @id @default(autoincrement())
-  expItemName            String
-  productionIngradientId Int
-  unitRate               Float    @default(0.00)
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  expItemName String
+  unitRate    Float    @default(0.00)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   ingredientExpneseItems IngredientExpneseItems[]
 }
