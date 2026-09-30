@@ -7,6 +7,7 @@ exports.RowMaterialsService = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_codes_1 = require("http-status-codes");
+const client_1 = require("@prisma/client");
 const createRawMaterial = async (payload) => {
     const isExist = await prisma_1.default.rawMaterial.findFirst({
         where: {
@@ -16,6 +17,12 @@ const createRawMaterial = async (payload) => {
     if (isExist) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "This name is already used");
     }
+    const isUnitExist = await prisma_1.default.unit.findUnique({
+        where: { id: Number(payload.unitId) },
+    });
+    if (!isUnitExist) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Unit with ID ${payload.unitId} does not exist. Please create the unit first.`);
+    }
     const openingDate = payload.date && !isNaN(new Date(payload.date).getTime())
         ? new Date(payload.date)
         : new Date();
@@ -23,14 +30,16 @@ const createRawMaterial = async (payload) => {
         data: {
             name: payload.name,
             description: payload.description,
-            unitId: payload.unitId,
+            unitId: Number(payload.unitId),
             unitPrice: payload.unitPrice,
             quantity: payload.quantity,
+            ingredienteQty: payload.ingredienteQty ?? 0,
             openingDate,
             openingAmount: payload.amount,
             inventory: {
                 create: {
                     date: openingDate,
+                    Department: client_1.Department.RM_STORE,
                     unitPrice: payload.unitPrice,
                     quantityAdd: payload.quantity,
                     debitAmount: payload.amount,
@@ -61,6 +70,22 @@ const createRawMaterialsMany = async (payloads) => {
             .map((item) => item.name)
             .join(", ")}`);
     }
+    const unitIds = [
+        ...new Set(payloads.map((item) => Number(item.unitId)).filter(Boolean)),
+    ];
+    const existingUnits = await prisma_1.default.unit.findMany({
+        where: {
+            id: { in: unitIds },
+        },
+        select: {
+            id: true,
+        },
+    });
+    const existingUnitIdSet = new Set(existingUnits.map((u) => u.id));
+    const missingUnits = unitIds.filter((id) => !existingUnitIdSet.has(id));
+    if (missingUnits.length > 0) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, `Unit ID(s) not found in database: ${missingUnits.join(", ")}. Please create unit(s) first.`);
+    }
     const result = await prisma_1.default.$transaction(payloads.map((payload) => {
         const openingDate = payload.date && !isNaN(new Date(payload.date).getTime())
             ? new Date(payload.date)
@@ -69,14 +94,16 @@ const createRawMaterialsMany = async (payloads) => {
             data: {
                 name: payload.name,
                 description: payload.description ?? null,
-                unitId: payload.unitId,
+                unitId: Number(payload.unitId),
                 unitPrice: payload.unitPrice ?? 0,
                 quantity: payload.quantity ?? 0,
+                ingredienteQty: payload.ingredienteQty ?? 0,
                 openingDate,
                 openingAmount: payload.amount ?? 0,
                 inventory: {
                     create: {
                         date: openingDate,
+                        Department: client_1.Department.RM_STORE,
                         unitPrice: payload.unitPrice ?? 0,
                         quantityAdd: payload.quantity ?? 0,
                         debitAmount: payload.amount ?? 0,
@@ -125,6 +152,7 @@ const updateRawMaterial = async (id, payload) => {
             description: payload.description,
             unitPrice: payload.unitPrice,
             quantity: payload.quantity,
+            ingredienteQty: payload.ingredienteQty,
             openingAmount: payload.openingAmount,
         },
     });

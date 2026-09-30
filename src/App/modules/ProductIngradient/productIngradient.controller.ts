@@ -7,7 +7,7 @@ import { ProductIngradientService } from "./productIngradient.service";
 const createProductIngradient = catchAsync(
   async (req: Request, res: Response) => {
     const result = await ProductIngradientService.createProductIngradient(
-      req.body
+      req.body,
     );
 
     sendResponse(res, {
@@ -16,7 +16,7 @@ const createProductIngradient = catchAsync(
       message: "Product ingradient created successfully",
       data: result,
     });
-  }
+  },
 );
 
 const getAllProductIngradients = catchAsync(
@@ -35,14 +35,13 @@ const getAllProductIngradients = catchAsync(
       message: "Product ingradients retrieved successfully",
       data: result,
     });
-  }
+  },
 );
 
 const getProductIngradientById = catchAsync(
   async (req: Request, res: Response) => {
     const id = parseInt(req.params.id as string);
-    const result =
-      await ProductIngradientService.getProductIngradientById(id);
+    const result = await ProductIngradientService.getProductIngradientById(id);
 
     sendResponse(res, {
       statusCode: StatusCodes.OK,
@@ -50,59 +49,61 @@ const getProductIngradientById = catchAsync(
       message: "Product ingradient retrieved successfully",
       data: result,
     });
-  }
+  },
 );
 
-const getProductIngradientByProductId = catchAsync(
-  async (req: Request, res: Response) => {
-    const productId = parseInt(req.params.productId as string);
-    const result =
-      await ProductIngradientService.getProductIngradientByProductId(productId);
+// const getProductIngradientByProductId = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const productId = parseInt(req.params.productId as string);
+//     const result =
+//       await ProductIngradientService.getProductIngradientByProductId(productId);
 
-    sendResponse(res, {
-      statusCode: StatusCodes.OK,
-      success: true,
-      message: "Product ingradient retrieved successfully",
-      data: result,
-    });
-  }
-);
+//     sendResponse(res, {
+//       statusCode: StatusCodes.OK,
+//       success: true,
+//       message: "Product ingradient retrieved successfully",
+//       data: result,
+//     });
+//   },
+// );
 
-const updateProductIngradient = catchAsync(
-  async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string);
-    const result =
-      await ProductIngradientService.updateProductIngradientById(id, req.body);
+// const updateProductIngradient = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const id = parseInt(req.params.id as string);
+//     const result = await ProductIngradientService.updateProductIngradientById(
+//       id,
+//       req.body,
+//     );
 
-    sendResponse(res, {
-      statusCode: StatusCodes.OK,
-      success: true,
-      message: "Product ingradient updated successfully",
-      data: result,
-    });
-  }
-);
+//     sendResponse(res, {
+//       statusCode: StatusCodes.OK,
+//       success: true,
+//       message: "Product ingradient updated successfully",
+//       data: result,
+//     });
+//   },
+// );
 
-const deleteProductIngradient = catchAsync(
-  async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string);
-    const result =
-      await ProductIngradientService.deleteProductIngradientById(id);
+// const deleteProductIngradient = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const id = parseInt(req.params.id as string);
+//     const result =
+//       await ProductIngradientService.deleteProductIngradientById(id);
 
-    sendResponse(res, {
-      statusCode: StatusCodes.OK,
-      success: true,
-      message: "Product ingradient deleted successfully",
-      data: result,
-    });
-  }
-);
+//     sendResponse(res, {
+//       statusCode: StatusCodes.OK,
+//       success: true,
+//       message: "Product ingradient deleted successfully",
+//       data: result,
+//     });
+//   },
+// );
 
 export const ProductIngradientControllers = {
   createProductIngradient,
   getAllProductIngradients,
   getProductIngradientById,
-  getProductIngradientByProductId,
-  updateProductIngradient,
-  deleteProductIngradient,
+  // getProductIngradientByProductId,
+  // updateProductIngradient,
+  // deleteProductIngradient,
 };

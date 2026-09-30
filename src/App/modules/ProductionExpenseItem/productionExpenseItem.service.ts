@@ -5,7 +5,10 @@ import { TProductionExpenseItem } from "./productionExpenseItem.types";
 
 const createProductionExpenseItem = async (payload: TProductionExpenseItem) => {
   if (!payload.expItemName || !payload.expItemName.trim()) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "Expense item name is required");
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "Expense item name is required",
+    );
   }
 
   const isExist = await prisma.productionExpenseItem.findFirst({
@@ -15,14 +18,15 @@ const createProductionExpenseItem = async (payload: TProductionExpenseItem) => {
   });
 
   if (isExist) {
-    throw new AppError(StatusCodes.BAD_REQUEST, "This expense item already exists");
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "This expense item already exists",
+    );
   }
 
   const result = await prisma.productionExpenseItem.create({
     data: {
       expItemName: payload.expItemName.trim(),
-      expDuration:
-        payload.expDuration !== undefined ? Number(payload.expDuration) : 0,
       unitRate: payload.unitRate !== undefined ? Number(payload.unitRate) : 0,
     },
   });
@@ -31,12 +35,12 @@ const createProductionExpenseItem = async (payload: TProductionExpenseItem) => {
 };
 
 const createProductionExpenseItemsMany = async (
-  payloads: TProductionExpenseItem[]
+  payloads: TProductionExpenseItem[],
 ) => {
   if (!Array.isArray(payloads) || payloads.length === 0) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
-      "At least one expense item is required"
+      "At least one expense item is required",
     );
   }
 
@@ -56,7 +60,7 @@ const createProductionExpenseItemsMany = async (
       StatusCodes.BAD_REQUEST,
       `These expense items already exist: ${existing
         .map((e) => e.expItemName)
-        .join(", ")}`
+        .join(", ")}`,
     );
   }
 
@@ -65,12 +69,10 @@ const createProductionExpenseItemsMany = async (
       prisma.productionExpenseItem.create({
         data: {
           expItemName: item.expItemName.trim(),
-          expDuration:
-            item.expDuration !== undefined ? Number(item.expDuration) : 0,
           unitRate: item.unitRate !== undefined ? Number(item.unitRate) : 0,
         },
-      })
-    )
+      }),
+    ),
   );
 
   return result;
@@ -109,7 +111,7 @@ const getProductionExpenseItemById = async (id: number) => {
 
 const updateProductionExpenseItemById = async (
   id: number,
-  payload: Partial<TProductionExpenseItem>
+  payload: Partial<TProductionExpenseItem>,
 ) => {
   const isExist = await prisma.productionExpenseItem.findUnique({
     where: { id },
@@ -133,7 +135,7 @@ const updateProductionExpenseItemById = async (
     if (duplicate) {
       throw new AppError(
         StatusCodes.BAD_REQUEST,
-        "Another expense item already has this name"
+        "Another expense item already has this name",
       );
     }
   }
@@ -142,10 +144,6 @@ const updateProductionExpenseItemById = async (
     where: { id },
     data: {
       expItemName: payload.expItemName ? payload.expItemName.trim() : undefined,
-      expDuration:
-        payload.expDuration !== undefined
-          ? Number(payload.expDuration)
-          : undefined,
       unitRate:
         payload.unitRate !== undefined ? Number(payload.unitRate) : undefined,
     },

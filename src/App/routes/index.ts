@@ -18,7 +18,7 @@ import { ReportRouter } from "../modules/Reports/report.route";
 import { VoucherRoute } from "../modules/TransctionVoucher/transction.route";
 import { UserRoute } from "../modules/User/user.route";
 import { ProductionRouter } from "../modules/Production/production.route";
-import { PackageRouter } from "../modules/Package/package.route";
+// import { PackageRouter } from "../modules/Package/package.route";
 import { PurchaseOrderRoute } from "../modules/PurchaseOrder/purchaseOrder.route";
 import { ProductIngradientRoute } from "../modules/ProductIngradient/productIngradient.route";
 import { PackingMaterialRoute } from "../modules/PackingMaterial/packingMaterials.route";
@@ -107,10 +107,10 @@ const moduleRoutes = [
     path: "/production",
     route: ProductionRouter,
   },
-  {
-    path: "/package",
-    route: PackageRouter,
-  },
+  // {
+  //   path: "/package",
+  //   route: PackageRouter,
+  // },
   {
     path: "/purchase-order",
     route: PurchaseOrderRoute,
@@ -128,7 +128,6 @@ const moduleRoutes = [
     route: ProductionExpItemRoute,
   },
 ];
-
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
 
