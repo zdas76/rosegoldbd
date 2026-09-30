@@ -7,35 +7,25 @@ const router = express.Router();
 
 router.post(
   "/",
-  validationRequiest(
-    ProductIngradientValidation.createProductIngradientSchema
-  ),
-  ProductIngradientControllers.createProductIngradient
+  validationRequiest(ProductIngradientValidation.createProductIngradientSchema),
+  ProductIngradientControllers.createProductIngradient,
 );
 
 router.get("/", ProductIngradientControllers.getAllProductIngradients);
 
-router.get(
-  "/product/:productId",
-  ProductIngradientControllers.getProductIngradientByProductId
-);
+// router.get(
+//   "/product/:productId",
+//   // ProductIngradientControllers.getProductIngradientByProductId
+// );
 
-router.get(
-  "/:id",
-  ProductIngradientControllers.getProductIngradientById
-);
+// router.get("/:id", ProductIngradientControllers.getProductIngradientById);
 
-router.put(
-  "/:id",
-  validationRequiest(
-    ProductIngradientValidation.updateProductIngradientSchema
-  ),
-  ProductIngradientControllers.updateProductIngradient
-);
+// router.put(
+//   "/:id",
+//   validationRequiest(ProductIngradientValidation.updateProductIngradientSchema),
+//   // ProductIngradientControllers.updateProductIngradient
+// );
 
-router.delete(
-  "/:id",
-  ProductIngradientControllers.deleteProductIngradient
-);
+// router.delete("/:id", ProductIngradientControllers.deleteProductIngradient);
 
 export const ProductIngradientRoute = router;

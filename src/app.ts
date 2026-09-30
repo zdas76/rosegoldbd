@@ -13,9 +13,9 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://sahajerp.xyz",
       "https://zdas.com.bd",
       "http://zdas.com.bd",
+      "https://rose-gold-chemical.vercel.app/dashboard",
     ],
     credentials: true,
   }),
