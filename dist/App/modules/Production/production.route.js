@@ -9,6 +9,5 @@ const production_controller_1 = require("./production.controller");
 const router = express_1.default.Router();
 router.get("/", production_controller_1.ProductionController.getProduction);
 router.post("/", production_controller_1.ProductionController.createProduction);
-router.put("/:id", production_controller_1.ProductionController.updateProduction);
 router.delete("/:id", production_controller_1.ProductionController.deleteProduction);
 exports.ProductionRouter = router;

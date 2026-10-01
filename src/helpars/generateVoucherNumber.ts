@@ -1,8 +1,8 @@
 import { VoucherType } from "@prisma/client";
 import prisma from "../shared/prisma";
 
-export const GenerateVoucherNumber = async (type: string) => {
-  let voucherNo;
+export const GenerateVoucherNumber = async (type: string): Promise<string> => {
+  let voucherNo: string | undefined;
 
   if (type === "PRV") {
     const lastVoucher = await prisma.transactionInfo.findFirst({
