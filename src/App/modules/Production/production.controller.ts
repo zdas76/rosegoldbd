@@ -5,13 +5,17 @@ import { StatusCodes } from "http-status-codes";
 import { ProductionService } from "./production.service";
 
 const createProduction = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id ? Number(req.params.id) : 0;
+  const id = req.params.id
+    ? Number(req.params.id)
+    : req.body?.id
+    ? Number(req.body.id)
+    : 0;
   const result = await ProductionService.createProduction(id, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Production created successfully",
+    message: id ? "Production updated successfully" : "Production created successfully",
     data: result,
   });
 });
@@ -23,6 +27,18 @@ const getProduction = catchAsync(async (req: Request, res: Response) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: "Production records retrieved successfully",
+    data: result,
+  });
+});
+
+const getProductionById = catchAsync(async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const result = await ProductionService.getProductionById(id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Production record retrieved successfully",
     data: result,
   });
 });
@@ -42,5 +58,6 @@ const deleteProduction = catchAsync(async (req: Request, res: Response) => {
 export const ProductionController = {
   createProduction,
   getProduction,
+  getProductionById,
   deleteProduction,
 };

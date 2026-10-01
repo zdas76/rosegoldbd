@@ -417,16 +417,15 @@ model ProductionExpenseItem {
 }
 
 model ProductionExpensesInventory {
-  id                Int      @id @default(autoincrement())
-  date              DateTime
-  proExpencesItemId Int
-  transectionId     Int?
-  unitRate          Float    @default(0.00)
-  expDuration       Float    @default(0.00)
-  amount            Float    @default(0.00)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
+  id                    Int                   @id @default(autoincrement())
+  date                  DateTime
+  proExpencesItemId     Int
+  transectionId         Int?
+  unitRate              Float                 @default(0.00)
+  expDuration           Float                 @default(0.00)
+  amount                Float                 @default(0.00)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
   transactionInfo       TransactionInfo?      @relation(fields: [transectionId], references: [id])
   productionExpenseItem ProductionExpenseItem @relation(fields: [proExpencesItemId], references: [id])
 
