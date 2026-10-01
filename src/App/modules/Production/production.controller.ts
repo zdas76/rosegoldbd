@@ -5,7 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { ProductionService } from "./production.service";
 
 const createProduction = catchAsync(async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+  const id = req.params.id ? Number(req.params.id) : 0;
   const result = await ProductionService.createProduction(id, req.body);
 
   sendResponse(res, {
