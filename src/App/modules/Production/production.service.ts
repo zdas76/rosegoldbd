@@ -232,23 +232,23 @@ const getProduction = async () => {
             },
           },
         },
-        pminventories: {
-          include: {
-            packingMaterial: {
-              select: {
-                id: true,
-                name: true,
-              },
+      },
+      pminventories: {
+        include: {
+          packingMaterial: {
+            select: {
+              id: true,
+              name: true,
             },
           },
         },
-        productionExpensesInventory: {
-          include: {
-            productionExpenseItem: {
-              selece: {
-                id: true,
-                expItemName: true,
-              },
+      },
+      productionExpensesInventory: {
+        include: {
+          productionExpenseItem: {
+            select: {
+              id: true,
+              expItemName: true,
             },
           },
         },
