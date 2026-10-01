@@ -44,6 +44,13 @@ const ingredientInclude = {
         select: {
           id: true,
           name: true,
+          unitPrice: true,
+          unit: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
@@ -56,6 +63,13 @@ const ingredientInclude = {
         select: {
           id: true,
           name: true,
+          unitPrice: true,
+          unit: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
@@ -68,6 +82,7 @@ const ingredientInclude = {
         select: {
           id: true,
           expItemName: true,
+          unitRate: true,
         },
       },
     },
