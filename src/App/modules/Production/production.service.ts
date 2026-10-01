@@ -22,7 +22,6 @@ const createProduction = async (
 
   const addProduction = await prisma.$transaction(async (tx) => {
     const VoucherNo = await GenerateVoucherNumber("PROD");
-
     const transactionInfo = await tx.transactionInfo.upsert({
       where: {
         id,
@@ -130,7 +129,7 @@ const createProduction = async (
               update: {
                 date: new Date(payload.date),
                 proExpencesItemId: expencesItem.id,
-                transactionId: transactionInfo.id,
+                transectionId: transactionInfo.id,
                 unitRate: Item.unitRate,
                 expDuration: Item.expDuration,
                 amount: Item.unitRate * Item.expDuration,
@@ -138,7 +137,7 @@ const createProduction = async (
               create: {
                 date: new Date(payload.date),
                 proExpencesItemId: expencesItem.id,
-                transactionId: transactionInfo.id,
+                transectionId: transactionInfo.id,
                 unitRate: Item.unitRate,
                 expDuration: Item.expDuration,
                 amount: Item.unitRate * Item.expDuration,
@@ -232,23 +231,23 @@ const getProduction = async () => {
             },
           },
         },
-        pminventories: {
-          include: {
-            packingMaterial: {
-              select: {
-                id: true,
-                name: true,
-              },
+      },
+      pminventories: {
+        include: {
+          packingMaterial: {
+            select: {
+              id: true,
+              name: true,
             },
           },
         },
-        productionExpensesInventory: {
-          include: {
-            productionExpenseItem: {
-              selece: {
-                id: true,
-                expItemName: true,
-              },
+      },
+      productionExpensesInventory: {
+        include: {
+          productionExpenseItem: {
+            select: {
+              id: true,
+              expItemName: true,
             },
           },
         },
@@ -261,6 +260,7 @@ const getProduction = async () => {
 
   return result;
 };
+
 
 const getProductionById = async (id: number) => {
   const result = await prisma.transactionInfo.findUnique({
@@ -283,23 +283,24 @@ const getProductionById = async (id: number) => {
             },
           },
         },
-        pminventories: {
-          include: {
-            packingMaterial: {
-              select: {
-                id: true,
-                name: true,
-              },
+
+      },
+      pminventories: {
+        include: {
+          packingMaterial: {
+            select: {
+              id: true,
+              name: true,
             },
           },
         },
-        productionExpensesInventory: {
-          include: {
-            productionExpenseItem: {
-              selece: {
-                id: true,
-                expItemName: true,
-              },
+      },
+      productionExpensesInventory: {
+        include: {
+          productionExpenseItem: {
+            select: {
+              id: true,
+              expItemName: true,
             },
           },
         },
