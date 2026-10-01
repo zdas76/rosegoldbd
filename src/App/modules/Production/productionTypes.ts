@@ -8,6 +8,7 @@ export interface Production {
   };
   rawMaterials?: [
     {
+      id?: number;
       rawId: number;
       quantity: number;
       unitPrice: number;
@@ -15,6 +16,7 @@ export interface Production {
   ];
   productionExpenses?: [
     {
+      id?: number;
       proExpencesItemId: number;
       unitRate: number;
       expDuration: number;
@@ -23,6 +25,7 @@ export interface Production {
   ];
   packingMaterials?: [
     {
+      id?: number;
       packingMaterialId: number;
       unitPrice: number;
       Qty: number;
