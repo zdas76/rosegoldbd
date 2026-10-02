@@ -1,19 +1,22 @@
-import { AccountsItem, Party, TransactionInfo, VoucherType } from "../../../generated/prisma/client";
+import {
+  AccountsItem,
+  Department,
+  Party,
+  TransactionInfo,
+  VoucherType,
+} from "../../../generated/prisma/client";
 import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
 import prisma from "../../../shared/prisma";
 
-
 //Create Purchase Received Voucher
 const createPurchestReceivedIntoDB = async (payload: any) => {
-
   const createPurchestVoucher = await prisma.$transaction(async (tx) => {
-
     const partyExists = await tx.party.findUnique({
       where: { id: payload.partyOrcustomerId },
     });
     if (!partyExists) {
       throw new Error(
-        `Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`
+        `Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`,
       );
     }
     const voucherNo = await GenerateVoucherNumber("PRV");
@@ -67,6 +70,7 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
           date: payload.date,
           rawId: item.rawOrProductId,
           unitPrice: item.unitPrice || 0,
+          department: Department.PURCHASE,
           quantityAdd: item.quantityAdd || 0,
           discount: item?.discount || 0,
           debitAmount: item.debitAmount,
@@ -79,6 +83,7 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
           quantityAdd: item.quantityAdd || 0,
           discount: item?.discount || 0,
           date: payload.date,
+          department: Department.PURCHASE,
           debitAmount: item.debitAmount,
         };
       }
@@ -89,23 +94,25 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
       inventoryData.map((item: any) =>
         tx.inventory.create({
           data: item,
-        })
-      )
+        }),
+      ),
     );
     let journalItem: any[] = [];
     // Step 7: Prepare Journal Credit Entries (For Payment Accounts)
-    payload.creditItem.forEach((item: any) => journalItem.push({
-      transectionId: createTransactionInfo.id,
-      accountsItemId: Number(item.accountsItemId),
-      creditAmount: Number(item.amount),
-      narration: item.narration ?? "",
-      date: new Date(payload.date),
-    }));
+    payload.creditItem.forEach((item: any) =>
+      journalItem.push({
+        transectionId: createTransactionInfo.id,
+        accountsItemId: Number(item.accountsItemId),
+        creditAmount: Number(item.amount),
+        narration: item.narration ?? "",
+        date: new Date(payload.date),
+      }),
+    );
 
     const debiteAccountsId = await tx.accountsItem.findFirst({
       where: {
         accountsItemName: {
-          contains: "inventory"
+          contains: "inventory",
         },
       },
     });
@@ -120,19 +127,17 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
       debitAmount: payload.grandTotal,
       narration: "Purchase Inventory Received",
       date: new Date(payload.date),
-
     });
 
     const debitAmount = journalItem.reduce(
       (total: number, item: any) => total + (Number(item.debitAmount) || 0),
-      0
+      0,
     );
 
     const creditAmount = journalItem.reduce(
       (total: number, item: any) => total + (Number(item.creditAmount) || 0),
-      0
+      0,
     );
-
 
     if (debitAmount !== creditAmount) {
       throw new Error("Debit and Credit amounts do not match");
@@ -150,7 +155,6 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
 // create Salse Voucher
 const createSalesVoucher = async (payload: any) => {
   const createSalseVoucher = await prisma.$transaction(async (tx) => {
-
     let isParty: Party | null = null;
 
     if (payload.partyType === "VENDOR") {
@@ -162,9 +166,7 @@ const createSalesVoucher = async (payload: any) => {
       });
 
       if (!isParty) {
-        throw new Error(
-          `Invalid Vendor`
-        );
+        throw new Error(`Invalid Vendor`);
       }
     }
 
@@ -224,8 +226,8 @@ const createSalesVoucher = async (payload: any) => {
       inventoryData.map((item: any) =>
         tx.inventory.create({
           data: item,
-        })
-      )
+        }),
+      ),
     );
 
     if (!Array.isArray(payload.debitItem) || payload.debitItem.length === 0) {
@@ -233,13 +235,15 @@ const createSalesVoucher = async (payload: any) => {
     }
 
     let journalItems = [];
-    payload.debitItem.map((item: any) => journalItems.push({
-      transectionId: createTransactionInfo.id,
-      accountsItemId: item.accountsItemId,
-      date: payload.date,
-      debitAmount: item.debitAmount,
-      narration: item?.narration || "",
-    }));
+    payload.debitItem.map((item: any) =>
+      journalItems.push({
+        transectionId: createTransactionInfo.id,
+        accountsItemId: item.accountsItemId,
+        date: payload.date,
+        debitAmount: item.debitAmount,
+        narration: item?.narration || "",
+      }),
+    );
 
     if (payload.totalDiscount && payload.totalDiscount > 0) {
       const discountItem: AccountsItem | any = await tx.accountsItem.findFirst({
@@ -264,7 +268,7 @@ const createSalesVoucher = async (payload: any) => {
     const debiteAccountsId = await tx.accountsItem.findFirst({
       where: {
         accountsItemName: {
-          contains: "inventory"
+          contains: "inventory",
         },
       },
     });
@@ -279,24 +283,21 @@ const createSalesVoucher = async (payload: any) => {
       creditAmount: payload.grandTotal,
       narration: "Purchase Inventory Received",
       date: new Date(payload.date),
-
     });
 
     const debitAmount = journalItems.reduce(
       (total: number, item: any) => total + (Number(item.debitAmount) || 0),
-      0
+      0,
     );
 
     const creditAmount = journalItems.reduce(
       (total: number, item: any) => total + (Number(item.creditAmount) || 0),
-      0
+      0,
     );
-
 
     if (debitAmount !== creditAmount) {
       throw new Error("Debit and Credit amounts do not match");
     }
-
 
     await tx.journal.createMany({
       data: journalItems,
@@ -309,7 +310,6 @@ const createSalesVoucher = async (payload: any) => {
 
 const createMaterialSaleVoucher = async (payload: any) => {
   const createSalseVoucher = await prisma.$transaction(async (tx) => {
-
     let isParty: Party | null = null;
 
     if (payload.partyType === "VENDOR") {
@@ -321,9 +321,7 @@ const createMaterialSaleVoucher = async (payload: any) => {
       });
 
       if (!isParty) {
-        throw new Error(
-          `Invalid Vendor`
-        );
+        throw new Error(`Invalid Vendor`);
       }
     }
 
@@ -382,8 +380,8 @@ const createMaterialSaleVoucher = async (payload: any) => {
       inventoryData.map((item: any) =>
         tx.inventory.create({
           data: item,
-        })
-      )
+        }),
+      ),
     );
 
     if (!Array.isArray(payload.debitItem) || payload.debitItem.length === 0) {
@@ -391,13 +389,15 @@ const createMaterialSaleVoucher = async (payload: any) => {
     }
 
     let journalItems = [];
-    payload.debitItem.map((item: any) => journalItems.push({
-      transectionId: createTransactionInfo.id,
-      accountsItemId: item.accountsItemId,
-      date: payload.date,
-      debitAmount: item.debitAmount,
-      narration: item?.narration || "",
-    }));
+    payload.debitItem.map((item: any) =>
+      journalItems.push({
+        transectionId: createTransactionInfo.id,
+        accountsItemId: item.accountsItemId,
+        date: payload.date,
+        debitAmount: item.debitAmount,
+        narration: item?.narration || "",
+      }),
+    );
 
     if (payload.totalDiscount && payload.totalDiscount > 0) {
       const discountItem: AccountsItem | any = await tx.accountsItem.findFirst({
@@ -422,7 +422,7 @@ const createMaterialSaleVoucher = async (payload: any) => {
     const debiteAccountsId = await tx.accountsItem.findFirst({
       where: {
         accountsItemName: {
-          contains: "inventory"
+          contains: "inventory",
         },
       },
     });
@@ -437,24 +437,21 @@ const createMaterialSaleVoucher = async (payload: any) => {
       creditAmount: payload.grandTotal,
       narration: "Purchase Inventory Received",
       date: new Date(payload.date),
-
     });
 
     const debitAmount = journalItems.reduce(
       (total: number, item: any) => total + (Number(item.debitAmount) || 0),
-      0
+      0,
     );
 
     const creditAmount = journalItems.reduce(
       (total: number, item: any) => total + (Number(item.creditAmount) || 0),
-      0
+      0,
     );
-
 
     if (debitAmount !== creditAmount) {
       throw new Error("Debit and Credit amounts do not match");
     }
-
 
     await tx.journal.createMany({
       data: journalItems,
@@ -479,7 +476,7 @@ const createPaymentVoucher = async (payload: any) => {
 
       if (!isParty) {
         throw new Error(
-          `Invalid partyId: ${payload.partyOrcustomerId}. No matching Party or Customer found.`
+          `Invalid partyId: ${payload.partyOrcustomerId}. No matching Party or Customer found.`,
         );
       }
     }
@@ -590,7 +587,7 @@ const createReceiptVoucher = async (payload: any) => {
 
       if (!isParty) {
         throw new Error(
-          `Invalid partyId: ${payload.partyOrcustomerId}. No matching Party or Customer found.`
+          `Invalid partyId: ${payload.partyOrcustomerId}. No matching Party or Customer found.`,
         );
       }
     }
@@ -859,8 +856,9 @@ j.accountsItemId,
     
   FROM journals j
   LEFT JOIN transaction_info t ON t.id = j.transectionId
-  WHERE j.accountsItemId = ${payLoad.accountsItemId} AND  j.date >= ${getDate?.date || new Date(payLoad.date)
-    } 
+  WHERE j.accountsItemId = ${payLoad.accountsItemId} AND  j.date >= ${
+    getDate?.date || new Date(payLoad.date)
+  } 
   GROUP BY j.accountsItemId`;
 
   return (result as any[])[0];
