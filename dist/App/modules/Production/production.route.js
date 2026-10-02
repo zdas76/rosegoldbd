@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const production_controller_1 = require("./production.controller");
 const router = express_1.default.Router();
 router.get("/", production_controller_1.ProductionController.getProduction);
-router.post("/", production_controller_1.ProductionController.createProduction);
+router.get("/:id", production_controller_1.ProductionController.getProductionById);
+router.patch("{/:id}", production_controller_1.ProductionController.createProduction);
 router.delete("/:id", production_controller_1.ProductionController.deleteProduction);
 exports.ProductionRouter = router;

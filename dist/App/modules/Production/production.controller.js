@@ -9,12 +9,16 @@ const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_codes_1 = require("http-status-codes");
 const production_service_1 = require("./production.service");
 const createProduction = (0, catchAsync_1.default)(async (req, res) => {
-    const id = Number(req.params.id);
+    const id = req.params.id
+        ? Number(req.params.id)
+        : req.body?.id
+            ? Number(req.body.id)
+            : 0;
     const result = await production_service_1.ProductionService.createProduction(id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
-        message: "Production created successfully",
+        message: id ? "Production updated successfully" : "Production created successfully",
         data: result,
     });
 });
@@ -24,6 +28,16 @@ const getProduction = (0, catchAsync_1.default)(async (req, res) => {
         statusCode: http_status_codes_1.StatusCodes.OK,
         success: true,
         message: "Production records retrieved successfully",
+        data: result,
+    });
+});
+const getProductionById = (0, catchAsync_1.default)(async (req, res) => {
+    const id = Number(req.params.id);
+    const result = await production_service_1.ProductionService.getProductionById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Production record retrieved successfully",
         data: result,
     });
 });
@@ -40,5 +54,6 @@ const deleteProduction = (0, catchAsync_1.default)(async (req, res) => {
 exports.ProductionController = {
     createProduction,
     getProduction,
+    getProductionById,
     deleteProduction,
 };
