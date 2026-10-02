@@ -44,12 +44,12 @@ const jwtHelpers_1 = require("../../../helpars/jwtHelpers");
 const config_1 = __importDefault(require("../../../config"));
 const emailSender_1 = __importDefault(require("./emailSender"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
-const enums_1 = require("../../../generated/prisma/enums");
+const prisma_2 = require("../../../generated/prisma");
 const loginUser = async (payLoad) => {
     const userData = await prisma_1.default.user.findFirst({
         where: {
             email: payLoad.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
     });
     if (!userData) {
@@ -87,7 +87,7 @@ const refreshToken = async (token) => {
     const checkUser = await prisma_1.default.employee.findUniqueOrThrow({
         where: {
             email: userData.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
     });
     const accessToken = jwtHelpers_1.jwtHelpers.generateToken({
@@ -115,7 +115,7 @@ const changePassword = async (user, data) => {
     await prisma_1.default.user.update({
         where: {
             email: userData.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         data: {
             password: hassPassWord,
@@ -129,7 +129,7 @@ const forgotPassword = async (playLoad) => {
     const userData = await prisma_1.default.user.findUniqueOrThrow({
         where: {
             email: playLoad.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
     });
     const resetPasswordToken = jwtHelpers_1.jwtHelpers.generateToken({
@@ -152,7 +152,7 @@ const resetPassword = async (token, payLoad) => {
     const userData = await prisma_1.default.employee.findUniqueOrThrow({
         where: {
             email: payLoad.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
     });
     const isValidToken = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.reset_pass_secret);
@@ -163,7 +163,7 @@ const resetPassword = async (token, payLoad) => {
     await prisma_1.default.user.update({
         where: {
             email: userData.email,
-            status: enums_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         data: {
             password: hassPassWord,
