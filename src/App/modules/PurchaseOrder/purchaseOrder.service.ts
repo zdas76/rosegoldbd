@@ -1,4 +1,4 @@
-import { Payload } from "./../../../generated/prisma/internal/prismaNamespace";
+
 import prisma from "../../../shared/prisma";
 import { StatusCodes } from "http-status-codes";
 import { paginationHelper } from "../../../helpars/paginationHelpers";
@@ -7,6 +7,7 @@ import { PurchaseOrderSearchAbleFields } from "./purchaseOrder.constant";
 import AppError from "../../errors/AppError";
 import { Prisma, Status } from "@prisma/client";
 import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
+
 import {
   CreatePurchaseOrder,
   UpdatePurchaseOrder,

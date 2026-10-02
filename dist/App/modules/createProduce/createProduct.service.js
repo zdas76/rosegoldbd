@@ -12,7 +12,7 @@ const createProductInfo = async (payLoad) => {
         const createTransaction = await tx.transactionInfo.create({
             data: {
                 voucherNo: payLoad.voucherNo,
-                voucherType: client_1.VoucherType.CREATEPRODUCT,
+                voucherType: client_1.VoucherType.FINISH_GOODS,
             },
         });
         // 2. check product item

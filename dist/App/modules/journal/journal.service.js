@@ -25,7 +25,6 @@ const createPurchestReceivedIntoDB = async (payload) => {
                 date: payload.date,
                 voucherType: client_1.VoucherType.PURCHASE,
                 partyId: partyExists.id,
-                requisitionNo: payload.requisitionNo || null,
             },
         });
         // 2. create bank transaction

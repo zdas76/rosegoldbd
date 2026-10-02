@@ -27,7 +27,6 @@ const createPurchestReceivedIntoDB = async (payload: any) => {
           date: payload.date,
           voucherType: VoucherType.PURCHASE,
           partyId: partyExists.id,
-          requisitionNo: payload.requisitionNo || null, 
         },
       });
 

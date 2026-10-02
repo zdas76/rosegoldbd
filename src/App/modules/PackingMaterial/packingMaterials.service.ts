@@ -45,7 +45,7 @@ const createPackingMaterial = async (payload: TpackingMaterial) => {
       inventory: {
         create: {
           date: openingDate,
-          Department: Department.MP_STORE,
+          department: Department.MP_STORE,
           unitPrice: Number(payload.unitPrice) || 0,
           quantityAdd: Number(payload.quantity) || 0,
           debitAmount: Number(payload.amount) || 0,
@@ -134,7 +134,7 @@ const createPackingMaterialsMany = async (payloads: TpackingMaterial[]) => {
           inventory: {
             create: {
               date: openingDate,
-              Department: Department.MP_STORE,
+              department: Department.MP_STORE,
               unitPrice: Number(payload.unitPrice) || 0,
               quantityAdd: Number(payload.quantity) || 0,
               debitAmount: Number(payload.amount) || 0,
