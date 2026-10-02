@@ -4,9 +4,10 @@ import { ProductionController } from "./production.controller";
 const router = express.Router();
 
 router.get("/", ProductionController.getProduction);
-router.get("/:id", ProductionController.getProductionById);
-router.patch("{/:id}", ProductionController.createProduction);
-router.delete("/:id", ProductionController.deleteProduction);
+
+router.patch("/{id}", ProductionController.createProduction);
+
+router.delete("/{id}", ProductionController.deleteProduction);
 
 export const ProductionRouter = router;
 

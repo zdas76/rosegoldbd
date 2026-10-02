@@ -22,6 +22,16 @@ export const GenerateVoucherNumber = async (type: string): Promise<string> => {
     voucherNo = lastVoucher?.orderNo;
   }
 
+  if (type === "PROD") {
+    const lastVoucher = await prisma.transactionInfo.findFirst({
+      where: { voucherType: VoucherType.PRODUCTION },
+      orderBy: { id: "desc" },
+      select: { voucherNo: true },
+    });
+
+    voucherNo = lastVoucher?.voucherNo;
+  }
+
   if (voucherNo) {
     const nextNumber = getNextNumber(voucherNo);
     const result = type + "-" + currentDate + "/" + nextNumber;
