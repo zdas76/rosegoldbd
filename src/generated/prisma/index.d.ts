@@ -656,8 +656,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.9.1
-   * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
+   * Prisma Client JS version: 7.10.0
+   * Query Engine version: 0edf323efd1d98336f3f0a68684b56f689b900d3
    */
   export type PrismaVersion = {
     client: string
@@ -11641,6 +11641,7 @@ export namespace Prisma {
     minPrice: number | null
     quantity: number | null
     unitPrice: number | null
+    alertQuantity: number | null
     unitId: number | null
     openingAmount: number | null
   }
@@ -11651,6 +11652,7 @@ export namespace Prisma {
     minPrice: number | null
     quantity: number | null
     unitPrice: number | null
+    alertQuantity: number | null
     unitId: number | null
     openingAmount: number | null
   }
@@ -11664,6 +11666,7 @@ export namespace Prisma {
     size: string | null
     quantity: number | null
     unitPrice: number | null
+    alertQuantity: number | null
     unitId: number | null
     openingDate: Date | null
     openingAmount: number | null
@@ -11682,6 +11685,7 @@ export namespace Prisma {
     size: string | null
     quantity: number | null
     unitPrice: number | null
+    alertQuantity: number | null
     unitId: number | null
     openingDate: Date | null
     openingAmount: number | null
@@ -11700,6 +11704,7 @@ export namespace Prisma {
     size: number
     quantity: number
     unitPrice: number
+    alertQuantity: number
     unitId: number
     openingDate: number
     openingAmount: number
@@ -11717,6 +11722,7 @@ export namespace Prisma {
     minPrice?: true
     quantity?: true
     unitPrice?: true
+    alertQuantity?: true
     unitId?: true
     openingAmount?: true
   }
@@ -11727,6 +11733,7 @@ export namespace Prisma {
     minPrice?: true
     quantity?: true
     unitPrice?: true
+    alertQuantity?: true
     unitId?: true
     openingAmount?: true
   }
@@ -11740,6 +11747,7 @@ export namespace Prisma {
     size?: true
     quantity?: true
     unitPrice?: true
+    alertQuantity?: true
     unitId?: true
     openingDate?: true
     openingAmount?: true
@@ -11758,6 +11766,7 @@ export namespace Prisma {
     size?: true
     quantity?: true
     unitPrice?: true
+    alertQuantity?: true
     unitId?: true
     openingDate?: true
     openingAmount?: true
@@ -11776,6 +11785,7 @@ export namespace Prisma {
     size?: true
     quantity?: true
     unitPrice?: true
+    alertQuantity?: true
     unitId?: true
     openingDate?: true
     openingAmount?: true
@@ -11881,6 +11891,7 @@ export namespace Prisma {
     size: string | null
     quantity: number
     unitPrice: number
+    alertQuantity: number
     unitId: number
     openingDate: Date
     openingAmount: number
@@ -11918,6 +11929,7 @@ export namespace Prisma {
     size?: boolean
     quantity?: boolean
     unitPrice?: boolean
+    alertQuantity?: boolean
     unitId?: boolean
     openingDate?: boolean
     openingAmount?: boolean
@@ -11943,6 +11955,7 @@ export namespace Prisma {
     size?: boolean
     quantity?: boolean
     unitPrice?: boolean
+    alertQuantity?: boolean
     unitId?: boolean
     openingDate?: boolean
     openingAmount?: boolean
@@ -11952,7 +11965,7 @@ export namespace Prisma {
     updateAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "subCategoryId" | "minPrice" | "size" | "quantity" | "unitPrice" | "unitId" | "openingDate" | "openingAmount" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "subCategoryId" | "minPrice" | "size" | "quantity" | "unitPrice" | "alertQuantity" | "unitId" | "openingDate" | "openingAmount" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     unit?: boolean | UnitDefaultArgs<ExtArgs>
     subCategory?: boolean | SubCategoryDefaultArgs<ExtArgs>
@@ -11978,6 +11991,7 @@ export namespace Prisma {
       size: string | null
       quantity: number
       unitPrice: number
+      alertQuantity: number
       unitId: number
       openingDate: Date
       openingAmount: number
@@ -12366,6 +12380,7 @@ export namespace Prisma {
     readonly size: FieldRef<"Product", 'String'>
     readonly quantity: FieldRef<"Product", 'Float'>
     readonly unitPrice: FieldRef<"Product", 'Float'>
+    readonly alertQuantity: FieldRef<"Product", 'Int'>
     readonly unitId: FieldRef<"Product", 'Int'>
     readonly openingDate: FieldRef<"Product", 'DateTime'>
     readonly openingAmount: FieldRef<"Product", 'Float'>
@@ -12804,8 +12819,7 @@ export namespace Prisma {
     unitId: number | null
     openingAmount: number | null
     quantity: number | null
-    ingredienteQty: number | null
-    ingredienteRate: number | null
+    alertQuantity: number | null
     unitPrice: number | null
   }
 
@@ -12814,8 +12828,7 @@ export namespace Prisma {
     unitId: number | null
     openingAmount: number | null
     quantity: number | null
-    ingredienteQty: number | null
-    ingredienteRate: number | null
+    alertQuantity: number | null
     unitPrice: number | null
   }
 
@@ -12827,8 +12840,7 @@ export namespace Prisma {
     openingDate: Date | null
     openingAmount: number | null
     quantity: number | null
-    ingredienteQty: number | null
-    ingredienteRate: number | null
+    alertQuantity: number | null
     unitPrice: number | null
     isDeleted: boolean | null
     status: $Enums.Status | null
@@ -12844,8 +12856,7 @@ export namespace Prisma {
     openingDate: Date | null
     openingAmount: number | null
     quantity: number | null
-    ingredienteQty: number | null
-    ingredienteRate: number | null
+    alertQuantity: number | null
     unitPrice: number | null
     isDeleted: boolean | null
     status: $Enums.Status | null
@@ -12861,8 +12872,7 @@ export namespace Prisma {
     openingDate: number
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate: number
+    alertQuantity: number
     unitPrice: number
     isDeleted: number
     status: number
@@ -12877,8 +12887,7 @@ export namespace Prisma {
     unitId?: true
     openingAmount?: true
     quantity?: true
-    ingredienteQty?: true
-    ingredienteRate?: true
+    alertQuantity?: true
     unitPrice?: true
   }
 
@@ -12887,8 +12896,7 @@ export namespace Prisma {
     unitId?: true
     openingAmount?: true
     quantity?: true
-    ingredienteQty?: true
-    ingredienteRate?: true
+    alertQuantity?: true
     unitPrice?: true
   }
 
@@ -12900,8 +12908,7 @@ export namespace Prisma {
     openingDate?: true
     openingAmount?: true
     quantity?: true
-    ingredienteQty?: true
-    ingredienteRate?: true
+    alertQuantity?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -12917,8 +12924,7 @@ export namespace Prisma {
     openingDate?: true
     openingAmount?: true
     quantity?: true
-    ingredienteQty?: true
-    ingredienteRate?: true
+    alertQuantity?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -12934,8 +12940,7 @@ export namespace Prisma {
     openingDate?: true
     openingAmount?: true
     quantity?: true
-    ingredienteQty?: true
-    ingredienteRate?: true
+    alertQuantity?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -13038,8 +13043,7 @@ export namespace Prisma {
     openingDate: Date
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate: number | null
+    alertQuantity: number
     unitPrice: number
     isDeleted: boolean
     status: $Enums.Status
@@ -13074,8 +13078,7 @@ export namespace Prisma {
     openingDate?: boolean
     openingAmount?: boolean
     quantity?: boolean
-    ingredienteQty?: boolean
-    ingredienteRate?: boolean
+    alertQuantity?: boolean
     unitPrice?: boolean
     isDeleted?: boolean
     status?: boolean
@@ -13098,8 +13101,7 @@ export namespace Prisma {
     openingDate?: boolean
     openingAmount?: boolean
     quantity?: boolean
-    ingredienteQty?: boolean
-    ingredienteRate?: boolean
+    alertQuantity?: boolean
     unitPrice?: boolean
     isDeleted?: boolean
     status?: boolean
@@ -13107,7 +13109,7 @@ export namespace Prisma {
     updateAt?: boolean
   }
 
-  export type RawMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unitId" | "description" | "openingDate" | "openingAmount" | "quantity" | "ingredienteQty" | "ingredienteRate" | "unitPrice" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["rawMaterial"]>
+  export type RawMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unitId" | "description" | "openingDate" | "openingAmount" | "quantity" | "alertQuantity" | "unitPrice" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["rawMaterial"]>
   export type RawMaterialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     unit?: boolean | UnitDefaultArgs<ExtArgs>
     inventory?: boolean | RawMaterial$inventoryArgs<ExtArgs>
@@ -13132,8 +13134,7 @@ export namespace Prisma {
       openingDate: Date
       openingAmount: number
       quantity: number
-      ingredienteQty: number
-      ingredienteRate: number | null
+      alertQuantity: number
       unitPrice: number
       isDeleted: boolean
       status: $Enums.Status
@@ -13519,8 +13520,7 @@ export namespace Prisma {
     readonly openingDate: FieldRef<"RawMaterial", 'DateTime'>
     readonly openingAmount: FieldRef<"RawMaterial", 'Float'>
     readonly quantity: FieldRef<"RawMaterial", 'Float'>
-    readonly ingredienteQty: FieldRef<"RawMaterial", 'Float'>
-    readonly ingredienteRate: FieldRef<"RawMaterial", 'Float'>
+    readonly alertQuantity: FieldRef<"RawMaterial", 'Int'>
     readonly unitPrice: FieldRef<"RawMaterial", 'Float'>
     readonly isDeleted: FieldRef<"RawMaterial", 'Boolean'>
     readonly status: FieldRef<"RawMaterial", 'Status'>
@@ -13980,8 +13980,8 @@ export namespace Prisma {
     id: number | null
     unitId: number | null
     quantity: number | null
+    alertQuantity: number | null
     openingAmount: number | null
-    ingredienteQty: number | null
     unitPrice: number | null
   }
 
@@ -13989,8 +13989,8 @@ export namespace Prisma {
     id: number | null
     unitId: number | null
     quantity: number | null
+    alertQuantity: number | null
     openingAmount: number | null
-    ingredienteQty: number | null
     unitPrice: number | null
   }
 
@@ -14001,8 +14001,8 @@ export namespace Prisma {
     description: string | null
     openingDate: Date | null
     quantity: number | null
+    alertQuantity: number | null
     openingAmount: number | null
-    ingredienteQty: number | null
     unitPrice: number | null
     isDeleted: boolean | null
     status: $Enums.Status | null
@@ -14017,8 +14017,8 @@ export namespace Prisma {
     description: string | null
     openingDate: Date | null
     quantity: number | null
+    alertQuantity: number | null
     openingAmount: number | null
-    ingredienteQty: number | null
     unitPrice: number | null
     isDeleted: boolean | null
     status: $Enums.Status | null
@@ -14033,8 +14033,8 @@ export namespace Prisma {
     description: number
     openingDate: number
     quantity: number
+    alertQuantity: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted: number
     status: number
@@ -14048,8 +14048,8 @@ export namespace Prisma {
     id?: true
     unitId?: true
     quantity?: true
+    alertQuantity?: true
     openingAmount?: true
-    ingredienteQty?: true
     unitPrice?: true
   }
 
@@ -14057,8 +14057,8 @@ export namespace Prisma {
     id?: true
     unitId?: true
     quantity?: true
+    alertQuantity?: true
     openingAmount?: true
-    ingredienteQty?: true
     unitPrice?: true
   }
 
@@ -14069,8 +14069,8 @@ export namespace Prisma {
     description?: true
     openingDate?: true
     quantity?: true
+    alertQuantity?: true
     openingAmount?: true
-    ingredienteQty?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -14085,8 +14085,8 @@ export namespace Prisma {
     description?: true
     openingDate?: true
     quantity?: true
+    alertQuantity?: true
     openingAmount?: true
-    ingredienteQty?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -14101,8 +14101,8 @@ export namespace Prisma {
     description?: true
     openingDate?: true
     quantity?: true
+    alertQuantity?: true
     openingAmount?: true
-    ingredienteQty?: true
     unitPrice?: true
     isDeleted?: true
     status?: true
@@ -14204,8 +14204,8 @@ export namespace Prisma {
     description: string | null
     openingDate: Date
     quantity: number
+    alertQuantity: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted: boolean
     status: $Enums.Status
@@ -14239,8 +14239,8 @@ export namespace Prisma {
     description?: boolean
     openingDate?: boolean
     quantity?: boolean
+    alertQuantity?: boolean
     openingAmount?: boolean
-    ingredienteQty?: boolean
     unitPrice?: boolean
     isDeleted?: boolean
     status?: boolean
@@ -14263,8 +14263,8 @@ export namespace Prisma {
     description?: boolean
     openingDate?: boolean
     quantity?: boolean
+    alertQuantity?: boolean
     openingAmount?: boolean
-    ingredienteQty?: boolean
     unitPrice?: boolean
     isDeleted?: boolean
     status?: boolean
@@ -14272,7 +14272,7 @@ export namespace Prisma {
     updateAt?: boolean
   }
 
-  export type PackingMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unitId" | "description" | "openingDate" | "quantity" | "openingAmount" | "ingredienteQty" | "unitPrice" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["packingMaterial"]>
+  export type PackingMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unitId" | "description" | "openingDate" | "quantity" | "alertQuantity" | "openingAmount" | "unitPrice" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["packingMaterial"]>
   export type PackingMaterialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     unit?: boolean | UnitDefaultArgs<ExtArgs>
     inventory?: boolean | PackingMaterial$inventoryArgs<ExtArgs>
@@ -14298,8 +14298,8 @@ export namespace Prisma {
       description: string | null
       openingDate: Date
       quantity: number
+      alertQuantity: number
       openingAmount: number
-      ingredienteQty: number
       unitPrice: number
       isDeleted: boolean
       status: $Enums.Status
@@ -14685,8 +14685,8 @@ export namespace Prisma {
     readonly description: FieldRef<"PackingMaterial", 'String'>
     readonly openingDate: FieldRef<"PackingMaterial", 'DateTime'>
     readonly quantity: FieldRef<"PackingMaterial", 'Float'>
+    readonly alertQuantity: FieldRef<"PackingMaterial", 'Int'>
     readonly openingAmount: FieldRef<"PackingMaterial", 'Float'>
-    readonly ingredienteQty: FieldRef<"PackingMaterial", 'Float'>
     readonly unitPrice: FieldRef<"PackingMaterial", 'Float'>
     readonly isDeleted: FieldRef<"PackingMaterial", 'Boolean'>
     readonly status: FieldRef<"PackingMaterial", 'Status'>
@@ -19413,11 +19413,14 @@ export namespace Prisma {
     rawId: number | null
     transactionId: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     packingMaterialId: number | null
   }
 
@@ -19427,11 +19430,14 @@ export namespace Prisma {
     rawId: number | null
     transactionId: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     packingMaterialId: number | null
   }
 
@@ -19443,11 +19449,14 @@ export namespace Prisma {
     transactionId: number | null
     department: $Enums.Department | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
@@ -19463,11 +19472,14 @@ export namespace Prisma {
     transactionId: number | null
     department: $Enums.Department | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
@@ -19483,11 +19495,14 @@ export namespace Prisma {
     transactionId: number
     department: number
     unitPrice: number
+    integratedUnitPrice: number
     quantityAdd: number
     quantityLess: number
     discount: number
     debitAmount: number
     creditAmount: number
+    integratedDebitAmount: number
+    integratedCreditAmount: number
     isOpening: number
     status: number
     createdAt: number
@@ -19503,11 +19518,14 @@ export namespace Prisma {
     rawId?: true
     transactionId?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     packingMaterialId?: true
   }
 
@@ -19517,11 +19535,14 @@ export namespace Prisma {
     rawId?: true
     transactionId?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     packingMaterialId?: true
   }
 
@@ -19533,11 +19554,14 @@ export namespace Prisma {
     transactionId?: true
     department?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -19553,11 +19577,14 @@ export namespace Prisma {
     transactionId?: true
     department?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -19573,11 +19600,14 @@ export namespace Prisma {
     transactionId?: true
     department?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -19680,11 +19710,14 @@ export namespace Prisma {
     transactionId: number | null
     department: $Enums.Department
     unitPrice: number
+    integratedUnitPrice: number
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean
     status: $Enums.Status
     createdAt: Date
@@ -19719,11 +19752,14 @@ export namespace Prisma {
     transactionId?: boolean
     department?: boolean
     unitPrice?: boolean
+    integratedUnitPrice?: boolean
     quantityAdd?: boolean
     quantityLess?: boolean
     discount?: boolean
     debitAmount?: boolean
     creditAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     isOpening?: boolean
     status?: boolean
     createdAt?: boolean
@@ -19745,11 +19781,14 @@ export namespace Prisma {
     transactionId?: boolean
     department?: boolean
     unitPrice?: boolean
+    integratedUnitPrice?: boolean
     quantityAdd?: boolean
     quantityLess?: boolean
     discount?: boolean
     debitAmount?: boolean
     creditAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     isOpening?: boolean
     status?: boolean
     createdAt?: boolean
@@ -19757,7 +19796,7 @@ export namespace Prisma {
     packingMaterialId?: boolean
   }
 
-  export type InventoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "productId" | "rawId" | "transactionId" | "department" | "unitPrice" | "quantityAdd" | "quantityLess" | "discount" | "debitAmount" | "creditAmount" | "isOpening" | "status" | "createdAt" | "updatedAt" | "packingMaterialId", ExtArgs["result"]["inventory"]>
+  export type InventoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "productId" | "rawId" | "transactionId" | "department" | "unitPrice" | "integratedUnitPrice" | "quantityAdd" | "quantityLess" | "discount" | "debitAmount" | "creditAmount" | "integratedDebitAmount" | "integratedCreditAmount" | "isOpening" | "status" | "createdAt" | "updatedAt" | "packingMaterialId", ExtArgs["result"]["inventory"]>
   export type InventoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | Inventory$productArgs<ExtArgs>
     raWMaterial?: boolean | Inventory$raWMaterialArgs<ExtArgs>
@@ -19781,11 +19820,14 @@ export namespace Prisma {
       transactionId: number | null
       department: $Enums.Department
       unitPrice: number
+      integratedUnitPrice: number
       quantityAdd: number | null
       quantityLess: number | null
       discount: number | null
       debitAmount: number | null
       creditAmount: number | null
+      integratedDebitAmount: number | null
+      integratedCreditAmount: number | null
       isOpening: boolean
       status: $Enums.Status
       createdAt: Date
@@ -20171,11 +20213,14 @@ export namespace Prisma {
     readonly transactionId: FieldRef<"Inventory", 'Int'>
     readonly department: FieldRef<"Inventory", 'Department'>
     readonly unitPrice: FieldRef<"Inventory", 'Float'>
+    readonly integratedUnitPrice: FieldRef<"Inventory", 'Float'>
     readonly quantityAdd: FieldRef<"Inventory", 'Float'>
     readonly quantityLess: FieldRef<"Inventory", 'Float'>
     readonly discount: FieldRef<"Inventory", 'Float'>
     readonly debitAmount: FieldRef<"Inventory", 'Float'>
     readonly creditAmount: FieldRef<"Inventory", 'Float'>
+    readonly integratedDebitAmount: FieldRef<"Inventory", 'Float'>
+    readonly integratedCreditAmount: FieldRef<"Inventory", 'Float'>
     readonly isOpening: FieldRef<"Inventory", 'Boolean'>
     readonly status: FieldRef<"Inventory", 'Status'>
     readonly createdAt: FieldRef<"Inventory", 'DateTime'>
@@ -20642,11 +20687,14 @@ export namespace Prisma {
     perUnitQty: number | null
     perUnitCost: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
   }
 
   export type PMInventorySumAggregateOutputType = {
@@ -20656,11 +20704,14 @@ export namespace Prisma {
     perUnitQty: number | null
     perUnitCost: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
   }
 
   export type PMInventoryMinAggregateOutputType = {
@@ -20672,11 +20723,14 @@ export namespace Prisma {
     perUnitQty: number | null
     perUnitCost: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
@@ -20692,11 +20746,14 @@ export namespace Prisma {
     perUnitQty: number | null
     perUnitCost: number | null
     unitPrice: number | null
+    integratedUnitPrice: number | null
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
@@ -20712,11 +20769,14 @@ export namespace Prisma {
     perUnitQty: number
     perUnitCost: number
     unitPrice: number
+    integratedUnitPrice: number
     quantityAdd: number
     quantityLess: number
     discount: number
     debitAmount: number
     creditAmount: number
+    integratedDebitAmount: number
+    integratedCreditAmount: number
     isOpening: number
     status: number
     createdAt: number
@@ -20732,11 +20792,14 @@ export namespace Prisma {
     perUnitQty?: true
     perUnitCost?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
   }
 
   export type PMInventorySumAggregateInputType = {
@@ -20746,11 +20809,14 @@ export namespace Prisma {
     perUnitQty?: true
     perUnitCost?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
   }
 
   export type PMInventoryMinAggregateInputType = {
@@ -20762,11 +20828,14 @@ export namespace Prisma {
     perUnitQty?: true
     perUnitCost?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -20782,11 +20851,14 @@ export namespace Prisma {
     perUnitQty?: true
     perUnitCost?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -20802,11 +20874,14 @@ export namespace Prisma {
     perUnitQty?: true
     perUnitCost?: true
     unitPrice?: true
+    integratedUnitPrice?: true
     quantityAdd?: true
     quantityLess?: true
     discount?: true
     debitAmount?: true
     creditAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     isOpening?: true
     status?: true
     createdAt?: true
@@ -20909,11 +20984,14 @@ export namespace Prisma {
     perUnitQty: number | null
     perUnitCost: number | null
     unitPrice: number
+    integratedUnitPrice: number
     quantityAdd: number | null
     quantityLess: number | null
     discount: number | null
     debitAmount: number | null
     creditAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     isOpening: boolean
     status: $Enums.Status
     createdAt: Date
@@ -20948,11 +21026,14 @@ export namespace Prisma {
     perUnitQty?: boolean
     perUnitCost?: boolean
     unitPrice?: boolean
+    integratedUnitPrice?: boolean
     quantityAdd?: boolean
     quantityLess?: boolean
     discount?: boolean
     debitAmount?: boolean
     creditAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     isOpening?: boolean
     status?: boolean
     createdAt?: boolean
@@ -20972,18 +21053,21 @@ export namespace Prisma {
     perUnitQty?: boolean
     perUnitCost?: boolean
     unitPrice?: boolean
+    integratedUnitPrice?: boolean
     quantityAdd?: boolean
     quantityLess?: boolean
     discount?: boolean
     debitAmount?: boolean
     creditAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     isOpening?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PMInventoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "packingMaterialId" | "transactionId" | "department" | "perUnitQty" | "perUnitCost" | "unitPrice" | "quantityAdd" | "quantityLess" | "discount" | "debitAmount" | "creditAmount" | "isOpening" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["pMInventory"]>
+  export type PMInventoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "packingMaterialId" | "transactionId" | "department" | "perUnitQty" | "perUnitCost" | "unitPrice" | "integratedUnitPrice" | "quantityAdd" | "quantityLess" | "discount" | "debitAmount" | "creditAmount" | "integratedDebitAmount" | "integratedCreditAmount" | "isOpening" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["pMInventory"]>
   export type PMInventoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactionInfo?: boolean | PMInventory$transactionInfoArgs<ExtArgs>
     packingMaterial?: boolean | PackingMaterialDefaultArgs<ExtArgs>
@@ -21004,11 +21088,14 @@ export namespace Prisma {
       perUnitQty: number | null
       perUnitCost: number | null
       unitPrice: number
+      integratedUnitPrice: number
       quantityAdd: number | null
       quantityLess: number | null
       discount: number | null
       debitAmount: number | null
       creditAmount: number | null
+      integratedDebitAmount: number | null
+      integratedCreditAmount: number | null
       isOpening: boolean
       status: $Enums.Status
       createdAt: Date
@@ -21392,11 +21479,14 @@ export namespace Prisma {
     readonly perUnitQty: FieldRef<"PMInventory", 'Float'>
     readonly perUnitCost: FieldRef<"PMInventory", 'Float'>
     readonly unitPrice: FieldRef<"PMInventory", 'Float'>
+    readonly integratedUnitPrice: FieldRef<"PMInventory", 'Float'>
     readonly quantityAdd: FieldRef<"PMInventory", 'Float'>
     readonly quantityLess: FieldRef<"PMInventory", 'Float'>
     readonly discount: FieldRef<"PMInventory", 'Float'>
     readonly debitAmount: FieldRef<"PMInventory", 'Float'>
     readonly creditAmount: FieldRef<"PMInventory", 'Float'>
+    readonly integratedDebitAmount: FieldRef<"PMInventory", 'Float'>
+    readonly integratedCreditAmount: FieldRef<"PMInventory", 'Float'>
     readonly isOpening: FieldRef<"PMInventory", 'Boolean'>
     readonly status: FieldRef<"PMInventory", 'Status'>
     readonly createdAt: FieldRef<"PMInventory", 'DateTime'>
@@ -22979,16 +23069,22 @@ export namespace Prisma {
     id: number | null
     transectionId: number | null
     accountsItemId: number | null
+    checkOrRTGS: number | null
     creditAmount: number | null
     debitAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
   }
 
   export type JournalSumAggregateOutputType = {
     id: number | null
     transectionId: number | null
     accountsItemId: number | null
+    checkOrRTGS: number | null
     creditAmount: number | null
     debitAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
   }
 
   export type JournalMinAggregateOutputType = {
@@ -22996,8 +23092,11 @@ export namespace Prisma {
     transectionId: number | null
     accountsItemId: number | null
     date: Date | null
+    checkOrRTGS: number | null
     creditAmount: number | null
     debitAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     narration: string | null
     isClosing: boolean | null
     createdAt: Date | null
@@ -23009,8 +23108,11 @@ export namespace Prisma {
     transectionId: number | null
     accountsItemId: number | null
     date: Date | null
+    checkOrRTGS: number | null
     creditAmount: number | null
     debitAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     narration: string | null
     isClosing: boolean | null
     createdAt: Date | null
@@ -23022,8 +23124,11 @@ export namespace Prisma {
     transectionId: number
     accountsItemId: number
     date: number
+    checkOrRTGS: number
     creditAmount: number
     debitAmount: number
+    integratedDebitAmount: number
+    integratedCreditAmount: number
     narration: number
     isClosing: number
     createdAt: number
@@ -23036,16 +23141,22 @@ export namespace Prisma {
     id?: true
     transectionId?: true
     accountsItemId?: true
+    checkOrRTGS?: true
     creditAmount?: true
     debitAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
   }
 
   export type JournalSumAggregateInputType = {
     id?: true
     transectionId?: true
     accountsItemId?: true
+    checkOrRTGS?: true
     creditAmount?: true
     debitAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
   }
 
   export type JournalMinAggregateInputType = {
@@ -23053,8 +23164,11 @@ export namespace Prisma {
     transectionId?: true
     accountsItemId?: true
     date?: true
+    checkOrRTGS?: true
     creditAmount?: true
     debitAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     narration?: true
     isClosing?: true
     createdAt?: true
@@ -23066,8 +23180,11 @@ export namespace Prisma {
     transectionId?: true
     accountsItemId?: true
     date?: true
+    checkOrRTGS?: true
     creditAmount?: true
     debitAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     narration?: true
     isClosing?: true
     createdAt?: true
@@ -23079,8 +23196,11 @@ export namespace Prisma {
     transectionId?: true
     accountsItemId?: true
     date?: true
+    checkOrRTGS?: true
     creditAmount?: true
     debitAmount?: true
+    integratedDebitAmount?: true
+    integratedCreditAmount?: true
     narration?: true
     isClosing?: true
     createdAt?: true
@@ -23179,8 +23299,11 @@ export namespace Prisma {
     transectionId: number | null
     accountsItemId: number | null
     date: Date
+    checkOrRTGS: number | null
     creditAmount: number | null
     debitAmount: number | null
+    integratedDebitAmount: number | null
+    integratedCreditAmount: number | null
     narration: string | null
     isClosing: boolean
     createdAt: Date
@@ -23211,8 +23334,11 @@ export namespace Prisma {
     transectionId?: boolean
     accountsItemId?: boolean
     date?: boolean
+    checkOrRTGS?: boolean
     creditAmount?: boolean
     debitAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     narration?: boolean
     isClosing?: boolean
     createdAt?: boolean
@@ -23228,15 +23354,18 @@ export namespace Prisma {
     transectionId?: boolean
     accountsItemId?: boolean
     date?: boolean
+    checkOrRTGS?: boolean
     creditAmount?: boolean
     debitAmount?: boolean
+    integratedDebitAmount?: boolean
+    integratedCreditAmount?: boolean
     narration?: boolean
     isClosing?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type JournalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transectionId" | "accountsItemId" | "date" | "creditAmount" | "debitAmount" | "narration" | "isClosing" | "createdAt" | "updatedAt", ExtArgs["result"]["journal"]>
+  export type JournalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transectionId" | "accountsItemId" | "date" | "checkOrRTGS" | "creditAmount" | "debitAmount" | "integratedDebitAmount" | "integratedCreditAmount" | "narration" | "isClosing" | "createdAt" | "updatedAt", ExtArgs["result"]["journal"]>
   export type JournalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactionInfo?: boolean | Journal$transactionInfoArgs<ExtArgs>
     accountsItem?: boolean | Journal$accountsItemArgs<ExtArgs>
@@ -23253,8 +23382,11 @@ export namespace Prisma {
       transectionId: number | null
       accountsItemId: number | null
       date: Date
+      checkOrRTGS: number | null
       creditAmount: number | null
       debitAmount: number | null
+      integratedDebitAmount: number | null
+      integratedCreditAmount: number | null
       narration: string | null
       isClosing: boolean
       createdAt: Date
@@ -23634,8 +23766,11 @@ export namespace Prisma {
     readonly transectionId: FieldRef<"Journal", 'Int'>
     readonly accountsItemId: FieldRef<"Journal", 'Int'>
     readonly date: FieldRef<"Journal", 'DateTime'>
+    readonly checkOrRTGS: FieldRef<"Journal", 'Float'>
     readonly creditAmount: FieldRef<"Journal", 'Float'>
     readonly debitAmount: FieldRef<"Journal", 'Float'>
+    readonly integratedDebitAmount: FieldRef<"Journal", 'Float'>
+    readonly integratedCreditAmount: FieldRef<"Journal", 'Float'>
     readonly narration: FieldRef<"Journal", 'String'>
     readonly isClosing: FieldRef<"Journal", 'Boolean'>
     readonly createdAt: FieldRef<"Journal", 'DateTime'>
@@ -30234,6 +30369,7 @@ export namespace Prisma {
     size: 'size',
     quantity: 'quantity',
     unitPrice: 'unitPrice',
+    alertQuantity: 'alertQuantity',
     unitId: 'unitId',
     openingDate: 'openingDate',
     openingAmount: 'openingAmount',
@@ -30254,8 +30390,7 @@ export namespace Prisma {
     openingDate: 'openingDate',
     openingAmount: 'openingAmount',
     quantity: 'quantity',
-    ingredienteQty: 'ingredienteQty',
-    ingredienteRate: 'ingredienteRate',
+    alertQuantity: 'alertQuantity',
     unitPrice: 'unitPrice',
     isDeleted: 'isDeleted',
     status: 'status',
@@ -30273,8 +30408,8 @@ export namespace Prisma {
     description: 'description',
     openingDate: 'openingDate',
     quantity: 'quantity',
+    alertQuantity: 'alertQuantity',
     openingAmount: 'openingAmount',
-    ingredienteQty: 'ingredienteQty',
     unitPrice: 'unitPrice',
     isDeleted: 'isDeleted',
     status: 'status',
@@ -30351,11 +30486,14 @@ export namespace Prisma {
     transactionId: 'transactionId',
     department: 'department',
     unitPrice: 'unitPrice',
+    integratedUnitPrice: 'integratedUnitPrice',
     quantityAdd: 'quantityAdd',
     quantityLess: 'quantityLess',
     discount: 'discount',
     debitAmount: 'debitAmount',
     creditAmount: 'creditAmount',
+    integratedDebitAmount: 'integratedDebitAmount',
+    integratedCreditAmount: 'integratedCreditAmount',
     isOpening: 'isOpening',
     status: 'status',
     createdAt: 'createdAt',
@@ -30375,11 +30513,14 @@ export namespace Prisma {
     perUnitQty: 'perUnitQty',
     perUnitCost: 'perUnitCost',
     unitPrice: 'unitPrice',
+    integratedUnitPrice: 'integratedUnitPrice',
     quantityAdd: 'quantityAdd',
     quantityLess: 'quantityLess',
     discount: 'discount',
     debitAmount: 'debitAmount',
     creditAmount: 'creditAmount',
+    integratedDebitAmount: 'integratedDebitAmount',
+    integratedCreditAmount: 'integratedCreditAmount',
     isOpening: 'isOpening',
     status: 'status',
     createdAt: 'createdAt',
@@ -30409,8 +30550,11 @@ export namespace Prisma {
     transectionId: 'transectionId',
     accountsItemId: 'accountsItemId',
     date: 'date',
+    checkOrRTGS: 'checkOrRTGS',
     creditAmount: 'creditAmount',
     debitAmount: 'debitAmount',
+    integratedDebitAmount: 'integratedDebitAmount',
+    integratedCreditAmount: 'integratedCreditAmount',
     narration: 'narration',
     isClosing: 'isClosing',
     createdAt: 'createdAt',
@@ -31277,6 +31421,7 @@ export namespace Prisma {
     size?: StringNullableFilter<"Product"> | string | null
     quantity?: FloatFilter<"Product"> | number
     unitPrice?: FloatFilter<"Product"> | number
+    alertQuantity?: IntFilter<"Product"> | number
     unitId?: IntFilter<"Product"> | number
     openingDate?: DateTimeFilter<"Product"> | Date | string
     openingAmount?: FloatFilter<"Product"> | number
@@ -31299,6 +31444,7 @@ export namespace Prisma {
     size?: SortOrderInput | SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingDate?: SortOrder
     openingAmount?: SortOrder
@@ -31325,6 +31471,7 @@ export namespace Prisma {
     size?: StringNullableFilter<"Product"> | string | null
     quantity?: FloatFilter<"Product"> | number
     unitPrice?: FloatFilter<"Product"> | number
+    alertQuantity?: IntFilter<"Product"> | number
     unitId?: IntFilter<"Product"> | number
     openingDate?: DateTimeFilter<"Product"> | Date | string
     openingAmount?: FloatFilter<"Product"> | number
@@ -31347,6 +31494,7 @@ export namespace Prisma {
     size?: SortOrderInput | SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingDate?: SortOrder
     openingAmount?: SortOrder
@@ -31373,6 +31521,7 @@ export namespace Prisma {
     size?: StringNullableWithAggregatesFilter<"Product"> | string | null
     quantity?: FloatWithAggregatesFilter<"Product"> | number
     unitPrice?: FloatWithAggregatesFilter<"Product"> | number
+    alertQuantity?: IntWithAggregatesFilter<"Product"> | number
     unitId?: IntWithAggregatesFilter<"Product"> | number
     openingDate?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     openingAmount?: FloatWithAggregatesFilter<"Product"> | number
@@ -31393,8 +31542,7 @@ export namespace Prisma {
     openingDate?: DateTimeFilter<"RawMaterial"> | Date | string
     openingAmount?: FloatFilter<"RawMaterial"> | number
     quantity?: FloatFilter<"RawMaterial"> | number
-    ingredienteQty?: FloatFilter<"RawMaterial"> | number
-    ingredienteRate?: FloatNullableFilter<"RawMaterial"> | number | null
+    alertQuantity?: IntFilter<"RawMaterial"> | number
     unitPrice?: FloatFilter<"RawMaterial"> | number
     isDeleted?: BoolFilter<"RawMaterial"> | boolean
     status?: EnumStatusFilter<"RawMaterial"> | $Enums.Status
@@ -31414,8 +31562,7 @@ export namespace Prisma {
     openingDate?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrderInput | SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -31439,8 +31586,7 @@ export namespace Prisma {
     openingDate?: DateTimeFilter<"RawMaterial"> | Date | string
     openingAmount?: FloatFilter<"RawMaterial"> | number
     quantity?: FloatFilter<"RawMaterial"> | number
-    ingredienteQty?: FloatFilter<"RawMaterial"> | number
-    ingredienteRate?: FloatNullableFilter<"RawMaterial"> | number | null
+    alertQuantity?: IntFilter<"RawMaterial"> | number
     unitPrice?: FloatFilter<"RawMaterial"> | number
     isDeleted?: BoolFilter<"RawMaterial"> | boolean
     status?: EnumStatusFilter<"RawMaterial"> | $Enums.Status
@@ -31460,8 +31606,7 @@ export namespace Prisma {
     openingDate?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrderInput | SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -31485,8 +31630,7 @@ export namespace Prisma {
     openingDate?: DateTimeWithAggregatesFilter<"RawMaterial"> | Date | string
     openingAmount?: FloatWithAggregatesFilter<"RawMaterial"> | number
     quantity?: FloatWithAggregatesFilter<"RawMaterial"> | number
-    ingredienteQty?: FloatWithAggregatesFilter<"RawMaterial"> | number
-    ingredienteRate?: FloatNullableWithAggregatesFilter<"RawMaterial"> | number | null
+    alertQuantity?: IntWithAggregatesFilter<"RawMaterial"> | number
     unitPrice?: FloatWithAggregatesFilter<"RawMaterial"> | number
     isDeleted?: BoolWithAggregatesFilter<"RawMaterial"> | boolean
     status?: EnumStatusWithAggregatesFilter<"RawMaterial"> | $Enums.Status
@@ -31504,8 +31648,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"PackingMaterial"> | string | null
     openingDate?: DateTimeFilter<"PackingMaterial"> | Date | string
     quantity?: FloatFilter<"PackingMaterial"> | number
+    alertQuantity?: IntFilter<"PackingMaterial"> | number
     openingAmount?: FloatFilter<"PackingMaterial"> | number
-    ingredienteQty?: FloatFilter<"PackingMaterial"> | number
     unitPrice?: FloatFilter<"PackingMaterial"> | number
     isDeleted?: BoolFilter<"PackingMaterial"> | boolean
     status?: EnumStatusFilter<"PackingMaterial"> | $Enums.Status
@@ -31525,8 +31669,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     openingDate?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -31550,8 +31694,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"PackingMaterial"> | string | null
     openingDate?: DateTimeFilter<"PackingMaterial"> | Date | string
     quantity?: FloatFilter<"PackingMaterial"> | number
+    alertQuantity?: IntFilter<"PackingMaterial"> | number
     openingAmount?: FloatFilter<"PackingMaterial"> | number
-    ingredienteQty?: FloatFilter<"PackingMaterial"> | number
     unitPrice?: FloatFilter<"PackingMaterial"> | number
     isDeleted?: BoolFilter<"PackingMaterial"> | boolean
     status?: EnumStatusFilter<"PackingMaterial"> | $Enums.Status
@@ -31571,8 +31715,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     openingDate?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -31595,8 +31739,8 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"PackingMaterial"> | string | null
     openingDate?: DateTimeWithAggregatesFilter<"PackingMaterial"> | Date | string
     quantity?: FloatWithAggregatesFilter<"PackingMaterial"> | number
+    alertQuantity?: IntWithAggregatesFilter<"PackingMaterial"> | number
     openingAmount?: FloatWithAggregatesFilter<"PackingMaterial"> | number
-    ingredienteQty?: FloatWithAggregatesFilter<"PackingMaterial"> | number
     unitPrice?: FloatWithAggregatesFilter<"PackingMaterial"> | number
     isDeleted?: BoolWithAggregatesFilter<"PackingMaterial"> | boolean
     status?: EnumStatusWithAggregatesFilter<"PackingMaterial"> | $Enums.Status
@@ -31931,11 +32075,14 @@ export namespace Prisma {
     transactionId?: IntNullableFilter<"Inventory"> | number | null
     department?: EnumDepartmentFilter<"Inventory"> | $Enums.Department
     unitPrice?: FloatFilter<"Inventory"> | number
+    integratedUnitPrice?: FloatFilter<"Inventory"> | number
     quantityAdd?: FloatNullableFilter<"Inventory"> | number | null
     quantityLess?: FloatNullableFilter<"Inventory"> | number | null
     discount?: FloatNullableFilter<"Inventory"> | number | null
     debitAmount?: FloatNullableFilter<"Inventory"> | number | null
     creditAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Inventory"> | number | null
     isOpening?: BoolFilter<"Inventory"> | boolean
     status?: EnumStatusFilter<"Inventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"Inventory"> | Date | string
@@ -31955,11 +32102,14 @@ export namespace Prisma {
     transactionId?: SortOrderInput | SortOrder
     department?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrderInput | SortOrder
     quantityLess?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -31982,11 +32132,14 @@ export namespace Prisma {
     transactionId?: IntNullableFilter<"Inventory"> | number | null
     department?: EnumDepartmentFilter<"Inventory"> | $Enums.Department
     unitPrice?: FloatFilter<"Inventory"> | number
+    integratedUnitPrice?: FloatFilter<"Inventory"> | number
     quantityAdd?: FloatNullableFilter<"Inventory"> | number | null
     quantityLess?: FloatNullableFilter<"Inventory"> | number | null
     discount?: FloatNullableFilter<"Inventory"> | number | null
     debitAmount?: FloatNullableFilter<"Inventory"> | number | null
     creditAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Inventory"> | number | null
     isOpening?: BoolFilter<"Inventory"> | boolean
     status?: EnumStatusFilter<"Inventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"Inventory"> | Date | string
@@ -32006,11 +32159,14 @@ export namespace Prisma {
     transactionId?: SortOrderInput | SortOrder
     department?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrderInput | SortOrder
     quantityLess?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -32034,11 +32190,14 @@ export namespace Prisma {
     transactionId?: IntNullableWithAggregatesFilter<"Inventory"> | number | null
     department?: EnumDepartmentWithAggregatesFilter<"Inventory"> | $Enums.Department
     unitPrice?: FloatWithAggregatesFilter<"Inventory"> | number
+    integratedUnitPrice?: FloatWithAggregatesFilter<"Inventory"> | number
     quantityAdd?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
     quantityLess?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
     discount?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
     debitAmount?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
     creditAmount?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
+    integratedDebitAmount?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
+    integratedCreditAmount?: FloatNullableWithAggregatesFilter<"Inventory"> | number | null
     isOpening?: BoolWithAggregatesFilter<"Inventory"> | boolean
     status?: EnumStatusWithAggregatesFilter<"Inventory"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Inventory"> | Date | string
@@ -32058,11 +32217,14 @@ export namespace Prisma {
     perUnitQty?: FloatNullableFilter<"PMInventory"> | number | null
     perUnitCost?: FloatNullableFilter<"PMInventory"> | number | null
     unitPrice?: FloatFilter<"PMInventory"> | number
+    integratedUnitPrice?: FloatFilter<"PMInventory"> | number
     quantityAdd?: FloatNullableFilter<"PMInventory"> | number | null
     quantityLess?: FloatNullableFilter<"PMInventory"> | number | null
     discount?: FloatNullableFilter<"PMInventory"> | number | null
     debitAmount?: FloatNullableFilter<"PMInventory"> | number | null
     creditAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"PMInventory"> | number | null
     isOpening?: BoolFilter<"PMInventory"> | boolean
     status?: EnumStatusFilter<"PMInventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"PMInventory"> | Date | string
@@ -32080,11 +32242,14 @@ export namespace Prisma {
     perUnitQty?: SortOrderInput | SortOrder
     perUnitCost?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrderInput | SortOrder
     quantityLess?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -32105,11 +32270,14 @@ export namespace Prisma {
     perUnitQty?: FloatNullableFilter<"PMInventory"> | number | null
     perUnitCost?: FloatNullableFilter<"PMInventory"> | number | null
     unitPrice?: FloatFilter<"PMInventory"> | number
+    integratedUnitPrice?: FloatFilter<"PMInventory"> | number
     quantityAdd?: FloatNullableFilter<"PMInventory"> | number | null
     quantityLess?: FloatNullableFilter<"PMInventory"> | number | null
     discount?: FloatNullableFilter<"PMInventory"> | number | null
     debitAmount?: FloatNullableFilter<"PMInventory"> | number | null
     creditAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"PMInventory"> | number | null
     isOpening?: BoolFilter<"PMInventory"> | boolean
     status?: EnumStatusFilter<"PMInventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"PMInventory"> | Date | string
@@ -32127,11 +32295,14 @@ export namespace Prisma {
     perUnitQty?: SortOrderInput | SortOrder
     perUnitCost?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrderInput | SortOrder
     quantityLess?: SortOrderInput | SortOrder
     discount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -32155,11 +32326,14 @@ export namespace Prisma {
     perUnitQty?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     perUnitCost?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     unitPrice?: FloatWithAggregatesFilter<"PMInventory"> | number
+    integratedUnitPrice?: FloatWithAggregatesFilter<"PMInventory"> | number
     quantityAdd?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     quantityLess?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     discount?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     debitAmount?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     creditAmount?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
+    integratedDebitAmount?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
+    integratedCreditAmount?: FloatNullableWithAggregatesFilter<"PMInventory"> | number | null
     isOpening?: BoolWithAggregatesFilter<"PMInventory"> | boolean
     status?: EnumStatusWithAggregatesFilter<"PMInventory"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"PMInventory"> | Date | string
@@ -32267,8 +32441,11 @@ export namespace Prisma {
     transectionId?: IntNullableFilter<"Journal"> | number | null
     accountsItemId?: IntNullableFilter<"Journal"> | number | null
     date?: DateTimeFilter<"Journal"> | Date | string
+    checkOrRTGS?: FloatNullableFilter<"Journal"> | number | null
     creditAmount?: FloatNullableFilter<"Journal"> | number | null
     debitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Journal"> | number | null
     narration?: StringNullableFilter<"Journal"> | string | null
     isClosing?: BoolFilter<"Journal"> | boolean
     createdAt?: DateTimeFilter<"Journal"> | Date | string
@@ -32282,8 +32459,11 @@ export namespace Prisma {
     transectionId?: SortOrderInput | SortOrder
     accountsItemId?: SortOrderInput | SortOrder
     date?: SortOrder
+    checkOrRTGS?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     narration?: SortOrderInput | SortOrder
     isClosing?: SortOrder
     createdAt?: SortOrder
@@ -32301,8 +32481,11 @@ export namespace Prisma {
     transectionId?: IntNullableFilter<"Journal"> | number | null
     accountsItemId?: IntNullableFilter<"Journal"> | number | null
     date?: DateTimeFilter<"Journal"> | Date | string
+    checkOrRTGS?: FloatNullableFilter<"Journal"> | number | null
     creditAmount?: FloatNullableFilter<"Journal"> | number | null
     debitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Journal"> | number | null
     narration?: StringNullableFilter<"Journal"> | string | null
     isClosing?: BoolFilter<"Journal"> | boolean
     createdAt?: DateTimeFilter<"Journal"> | Date | string
@@ -32316,8 +32499,11 @@ export namespace Prisma {
     transectionId?: SortOrderInput | SortOrder
     accountsItemId?: SortOrderInput | SortOrder
     date?: SortOrder
+    checkOrRTGS?: SortOrderInput | SortOrder
     creditAmount?: SortOrderInput | SortOrder
     debitAmount?: SortOrderInput | SortOrder
+    integratedDebitAmount?: SortOrderInput | SortOrder
+    integratedCreditAmount?: SortOrderInput | SortOrder
     narration?: SortOrderInput | SortOrder
     isClosing?: SortOrder
     createdAt?: SortOrder
@@ -32337,8 +32523,11 @@ export namespace Prisma {
     transectionId?: IntNullableWithAggregatesFilter<"Journal"> | number | null
     accountsItemId?: IntNullableWithAggregatesFilter<"Journal"> | number | null
     date?: DateTimeWithAggregatesFilter<"Journal"> | Date | string
+    checkOrRTGS?: FloatNullableWithAggregatesFilter<"Journal"> | number | null
     creditAmount?: FloatNullableWithAggregatesFilter<"Journal"> | number | null
     debitAmount?: FloatNullableWithAggregatesFilter<"Journal"> | number | null
+    integratedDebitAmount?: FloatNullableWithAggregatesFilter<"Journal"> | number | null
+    integratedCreditAmount?: FloatNullableWithAggregatesFilter<"Journal"> | number | null
     narration?: StringNullableWithAggregatesFilter<"Journal"> | string | null
     isClosing?: BoolWithAggregatesFilter<"Journal"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Journal"> | Date | string
@@ -33294,6 +33483,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -33315,6 +33505,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -33333,6 +33524,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -33354,6 +33546,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -33374,6 +33567,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -33390,6 +33584,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -33407,6 +33602,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -33422,8 +33618,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33443,8 +33638,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33461,8 +33655,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33482,8 +33675,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33502,8 +33694,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33517,8 +33708,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33534,8 +33724,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33548,8 +33737,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33569,8 +33758,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33587,8 +33776,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33608,8 +33797,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33628,8 +33817,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -33642,8 +33831,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33658,8 +33847,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -33982,11 +34171,14 @@ export namespace Prisma {
     date: Date | string
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34005,11 +34197,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34021,11 +34216,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34044,11 +34242,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34064,11 +34265,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34080,11 +34284,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34099,11 +34306,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34117,11 +34327,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34139,11 +34352,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34156,11 +34372,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34178,11 +34397,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34198,11 +34420,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -34215,11 +34440,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34235,11 +34463,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34348,8 +34579,11 @@ export namespace Prisma {
 
   export type JournalCreateInput = {
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -34363,8 +34597,11 @@ export namespace Prisma {
     transectionId?: number | null
     accountsItemId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -34373,8 +34610,11 @@ export namespace Prisma {
 
   export type JournalUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34388,8 +34628,11 @@ export namespace Prisma {
     transectionId?: NullableIntFieldUpdateOperationsInput | number | null
     accountsItemId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34401,8 +34644,11 @@ export namespace Prisma {
     transectionId?: number | null
     accountsItemId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -34411,8 +34657,11 @@ export namespace Prisma {
 
   export type JournalUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34424,8 +34673,11 @@ export namespace Prisma {
     transectionId?: NullableIntFieldUpdateOperationsInput | number | null
     accountsItemId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35532,6 +35784,7 @@ export namespace Prisma {
     size?: SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingDate?: SortOrder
     openingAmount?: SortOrder
@@ -35547,6 +35800,7 @@ export namespace Prisma {
     minPrice?: SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingAmount?: SortOrder
   }
@@ -35560,6 +35814,7 @@ export namespace Prisma {
     size?: SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingDate?: SortOrder
     openingAmount?: SortOrder
@@ -35578,6 +35833,7 @@ export namespace Prisma {
     size?: SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingDate?: SortOrder
     openingAmount?: SortOrder
@@ -35593,6 +35849,7 @@ export namespace Prisma {
     minPrice?: SortOrder
     quantity?: SortOrder
     unitPrice?: SortOrder
+    alertQuantity?: SortOrder
     unitId?: SortOrder
     openingAmount?: SortOrder
   }
@@ -35653,8 +35910,7 @@ export namespace Prisma {
     openingDate?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35667,8 +35923,7 @@ export namespace Prisma {
     unitId?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
   }
 
@@ -35680,8 +35935,7 @@ export namespace Prisma {
     openingDate?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35697,8 +35951,7 @@ export namespace Prisma {
     openingDate?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35711,8 +35964,7 @@ export namespace Prisma {
     unitId?: SortOrder
     openingAmount?: SortOrder
     quantity?: SortOrder
-    ingredienteQty?: SortOrder
-    ingredienteRate?: SortOrder
+    alertQuantity?: SortOrder
     unitPrice?: SortOrder
   }
 
@@ -35749,8 +36001,8 @@ export namespace Prisma {
     description?: SortOrder
     openingDate?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35762,8 +36014,8 @@ export namespace Prisma {
     id?: SortOrder
     unitId?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
   }
 
@@ -35774,8 +36026,8 @@ export namespace Prisma {
     description?: SortOrder
     openingDate?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35790,8 +36042,8 @@ export namespace Prisma {
     description?: SortOrder
     openingDate?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
     isDeleted?: SortOrder
     status?: SortOrder
@@ -35803,8 +36055,8 @@ export namespace Prisma {
     id?: SortOrder
     unitId?: SortOrder
     quantity?: SortOrder
+    alertQuantity?: SortOrder
     openingAmount?: SortOrder
-    ingredienteQty?: SortOrder
     unitPrice?: SortOrder
   }
 
@@ -36079,11 +36331,14 @@ export namespace Prisma {
     transactionId?: SortOrder
     department?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36097,11 +36352,14 @@ export namespace Prisma {
     rawId?: SortOrder
     transactionId?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     packingMaterialId?: SortOrder
   }
 
@@ -36113,11 +36371,14 @@ export namespace Prisma {
     transactionId?: SortOrder
     department?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36133,11 +36394,14 @@ export namespace Prisma {
     transactionId?: SortOrder
     department?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36151,11 +36415,14 @@ export namespace Prisma {
     rawId?: SortOrder
     transactionId?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     packingMaterialId?: SortOrder
   }
 
@@ -36183,11 +36450,14 @@ export namespace Prisma {
     perUnitQty?: SortOrder
     perUnitCost?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36201,11 +36471,14 @@ export namespace Prisma {
     perUnitQty?: SortOrder
     perUnitCost?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
   }
 
   export type PMInventoryMaxOrderByAggregateInput = {
@@ -36217,11 +36490,14 @@ export namespace Prisma {
     perUnitQty?: SortOrder
     perUnitCost?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36237,11 +36513,14 @@ export namespace Prisma {
     perUnitQty?: SortOrder
     perUnitCost?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     isOpening?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -36255,11 +36534,14 @@ export namespace Prisma {
     perUnitQty?: SortOrder
     perUnitCost?: SortOrder
     unitPrice?: SortOrder
+    integratedUnitPrice?: SortOrder
     quantityAdd?: SortOrder
     quantityLess?: SortOrder
     discount?: SortOrder
     debitAmount?: SortOrder
     creditAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
   }
 
   export type EnumVoucherTypeFilter<$PrismaModel = never> = {
@@ -36357,8 +36639,11 @@ export namespace Prisma {
     transectionId?: SortOrder
     accountsItemId?: SortOrder
     date?: SortOrder
+    checkOrRTGS?: SortOrder
     creditAmount?: SortOrder
     debitAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     narration?: SortOrder
     isClosing?: SortOrder
     createdAt?: SortOrder
@@ -36369,8 +36654,11 @@ export namespace Prisma {
     id?: SortOrder
     transectionId?: SortOrder
     accountsItemId?: SortOrder
+    checkOrRTGS?: SortOrder
     creditAmount?: SortOrder
     debitAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
   }
 
   export type JournalMaxOrderByAggregateInput = {
@@ -36378,8 +36666,11 @@ export namespace Prisma {
     transectionId?: SortOrder
     accountsItemId?: SortOrder
     date?: SortOrder
+    checkOrRTGS?: SortOrder
     creditAmount?: SortOrder
     debitAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     narration?: SortOrder
     isClosing?: SortOrder
     createdAt?: SortOrder
@@ -36391,8 +36682,11 @@ export namespace Prisma {
     transectionId?: SortOrder
     accountsItemId?: SortOrder
     date?: SortOrder
+    checkOrRTGS?: SortOrder
     creditAmount?: SortOrder
     debitAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
     narration?: SortOrder
     isClosing?: SortOrder
     createdAt?: SortOrder
@@ -36403,8 +36697,11 @@ export namespace Prisma {
     id?: SortOrder
     transectionId?: SortOrder
     accountsItemId?: SortOrder
+    checkOrRTGS?: SortOrder
     creditAmount?: SortOrder
     debitAmount?: SortOrder
+    integratedDebitAmount?: SortOrder
+    integratedCreditAmount?: SortOrder
   }
 
   export type IngredientExpneseItemsListRelationFilter = {
@@ -38844,6 +39141,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -38863,6 +39161,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -38936,6 +39235,7 @@ export namespace Prisma {
     size?: StringNullableFilter<"Product"> | string | null
     quantity?: FloatFilter<"Product"> | number
     unitPrice?: FloatFilter<"Product"> | number
+    alertQuantity?: IntFilter<"Product"> | number
     unitId?: IntFilter<"Product"> | number
     openingDate?: DateTimeFilter<"Product"> | Date | string
     openingAmount?: FloatFilter<"Product"> | number
@@ -38951,8 +39251,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -38970,8 +39269,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -38999,6 +39297,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -39019,6 +39318,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -39044,8 +39344,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -39063,8 +39363,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -39113,8 +39413,7 @@ export namespace Prisma {
     openingDate?: DateTimeFilter<"RawMaterial"> | Date | string
     openingAmount?: FloatFilter<"RawMaterial"> | number
     quantity?: FloatFilter<"RawMaterial"> | number
-    ingredienteQty?: FloatFilter<"RawMaterial"> | number
-    ingredienteRate?: FloatNullableFilter<"RawMaterial"> | number | null
+    alertQuantity?: IntFilter<"RawMaterial"> | number
     unitPrice?: FloatFilter<"RawMaterial"> | number
     isDeleted?: BoolFilter<"RawMaterial"> | boolean
     status?: EnumStatusFilter<"RawMaterial"> | $Enums.Status
@@ -39164,8 +39463,8 @@ export namespace Prisma {
     description?: StringNullableFilter<"PackingMaterial"> | string | null
     openingDate?: DateTimeFilter<"PackingMaterial"> | Date | string
     quantity?: FloatFilter<"PackingMaterial"> | number
+    alertQuantity?: IntFilter<"PackingMaterial"> | number
     openingAmount?: FloatFilter<"PackingMaterial"> | number
-    ingredienteQty?: FloatFilter<"PackingMaterial"> | number
     unitPrice?: FloatFilter<"PackingMaterial"> | number
     isDeleted?: BoolFilter<"PackingMaterial"> | boolean
     status?: EnumStatusFilter<"PackingMaterial"> | $Enums.Status
@@ -39230,8 +39529,11 @@ export namespace Prisma {
 
   export type JournalCreateWithoutAccountsItemInput = {
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -39243,8 +39545,11 @@ export namespace Prisma {
     id?: number
     transectionId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -39305,8 +39610,11 @@ export namespace Prisma {
     transectionId?: IntNullableFilter<"Journal"> | number | null
     accountsItemId?: IntNullableFilter<"Journal"> | number | null
     date?: DateTimeFilter<"Journal"> | Date | string
+    checkOrRTGS?: FloatNullableFilter<"Journal"> | number | null
     creditAmount?: FloatNullableFilter<"Journal"> | number | null
     debitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Journal"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Journal"> | number | null
     narration?: StringNullableFilter<"Journal"> | string | null
     isClosing?: BoolFilter<"Journal"> | boolean
     createdAt?: DateTimeFilter<"Journal"> | Date | string
@@ -39515,11 +39823,14 @@ export namespace Prisma {
     date: Date | string
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -39536,11 +39847,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -39674,11 +39988,14 @@ export namespace Prisma {
     transactionId?: IntNullableFilter<"Inventory"> | number | null
     department?: EnumDepartmentFilter<"Inventory"> | $Enums.Department
     unitPrice?: FloatFilter<"Inventory"> | number
+    integratedUnitPrice?: FloatFilter<"Inventory"> | number
     quantityAdd?: FloatNullableFilter<"Inventory"> | number | null
     quantityLess?: FloatNullableFilter<"Inventory"> | number | null
     discount?: FloatNullableFilter<"Inventory"> | number | null
     debitAmount?: FloatNullableFilter<"Inventory"> | number | null
     creditAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"Inventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"Inventory"> | number | null
     isOpening?: BoolFilter<"Inventory"> | boolean
     status?: EnumStatusFilter<"Inventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"Inventory"> | Date | string
@@ -39745,11 +40062,14 @@ export namespace Prisma {
     date: Date | string
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -39766,11 +40086,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -39959,11 +40282,14 @@ export namespace Prisma {
     date: Date | string
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -39981,11 +40307,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -40066,11 +40395,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -40086,11 +40418,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -40222,11 +40557,14 @@ export namespace Prisma {
     perUnitQty?: FloatNullableFilter<"PMInventory"> | number | null
     perUnitCost?: FloatNullableFilter<"PMInventory"> | number | null
     unitPrice?: FloatFilter<"PMInventory"> | number
+    integratedUnitPrice?: FloatFilter<"PMInventory"> | number
     quantityAdd?: FloatNullableFilter<"PMInventory"> | number | null
     quantityLess?: FloatNullableFilter<"PMInventory"> | number | null
     discount?: FloatNullableFilter<"PMInventory"> | number | null
     debitAmount?: FloatNullableFilter<"PMInventory"> | number | null
     creditAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedDebitAmount?: FloatNullableFilter<"PMInventory"> | number | null
+    integratedCreditAmount?: FloatNullableFilter<"PMInventory"> | number | null
     isOpening?: BoolFilter<"PMInventory"> | boolean
     status?: EnumStatusFilter<"PMInventory"> | $Enums.Status
     createdAt?: DateTimeFilter<"PMInventory"> | Date | string
@@ -40385,6 +40723,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -40405,6 +40744,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -40426,8 +40766,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40446,8 +40785,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40467,8 +40805,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40487,8 +40825,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40552,6 +40890,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -40572,6 +40911,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -40599,8 +40939,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -40619,8 +40958,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -40646,8 +40984,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -40666,8 +41004,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -40879,6 +41217,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -40899,6 +41238,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -40920,8 +41260,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40940,8 +41279,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -40997,8 +41335,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -41017,8 +41355,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -41052,6 +41390,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -41072,6 +41411,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -41099,8 +41439,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41119,8 +41458,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41188,8 +41526,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41208,8 +41546,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41261,8 +41599,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -41281,8 +41619,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -41356,8 +41694,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41376,8 +41714,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -41421,8 +41759,11 @@ export namespace Prisma {
 
   export type JournalCreateWithoutTransactionInfoInput = {
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -41434,8 +41775,11 @@ export namespace Prisma {
     id?: number
     accountsItemId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -41456,11 +41800,14 @@ export namespace Prisma {
     date: Date | string
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -41477,11 +41824,14 @@ export namespace Prisma {
     rawId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -41505,11 +41855,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -41525,11 +41878,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -42026,8 +42382,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42046,8 +42401,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42107,8 +42461,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42127,8 +42480,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42143,8 +42495,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42163,8 +42515,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42218,8 +42570,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42238,8 +42590,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42629,6 +42981,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     unitId: number
     openingDate: Date | string
     openingAmount: number
@@ -42645,6 +42998,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -42664,6 +43018,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -42683,6 +43038,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitId?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
@@ -42699,8 +43055,7 @@ export namespace Prisma {
     openingDate: Date | string
     openingAmount: number
     quantity: number
-    ingredienteQty: number
-    ingredienteRate?: number | null
+    alertQuantity?: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42717,6 +43072,7 @@ export namespace Prisma {
     size?: string | null
     quantity: number
     unitPrice: number
+    alertQuantity?: number
     openingDate: Date | string
     openingAmount: number
     isDeleted?: boolean
@@ -42731,8 +43087,8 @@ export namespace Prisma {
     description?: string | null
     openingDate: Date | string
     quantity: number
+    alertQuantity?: number
     openingAmount: number
-    ingredienteQty: number
     unitPrice: number
     isDeleted?: boolean
     status?: $Enums.Status
@@ -42746,8 +43102,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42765,8 +43120,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42784,8 +43138,7 @@ export namespace Prisma {
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     quantity?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
-    ingredienteRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42800,6 +43153,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -42820,6 +43174,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -42839,6 +43194,7 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     openingAmount?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -42852,8 +43208,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42871,8 +43227,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42890,8 +43246,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    alertQuantity?: IntFieldUpdateOperationsInput | number
     openingAmount?: FloatFieldUpdateOperationsInput | number
-    ingredienteQty?: FloatFieldUpdateOperationsInput | number
     unitPrice?: FloatFieldUpdateOperationsInput | number
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
@@ -42936,8 +43292,11 @@ export namespace Prisma {
     id?: number
     transectionId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -42946,8 +43305,11 @@ export namespace Prisma {
 
   export type JournalUpdateWithoutAccountsItemInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42959,8 +43321,11 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     transectionId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42971,8 +43336,11 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     transectionId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43076,11 +43444,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43105,11 +43476,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43126,11 +43500,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43145,11 +43522,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43202,11 +43582,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43238,11 +43621,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43259,11 +43645,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43278,11 +43667,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43356,11 +43748,14 @@ export namespace Prisma {
     transactionId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43395,11 +43790,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43410,11 +43808,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43432,11 +43833,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43451,11 +43855,14 @@ export namespace Prisma {
     transactionId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43526,11 +43933,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43546,11 +43956,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43565,11 +43978,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43685,8 +44101,11 @@ export namespace Prisma {
     id?: number
     accountsItemId?: number | null
     date: Date | string
+    checkOrRTGS?: number | null
     creditAmount?: number | null
     debitAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     narration?: string | null
     isClosing?: boolean
     createdAt?: Date | string
@@ -43700,11 +44119,14 @@ export namespace Prisma {
     rawId?: number | null
     department: $Enums.Department
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43720,11 +44142,14 @@ export namespace Prisma {
     perUnitQty?: number | null
     perUnitCost?: number | null
     unitPrice?: number
+    integratedUnitPrice?: number
     quantityAdd?: number | null
     quantityLess?: number | null
     discount?: number | null
     debitAmount?: number | null
     creditAmount?: number | null
+    integratedDebitAmount?: number | null
+    integratedCreditAmount?: number | null
     isOpening?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
@@ -43776,8 +44201,11 @@ export namespace Prisma {
 
   export type JournalUpdateWithoutTransactionInfoInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43789,8 +44217,11 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     accountsItemId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43801,8 +44232,11 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     accountsItemId?: NullableIntFieldUpdateOperationsInput | number | null
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    checkOrRTGS?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     narration?: NullableStringFieldUpdateOperationsInput | string | null
     isClosing?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43813,11 +44247,14 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43834,11 +44271,14 @@ export namespace Prisma {
     rawId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43853,11 +44293,14 @@ export namespace Prisma {
     rawId?: NullableIntFieldUpdateOperationsInput | number | null
     department?: EnumDepartmentFieldUpdateOperationsInput | $Enums.Department
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43871,11 +44314,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43891,11 +44337,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43910,11 +44359,14 @@ export namespace Prisma {
     perUnitQty?: NullableFloatFieldUpdateOperationsInput | number | null
     perUnitCost?: NullableFloatFieldUpdateOperationsInput | number | null
     unitPrice?: FloatFieldUpdateOperationsInput | number
+    integratedUnitPrice?: FloatFieldUpdateOperationsInput | number
     quantityAdd?: NullableFloatFieldUpdateOperationsInput | number | null
     quantityLess?: NullableFloatFieldUpdateOperationsInput | number | null
     discount?: NullableFloatFieldUpdateOperationsInput | number | null
     debitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     creditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedDebitAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    integratedCreditAmount?: NullableFloatFieldUpdateOperationsInput | number | null
     isOpening?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

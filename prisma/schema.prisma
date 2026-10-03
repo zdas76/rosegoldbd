@@ -126,6 +126,7 @@ model Product {
   size                     String?
   quantity                 Float
   unitPrice                Float
+  alertQuantity            Int                      @default(0)
   unitId                   Int
   openingDate              DateTime
   openingAmount            Float
@@ -150,8 +151,7 @@ model RawMaterial {
   openingDate              DateTime
   openingAmount            Float
   quantity                 Float
-  ingredienteQty           Float
-  ingredienteRate          Float?
+  alertQuantity            Int                      @default(0)
   unitPrice                Float
   isDeleted                Boolean                  @default(false)
   status                   Status                   @default(ACTIVE)
@@ -172,8 +172,8 @@ model PackingMaterial {
   description              String?                  @db.VarChar(250)
   openingDate              DateTime
   quantity                 Float
+  alertQuantity            Int                      @default(0)
   openingAmount            Float
-  ingredienteQty           Float
   unitPrice                Float
   isDeleted                Boolean                  @default(false)
   status                   Status                   @default(ACTIVE)
@@ -268,27 +268,30 @@ enum Department {
 }
 
 model Inventory {
-  id                Int              @id @default(autoincrement())
-  date              DateTime
-  productId         Int?
-  rawId             Int?
-  transactionId     Int?
-  department        Department
-  unitPrice         Float            @default(0.00)
-  quantityAdd       Float?           @default(0.00)
-  quantityLess      Float?           @default(0.00)
-  discount          Float?           @default(0.00)
-  debitAmount       Float?           @default(0.00)
-  creditAmount      Float?           @default(0.00)
-  isOpening         Boolean          @default(false)
-  status            Status           @default(PENDING)
-  product           Product?         @relation(fields: [productId], references: [id])
-  raWMaterial       RawMaterial?     @relation(fields: [rawId], references: [id])
-  transactionInfo   TransactionInfo? @relation(fields: [transactionId], references: [id])
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  packingMaterial   PackingMaterial? @relation(fields: [packingMaterialId], references: [id])
-  packingMaterialId Int?
+  id                     Int              @id @default(autoincrement())
+  date                   DateTime
+  productId              Int?
+  rawId                  Int?
+  transactionId          Int?
+  department             Department
+  unitPrice              Float            @default(0.00)
+  integratedUnitPrice    Float            @default(0.00)
+  quantityAdd            Float?           @default(0.00)
+  quantityLess           Float?           @default(0.00)
+  discount               Float?           @default(0.00)
+  debitAmount            Float?           @default(0.00)
+  creditAmount           Float?           @default(0.00)
+  integratedDebitAmount  Float?           @default(0.00)
+  integratedCreditAmount Float?           @default(0.00)
+  isOpening              Boolean          @default(false)
+  status                 Status           @default(PENDING)
+  product                Product?         @relation(fields: [productId], references: [id])
+  raWMaterial            RawMaterial?     @relation(fields: [rawId], references: [id])
+  transactionInfo        TransactionInfo? @relation(fields: [transactionId], references: [id])
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  packingMaterial        PackingMaterial? @relation(fields: [packingMaterialId], references: [id])
+  packingMaterialId      Int?
 
   @@index([productId, transactionId])
   @@index([rawId])
@@ -296,25 +299,28 @@ model Inventory {
 }
 
 model PMInventory {
-  id                Int              @id @default(autoincrement())
-  date              DateTime
-  packingMaterialId Int
-  transactionId     Int?
-  department        Department
-  perUnitQty        Float?           @default(0.00)
-  perUnitCost       Float?           @default(0.00)
-  unitPrice         Float            @default(0.00)
-  quantityAdd       Float?           @default(0.00)
-  quantityLess      Float?           @default(0.00)
-  discount          Float?           @default(0.00)
-  debitAmount       Float?           @default(0.00)
-  creditAmount      Float?           @default(0.00)
-  isOpening         Boolean          @default(false)
-  status            Status           @default(PENDING)
-  transactionInfo   TransactionInfo? @relation(fields: [transactionId], references: [id])
-  packingMaterial   PackingMaterial  @relation(fields: [packingMaterialId], references: [id])
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id                     Int              @id @default(autoincrement())
+  date                   DateTime
+  packingMaterialId      Int
+  transactionId          Int?
+  department             Department
+  perUnitQty             Float?           @default(0.00)
+  perUnitCost            Float?           @default(0.00)
+  unitPrice              Float            @default(0.00)
+  integratedUnitPrice    Float            @default(0.00)
+  quantityAdd            Float?           @default(0.00)
+  quantityLess           Float?           @default(0.00)
+  discount               Float?           @default(0.00)
+  debitAmount            Float?           @default(0.00)
+  creditAmount           Float?           @default(0.00)
+  integratedDebitAmount  Float?           @default(0.00)
+  integratedCreditAmount Float?           @default(0.00)
+  isOpening              Boolean          @default(false)
+  status                 Status           @default(PENDING)
+  transactionInfo        TransactionInfo? @relation(fields: [transactionId], references: [id])
+  packingMaterial        PackingMaterial  @relation(fields: [packingMaterialId], references: [id])
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
 
   @@map("pm_inventories")
 }
@@ -341,18 +347,21 @@ model TransactionInfo {
 }
 
 model Journal {
-  id              Int              @id @default(autoincrement())
-  transectionId   Int?
-  accountsItemId  Int?
-  date            DateTime         @db.Date
-  creditAmount    Float?           @default(0.00)
-  debitAmount     Float?           @default(0.00)
-  narration       String?
-  isClosing       Boolean          @default(false)
-  transactionInfo TransactionInfo? @relation(fields: [transectionId], references: [id])
-  accountsItem    AccountsItem?    @relation(fields: [accountsItemId], references: [id])
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  id                     Int              @id @default(autoincrement())
+  transectionId          Int?
+  accountsItemId         Int?
+  date                   DateTime         @db.Date
+  checkOrRTGS            Float?           @default(0.00)
+  creditAmount           Float?           @default(0.00)
+  debitAmount            Float?           @default(0.00)
+  integratedDebitAmount  Float?           @default(0.00)
+  integratedCreditAmount Float?           @default(0.00)
+  narration              String?
+  isClosing              Boolean          @default(false)
+  transactionInfo        TransactionInfo? @relation(fields: [transectionId], references: [id])
+  accountsItem           AccountsItem?    @relation(fields: [accountsItemId], references: [id])
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
 
   @@index([accountsItemId])
   @@map("journals")
