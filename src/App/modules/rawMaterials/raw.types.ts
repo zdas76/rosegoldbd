@@ -22,6 +22,5 @@ export type TrawMaterial = {
   status: Status;
   updateAt?: Date;
   inventory?: Inventory[];
-  ingredienteQty?: number;
+  alertQuantity?: number;
 };
-

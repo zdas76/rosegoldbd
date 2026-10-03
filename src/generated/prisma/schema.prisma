@@ -4,6 +4,11 @@ datasource db {
 
 generator client {
   provider   = "prisma-client-js"
+  engineType = "client"
+}
+
+generator customClient {
+  provider   = "prisma-client-js"
   output     = "../src/generated/prisma"
   engineType = "client"
 }
