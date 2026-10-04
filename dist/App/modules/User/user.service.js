@@ -7,7 +7,7 @@ exports.UserService = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const config_1 = __importDefault(require("../../../config"));
-const client_1 = require("@prisma/client");
+const prisma_2 = require("../../../generated/prisma");
 const creatUserToDB = async (payload) => {
     const hashedPassword = bcryptjs_1.default.hashSync(payload.password, parseInt(config_1.default.hash_round));
     const createUser = await prisma_1.default.user.create({
@@ -23,7 +23,7 @@ const creatUserToDB = async (payload) => {
 const getAllUser = async () => {
     const result = await prisma_1.default.user.findMany({
         where: {
-            status: client_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         select: {
             id: true,
@@ -39,7 +39,7 @@ const getUserById = async (id) => {
     const result = await prisma_1.default.user.findFirst({
         where: {
             id: id,
-            status: client_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         select: {
             id: true,
@@ -55,7 +55,7 @@ const updateUserById = async (id, payload) => {
     const result = await prisma_1.default.user.update({
         where: {
             id: id,
-            status: client_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         data: payload,
     });
@@ -65,10 +65,10 @@ const deleteUserById = async (id) => {
     const result = await prisma_1.default.user.update({
         where: {
             id: id,
-            status: client_1.Status.ACTIVE,
+            status: prisma_2.Status.ACTIVE,
         },
         data: {
-            status: client_1.Status.DELETED,
+            status: prisma_2.Status.DELETED,
         },
     });
     return result;

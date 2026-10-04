@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductionService = void 0;
-const client_1 = require("@prisma/client");
+const prisma_1 = require("../../../generated/prisma");
 const generateVoucherNumber_1 = require("../../../helpars/generateVoucherNumber");
-const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const prisma_2 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_codes_1 = require("http-status-codes");
 const createProduction = async (id, payload) => {
-    const isProductExisted = await prisma_1.default.product.findFirst({
+    const isProductExisted = await prisma_2.default.product.findFirst({
         where: {
             id: payload.productinfo.productId,
             isDeleted: false,
@@ -19,7 +19,7 @@ const createProduction = async (id, payload) => {
     if (!isProductExisted) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Product not found");
     }
-    const addProduction = await prisma_1.default.$transaction(async (tx) => {
+    const addProduction = await prisma_2.default.$transaction(async (tx) => {
         let transactionInfo;
         if (id && id > 0) {
             const existingTx = await tx.transactionInfo.findUnique({
@@ -53,7 +53,7 @@ const createProduction = async (id, payload) => {
                     voucherNo: VoucherNo,
                     batchNo: payload.batchNo,
                     date: new Date(payload.date),
-                    voucherType: client_1.VoucherType.PRODUCTION,
+                    voucherType: prisma_1.VoucherType.PRODUCTION,
                 },
             });
         }
@@ -63,7 +63,7 @@ const createProduction = async (id, payload) => {
                 productId: payload.productinfo.productId,
                 transactionId: transactionInfo.id,
                 date: new Date(payload.date),
-                department: client_1.Department.PRODUCTION,
+                department: prisma_1.Department.PRODUCTION,
                 quantityAdd: Number(payload.productinfo.quantity) || 0,
                 unitPrice: Number(payload.productinfo.unitPrice) || 0,
                 debitAmount: (Number(payload.productinfo.quantity) || 0) *
@@ -76,7 +76,7 @@ const createProduction = async (id, payload) => {
                 const rawMaterial = await tx.rawMaterial.findFirst({
                     where: {
                         id: item.rawId,
-                        status: client_1.Status.ACTIVE,
+                        status: prisma_1.Status.ACTIVE,
                     },
                 });
                 if (!rawMaterial) {
@@ -87,7 +87,7 @@ const createProduction = async (id, payload) => {
                         rawId: rawMaterial.id,
                         transactionId: transactionInfo.id,
                         date: new Date(payload.date),
-                        department: client_1.Department.PRODUCTION,
+                        department: prisma_1.Department.PRODUCTION,
                         quantityLess: Number(item.quantity) || 0,
                         unitPrice: Number(item.unitPrice) || 0,
                         creditAmount: (Number(item.quantity) || 0) * (Number(item.unitPrice) || 0),
@@ -135,7 +135,7 @@ const createProduction = async (id, payload) => {
                         date: new Date(payload.date),
                         packingMaterialId: packmaterials.id,
                         transactionId: transactionInfo.id,
-                        department: client_1.Department.PRODUCTION,
+                        department: prisma_1.Department.PRODUCTION,
                         perUnitQty: Number(packmaterial.perUnitQty) || 0,
                         perUnitCost: Number(packmaterial.perUnitCost) || 0,
                         unitPrice: Number(packmaterial.unitPrice) || 0,
@@ -146,7 +146,7 @@ const createProduction = async (id, payload) => {
         }
         return transactionInfo;
     });
-    const getCreatedProduction = await prisma_1.default.transactionInfo.findUnique({
+    const getCreatedProduction = await prisma_2.default.transactionInfo.findUnique({
         where: {
             id: addProduction.id,
         },
@@ -192,9 +192,9 @@ const createProduction = async (id, payload) => {
     return getCreatedProduction;
 };
 const getProduction = async () => {
-    const result = await prisma_1.default.transactionInfo.findMany({
+    const result = await prisma_2.default.transactionInfo.findMany({
         where: {
-            voucherType: client_1.VoucherType.PRODUCTION,
+            voucherType: prisma_1.VoucherType.PRODUCTION,
         },
         include: {
             inventory: {
@@ -241,7 +241,7 @@ const getProduction = async () => {
     return result;
 };
 const getProductionById = async (id) => {
-    const result = await prisma_1.default.transactionInfo.findUnique({
+    const result = await prisma_2.default.transactionInfo.findUnique({
         where: {
             id: id,
         },
@@ -290,7 +290,7 @@ const getProductionById = async (id) => {
     return result;
 };
 const deleteProduction = async (id) => {
-    const isExist = await prisma_1.default.transactionInfo.findUnique({
+    const isExist = await prisma_2.default.transactionInfo.findUnique({
         where: {
             id: id,
         },
@@ -298,7 +298,7 @@ const deleteProduction = async (id) => {
     if (!isExist) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Production not found");
     }
-    await prisma_1.default.$transaction(async (tx) => {
+    await prisma_2.default.$transaction(async (tx) => {
         await tx.inventory.deleteMany({
             where: { transactionId: id },
         });

@@ -2,7 +2,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TrawMaterial } from "./raw.types";
-import { Department, RawMaterial } from "@prisma/client";
+import { Department, RawMaterial } from "../../../generated/prisma";
 
 const createRawMaterial = async (payload: TrawMaterial) => {
   const isExist = await prisma.rawMaterial.findFirst({
@@ -38,7 +38,6 @@ const createRawMaterial = async (payload: TrawMaterial) => {
       unitId: Number(payload.unitId),
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      alertQuantity: payload.alertQuantity,
       openingDate,
       openingAmount: payload.amount,
       inventory: {
@@ -123,7 +122,6 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
           unitId: Number(payload.unitId),
           unitPrice: payload.unitPrice ?? 0,
           quantity: payload.quantity ?? 0,
-          alertQuantity: payload.alertQuantity,
           openingDate,
           openingAmount: payload.amount ?? 0,
           inventory: {
@@ -187,7 +185,7 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
       openingAmount: payload.openingAmount,
-      alertQuantity: payload.alertQuantity
+      alertQuantity: payload.alertQuantity,
     },
   });
 

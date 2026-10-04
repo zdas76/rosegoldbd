@@ -1,5 +1,5 @@
 import prisma from "../../../shared/prisma";
-import { AccountHead } from "@prisma/client";
+import { AccountHead } from "../../../generated/prisma";
 
 const createPliersItemIntoDB = async (payLoad: AccountHead[]) => {
   console.log(payLoad);

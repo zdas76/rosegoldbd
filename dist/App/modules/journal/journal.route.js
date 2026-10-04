@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const journal_controllers_1 = require("./journal.controllers");
 const route = express_1.default.Router();
 route.post("/purchase", journal_controllers_1.JournalControllers.addPurcherReceived);
+route.post("/purchase-packing-material", journal_controllers_1.JournalControllers.addPurcherReceivedPM);
 route.post("/sales", journal_controllers_1.JournalControllers.createSalseVoucher);
 route.post("/material-sale", journal_controllers_1.JournalControllers.createMaterialSaleVoucher);
 route.post("/received", journal_controllers_1.JournalControllers.createReceiptdVoucher);

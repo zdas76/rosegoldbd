@@ -5,14 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductServices = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
-const client_1 = require("@prisma/client");
+const prisma_2 = require("../../../generated/prisma");
 const createProductInfo = async (payLoad) => {
     const addProduct = await prisma_1.default.$transaction(async (tx) => {
         // create Transaction
         const createTransaction = await tx.transactionInfo.create({
             data: {
                 voucherNo: payLoad.voucherNo,
-                voucherType: client_1.VoucherType.FINISH_GOODS,
+                voucherType: prisma_2.VoucherType.FINISH_GOODS,
             },
         });
         // 2. check product item

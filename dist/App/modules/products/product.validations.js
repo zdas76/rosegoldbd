@@ -15,6 +15,7 @@ const CreateProductValidationSchema = zod_1.default.object({
         minPrice: zod_1.default.number().optional(),
         color: zod_1.default.string().optional(),
         size: zod_1.default.string().optional(),
+        alertQuantity: zod_1.default.number().optional(),
     }),
 });
 const updateProductValidationSchema = zod_1.default.object({
