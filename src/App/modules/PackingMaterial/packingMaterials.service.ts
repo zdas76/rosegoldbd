@@ -39,7 +39,7 @@ const createPackingMaterial = async (payload: TpackingMaterial) => {
       unitId: Number(payload.unitId),
       unitPrice: Number(payload.unitPrice) || 0,
       quantity: Number(payload.quantity) || 0,
-      ingredienteQty: Number(payload.ingredienteQty) || 0,
+      alertQuantity: Number(payload.alertQuantity) || 0,
       openingDate,
       openingAmount: Number(payload.amount) || 0,
       inventory: {
@@ -128,7 +128,7 @@ const createPackingMaterialsMany = async (payloads: TpackingMaterial[]) => {
           unitId: Number(payload.unitId),
           unitPrice: Number(payload.unitPrice) || 0,
           quantity: Number(payload.quantity) || 0,
-          ingredienteQty: Number(payload.ingredienteQty) || 0,
+          alertQuantity: Number(payload.alertQuantity) || 0,
           openingDate,
           openingAmount: Number(payload.amount) || 0,
           inventory: {
@@ -212,13 +212,13 @@ const updatePackingMaterial = async (
       description: payload.description,
       unitPrice: payload.unitPrice !== undefined ? Number(payload.unitPrice) : undefined,
       quantity: payload.quantity !== undefined ? Number(payload.quantity) : undefined,
-      ingredienteQty: payload.ingredienteQty !== undefined ? Number(payload.ingredienteQty) : undefined,
+      alertQuantity: payload.alertQuantity !== undefined ? Number(payload.alertQuantity) : undefined,
       openingAmount:
         payload.openingAmount !== undefined
           ? Number(payload.openingAmount)
           : payload.amount !== undefined
-          ? Number(payload.amount)
-          : undefined,
+            ? Number(payload.amount)
+            : undefined,
     },
     include: {
       unit: true,

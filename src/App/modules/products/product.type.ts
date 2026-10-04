@@ -11,6 +11,7 @@ export type TcreateProduct = {
   size?: string | null;
   isDeleted: boolean;
   status: Status;
+  alertQuantity?: number | null;
   initialStock: {
     quantity: number;
     unitPrice: number;

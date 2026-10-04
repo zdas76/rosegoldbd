@@ -4,6 +4,7 @@ import { JournalControllers } from "./journal.controllers";
 const route = express.Router();
 
 route.post("/purchase", JournalControllers.addPurcherReceived);
+// route.post("/purchase-packing-material", JournalControllers.addPackingMaterial);
 
 route.post("/sales", JournalControllers.createSalseVoucher);
 

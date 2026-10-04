@@ -39,7 +39,7 @@ const createRawMaterial = async (payload: TrawMaterial) => {
       unitId: Number(payload.unitId),
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      ingredienteQty: payload.ingredienteQty ?? 0,
+      alertQuantity: payload.alertQuantity,
       openingDate,
       openingAmount: payload.amount,
       inventory: {
@@ -124,7 +124,6 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
           unitId: Number(payload.unitId),
           unitPrice: payload.unitPrice ?? 0,
           quantity: payload.quantity ?? 0,
-          ingredienteQty: payload.ingredienteQty ?? 0,
           openingDate,
           openingAmount: payload.amount ?? 0,
           inventory: {
@@ -187,8 +186,8 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       description: payload.description,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      ingredienteQty: payload.ingredienteQty,
       openingAmount: payload.openingAmount,
+      alertQuantity: payload.alertQuantity
     },
   });
 

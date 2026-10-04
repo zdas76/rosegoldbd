@@ -55,6 +55,7 @@ const createPurchestReceivedIntoDB = async (payload) => {
                     date: payload.date,
                     rawId: item.rawOrProductId,
                     unitPrice: item.unitPrice || 0,
+                    department: client_1.Department.PURCHASE,
                     quantityAdd: item.quantityAdd || 0,
                     discount: item?.discount || 0,
                     debitAmount: item.debitAmount,
@@ -68,6 +69,7 @@ const createPurchestReceivedIntoDB = async (payload) => {
                     quantityAdd: item.quantityAdd || 0,
                     discount: item?.discount || 0,
                     date: payload.date,
+                    department: client_1.Department.PURCHASE,
                     debitAmount: item.debitAmount,
                 };
             }
@@ -88,7 +90,7 @@ const createPurchestReceivedIntoDB = async (payload) => {
         const debiteAccountsId = await tx.accountsItem.findFirst({
             where: {
                 accountsItemName: {
-                    contains: "inventory"
+                    contains: "inventory",
                 },
             },
         });
@@ -205,7 +207,7 @@ const createSalesVoucher = async (payload) => {
         const debiteAccountsId = await tx.accountsItem.findFirst({
             where: {
                 accountsItemName: {
-                    contains: "inventory"
+                    contains: "inventory",
                 },
             },
         });
@@ -320,7 +322,7 @@ const createMaterialSaleVoucher = async (payload) => {
         const debiteAccountsId = await tx.accountsItem.findFirst({
             where: {
                 accountsItemName: {
-                    contains: "inventory"
+                    contains: "inventory",
                 },
             },
         });
