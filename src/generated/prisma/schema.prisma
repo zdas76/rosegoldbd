@@ -144,21 +144,22 @@ model Product {
 }
 
 model RawMaterial {
-  id                       Int                      @id @default(autoincrement())
-  name                     String                   @db.VarChar(50)
-  unitId                   Int
-  description              String?                  @db.VarChar(250)
-  openingDate              DateTime
-  openingAmount            Float
-  quantity                 Float
-  alertQuantity            Int                      @default(0)
-  unitPrice                Float
-  isDeleted                Boolean                  @default(false)
-  status                   Status                   @default(ACTIVE)
-  unit                     Unit                     @relation(fields: [unitId], references: [id])
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(50)
+  unitId        Int
+  description   String?  @db.VarChar(250)
+  openingDate   DateTime
+  openingAmount Float
+  quantity      Float
+  alertQuantity Int      @default(0)
+  unitPrice     Float
+  isDeleted     Boolean  @default(false)
+  status        Status   @default(ACTIVE)
+  createdAt     DateTime @default(now())
+  updateAt      DateTime @updatedAt
+
   inventory                Inventory[]
-  createdAt                DateTime                 @default(now())
-  updateAt                 DateTime                 @updatedAt
+  unit                     Unit                     @relation(fields: [unitId], references: [id])
   purchaseOrderInventories PurchaseOrderInventory[]
   productRawMaterial       IngredientRawMaterial[]
 

@@ -13084,8 +13084,8 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updateAt?: boolean
-    unit?: boolean | UnitDefaultArgs<ExtArgs>
     inventory?: boolean | RawMaterial$inventoryArgs<ExtArgs>
+    unit?: boolean | UnitDefaultArgs<ExtArgs>
     purchaseOrderInventories?: boolean | RawMaterial$purchaseOrderInventoriesArgs<ExtArgs>
     productRawMaterial?: boolean | RawMaterial$productRawMaterialArgs<ExtArgs>
     _count?: boolean | RawMaterialCountOutputTypeDefaultArgs<ExtArgs>
@@ -13111,8 +13111,8 @@ export namespace Prisma {
 
   export type RawMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "unitId" | "description" | "openingDate" | "openingAmount" | "quantity" | "alertQuantity" | "unitPrice" | "isDeleted" | "status" | "createdAt" | "updateAt", ExtArgs["result"]["rawMaterial"]>
   export type RawMaterialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    unit?: boolean | UnitDefaultArgs<ExtArgs>
     inventory?: boolean | RawMaterial$inventoryArgs<ExtArgs>
+    unit?: boolean | UnitDefaultArgs<ExtArgs>
     purchaseOrderInventories?: boolean | RawMaterial$purchaseOrderInventoriesArgs<ExtArgs>
     productRawMaterial?: boolean | RawMaterial$productRawMaterialArgs<ExtArgs>
     _count?: boolean | RawMaterialCountOutputTypeDefaultArgs<ExtArgs>
@@ -13121,8 +13121,8 @@ export namespace Prisma {
   export type $RawMaterialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "RawMaterial"
     objects: {
-      unit: Prisma.$UnitPayload<ExtArgs>
       inventory: Prisma.$InventoryPayload<ExtArgs>[]
+      unit: Prisma.$UnitPayload<ExtArgs>
       purchaseOrderInventories: Prisma.$PurchaseOrderInventoryPayload<ExtArgs>[]
       productRawMaterial: Prisma.$IngredientRawMaterialPayload<ExtArgs>[]
     }
@@ -13480,8 +13480,8 @@ export namespace Prisma {
    */
   export interface Prisma__RawMaterialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    unit<T extends UnitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UnitDefaultArgs<ExtArgs>>): Prisma__UnitClient<$Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     inventory<T extends RawMaterial$inventoryArgs<ExtArgs> = {}>(args?: Subset<T, RawMaterial$inventoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    unit<T extends UnitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UnitDefaultArgs<ExtArgs>>): Prisma__UnitClient<$Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     purchaseOrderInventories<T extends RawMaterial$purchaseOrderInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, RawMaterial$purchaseOrderInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchaseOrderInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productRawMaterial<T extends RawMaterial$productRawMaterialArgs<ExtArgs> = {}>(args?: Subset<T, RawMaterial$productRawMaterialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngredientRawMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -31548,8 +31548,8 @@ export namespace Prisma {
     status?: EnumStatusFilter<"RawMaterial"> | $Enums.Status
     createdAt?: DateTimeFilter<"RawMaterial"> | Date | string
     updateAt?: DateTimeFilter<"RawMaterial"> | Date | string
-    unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
     inventory?: InventoryListRelationFilter
+    unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
     purchaseOrderInventories?: PurchaseOrderInventoryListRelationFilter
     productRawMaterial?: IngredientRawMaterialListRelationFilter
   }
@@ -31568,8 +31568,8 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    unit?: UnitOrderByWithRelationInput
     inventory?: InventoryOrderByRelationAggregateInput
+    unit?: UnitOrderByWithRelationInput
     purchaseOrderInventories?: PurchaseOrderInventoryOrderByRelationAggregateInput
     productRawMaterial?: IngredientRawMaterialOrderByRelationAggregateInput
     _relevance?: RawMaterialOrderByRelevanceInput
@@ -31592,8 +31592,8 @@ export namespace Prisma {
     status?: EnumStatusFilter<"RawMaterial"> | $Enums.Status
     createdAt?: DateTimeFilter<"RawMaterial"> | Date | string
     updateAt?: DateTimeFilter<"RawMaterial"> | Date | string
-    unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
     inventory?: InventoryListRelationFilter
+    unit?: XOR<UnitScalarRelationFilter, UnitWhereInput>
     purchaseOrderInventories?: PurchaseOrderInventoryListRelationFilter
     productRawMaterial?: IngredientRawMaterialListRelationFilter
   }, "id">
@@ -33624,8 +33624,8 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updateAt?: Date | string
-    unit: UnitCreateNestedOneWithoutRawMaterialInput
     inventory?: InventoryCreateNestedManyWithoutRaWMaterialInput
+    unit: UnitCreateNestedOneWithoutRawMaterialInput
     purchaseOrderInventories?: PurchaseOrderInventoryCreateNestedManyWithoutRaWMaterialInput
     productRawMaterial?: IngredientRawMaterialCreateNestedManyWithoutRawMaterialsInput
   }
@@ -33661,8 +33661,8 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     inventory?: InventoryUpdateManyWithoutRaWMaterialNestedInput
+    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     purchaseOrderInventories?: PurchaseOrderInventoryUpdateManyWithoutRaWMaterialNestedInput
     productRawMaterial?: IngredientRawMaterialUpdateManyWithoutRawMaterialsNestedInput
   }
@@ -37544,17 +37544,17 @@ export namespace Prisma {
     deleteMany?: PurchaseOrderInventoryScalarWhereInput | PurchaseOrderInventoryScalarWhereInput[]
   }
 
-  export type UnitCreateNestedOneWithoutRawMaterialInput = {
-    create?: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
-    connectOrCreate?: UnitCreateOrConnectWithoutRawMaterialInput
-    connect?: UnitWhereUniqueInput
-  }
-
   export type InventoryCreateNestedManyWithoutRaWMaterialInput = {
     create?: XOR<InventoryCreateWithoutRaWMaterialInput, InventoryUncheckedCreateWithoutRaWMaterialInput> | InventoryCreateWithoutRaWMaterialInput[] | InventoryUncheckedCreateWithoutRaWMaterialInput[]
     connectOrCreate?: InventoryCreateOrConnectWithoutRaWMaterialInput | InventoryCreateOrConnectWithoutRaWMaterialInput[]
     createMany?: InventoryCreateManyRaWMaterialInputEnvelope
     connect?: InventoryWhereUniqueInput | InventoryWhereUniqueInput[]
+  }
+
+  export type UnitCreateNestedOneWithoutRawMaterialInput = {
+    create?: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
+    connectOrCreate?: UnitCreateOrConnectWithoutRawMaterialInput
+    connect?: UnitWhereUniqueInput
   }
 
   export type PurchaseOrderInventoryCreateNestedManyWithoutRaWMaterialInput = {
@@ -37592,14 +37592,6 @@ export namespace Prisma {
     connect?: IngredientRawMaterialWhereUniqueInput | IngredientRawMaterialWhereUniqueInput[]
   }
 
-  export type UnitUpdateOneRequiredWithoutRawMaterialNestedInput = {
-    create?: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
-    connectOrCreate?: UnitCreateOrConnectWithoutRawMaterialInput
-    upsert?: UnitUpsertWithoutRawMaterialInput
-    connect?: UnitWhereUniqueInput
-    update?: XOR<XOR<UnitUpdateToOneWithWhereWithoutRawMaterialInput, UnitUpdateWithoutRawMaterialInput>, UnitUncheckedUpdateWithoutRawMaterialInput>
-  }
-
   export type InventoryUpdateManyWithoutRaWMaterialNestedInput = {
     create?: XOR<InventoryCreateWithoutRaWMaterialInput, InventoryUncheckedCreateWithoutRaWMaterialInput> | InventoryCreateWithoutRaWMaterialInput[] | InventoryUncheckedCreateWithoutRaWMaterialInput[]
     connectOrCreate?: InventoryCreateOrConnectWithoutRaWMaterialInput | InventoryCreateOrConnectWithoutRaWMaterialInput[]
@@ -37612,6 +37604,14 @@ export namespace Prisma {
     update?: InventoryUpdateWithWhereUniqueWithoutRaWMaterialInput | InventoryUpdateWithWhereUniqueWithoutRaWMaterialInput[]
     updateMany?: InventoryUpdateManyWithWhereWithoutRaWMaterialInput | InventoryUpdateManyWithWhereWithoutRaWMaterialInput[]
     deleteMany?: InventoryScalarWhereInput | InventoryScalarWhereInput[]
+  }
+
+  export type UnitUpdateOneRequiredWithoutRawMaterialNestedInput = {
+    create?: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
+    connectOrCreate?: UnitCreateOrConnectWithoutRawMaterialInput
+    upsert?: UnitUpsertWithoutRawMaterialInput
+    connect?: UnitWhereUniqueInput
+    update?: XOR<XOR<UnitUpdateToOneWithWhereWithoutRawMaterialInput, UnitUpdateWithoutRawMaterialInput>, UnitUncheckedUpdateWithoutRawMaterialInput>
   }
 
   export type PurchaseOrderInventoryUpdateManyWithoutRaWMaterialNestedInput = {
@@ -40036,28 +40036,6 @@ export namespace Prisma {
     packingMaterialId?: IntNullableFilter<"PurchaseOrderInventory"> | number | null
   }
 
-  export type UnitCreateWithoutRawMaterialInput = {
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    Product?: ProductCreateNestedManyWithoutUnitInput
-    packingMaterials?: PackingMaterialCreateNestedManyWithoutUnitInput
-  }
-
-  export type UnitUncheckedCreateWithoutRawMaterialInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    Product?: ProductUncheckedCreateNestedManyWithoutUnitInput
-    packingMaterials?: PackingMaterialUncheckedCreateNestedManyWithoutUnitInput
-  }
-
-  export type UnitCreateOrConnectWithoutRawMaterialInput = {
-    where: UnitWhereUniqueInput
-    create: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
-  }
-
   export type InventoryCreateWithoutRaWMaterialInput = {
     date: Date | string
     department: $Enums.Department
@@ -40109,6 +40087,28 @@ export namespace Prisma {
   export type InventoryCreateManyRaWMaterialInputEnvelope = {
     data: InventoryCreateManyRaWMaterialInput | InventoryCreateManyRaWMaterialInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UnitCreateWithoutRawMaterialInput = {
+    name: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Product?: ProductCreateNestedManyWithoutUnitInput
+    packingMaterials?: PackingMaterialCreateNestedManyWithoutUnitInput
+  }
+
+  export type UnitUncheckedCreateWithoutRawMaterialInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updateAt?: Date | string
+    Product?: ProductUncheckedCreateNestedManyWithoutUnitInput
+    packingMaterials?: PackingMaterialUncheckedCreateNestedManyWithoutUnitInput
+  }
+
+  export type UnitCreateOrConnectWithoutRawMaterialInput = {
+    where: UnitWhereUniqueInput
+    create: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
   }
 
   export type PurchaseOrderInventoryCreateWithoutRaWMaterialInput = {
@@ -40169,6 +40169,22 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InventoryUpsertWithWhereUniqueWithoutRaWMaterialInput = {
+    where: InventoryWhereUniqueInput
+    update: XOR<InventoryUpdateWithoutRaWMaterialInput, InventoryUncheckedUpdateWithoutRaWMaterialInput>
+    create: XOR<InventoryCreateWithoutRaWMaterialInput, InventoryUncheckedCreateWithoutRaWMaterialInput>
+  }
+
+  export type InventoryUpdateWithWhereUniqueWithoutRaWMaterialInput = {
+    where: InventoryWhereUniqueInput
+    data: XOR<InventoryUpdateWithoutRaWMaterialInput, InventoryUncheckedUpdateWithoutRaWMaterialInput>
+  }
+
+  export type InventoryUpdateManyWithWhereWithoutRaWMaterialInput = {
+    where: InventoryScalarWhereInput
+    data: XOR<InventoryUpdateManyMutationInput, InventoryUncheckedUpdateManyWithoutRaWMaterialInput>
+  }
+
   export type UnitUpsertWithoutRawMaterialInput = {
     update: XOR<UnitUpdateWithoutRawMaterialInput, UnitUncheckedUpdateWithoutRawMaterialInput>
     create: XOR<UnitCreateWithoutRawMaterialInput, UnitUncheckedCreateWithoutRawMaterialInput>
@@ -40195,22 +40211,6 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Product?: ProductUncheckedUpdateManyWithoutUnitNestedInput
     packingMaterials?: PackingMaterialUncheckedUpdateManyWithoutUnitNestedInput
-  }
-
-  export type InventoryUpsertWithWhereUniqueWithoutRaWMaterialInput = {
-    where: InventoryWhereUniqueInput
-    update: XOR<InventoryUpdateWithoutRaWMaterialInput, InventoryUncheckedUpdateWithoutRaWMaterialInput>
-    create: XOR<InventoryCreateWithoutRaWMaterialInput, InventoryUncheckedCreateWithoutRaWMaterialInput>
-  }
-
-  export type InventoryUpdateWithWhereUniqueWithoutRaWMaterialInput = {
-    where: InventoryWhereUniqueInput
-    data: XOR<InventoryUpdateWithoutRaWMaterialInput, InventoryUncheckedUpdateWithoutRaWMaterialInput>
-  }
-
-  export type InventoryUpdateManyWithWhereWithoutRaWMaterialInput = {
-    where: InventoryScalarWhereInput
-    data: XOR<InventoryUpdateManyMutationInput, InventoryUncheckedUpdateManyWithoutRaWMaterialInput>
   }
 
   export type PurchaseOrderInventoryUpsertWithWhereUniqueWithoutRaWMaterialInput = {
@@ -40772,8 +40772,8 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updateAt?: Date | string
-    unit: UnitCreateNestedOneWithoutRawMaterialInput
     inventory?: InventoryCreateNestedManyWithoutRaWMaterialInput
+    unit: UnitCreateNestedOneWithoutRawMaterialInput
     productRawMaterial?: IngredientRawMaterialCreateNestedManyWithoutRawMaterialsInput
   }
 
@@ -40945,8 +40945,8 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     inventory?: InventoryUpdateManyWithoutRaWMaterialNestedInput
+    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     productRawMaterial?: IngredientRawMaterialUpdateManyWithoutRawMaterialsNestedInput
   }
 
@@ -42388,8 +42388,8 @@ export namespace Prisma {
     status?: $Enums.Status
     createdAt?: Date | string
     updateAt?: Date | string
-    unit: UnitCreateNestedOneWithoutRawMaterialInput
     inventory?: InventoryCreateNestedManyWithoutRaWMaterialInput
+    unit: UnitCreateNestedOneWithoutRawMaterialInput
     purchaseOrderInventories?: PurchaseOrderInventoryCreateNestedManyWithoutRaWMaterialInput
   }
 
@@ -42467,8 +42467,8 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     inventory?: InventoryUpdateManyWithoutRaWMaterialNestedInput
+    unit?: UnitUpdateOneRequiredWithoutRawMaterialNestedInput
     purchaseOrderInventories?: PurchaseOrderInventoryUpdateManyWithoutRaWMaterialNestedInput
   }
 
