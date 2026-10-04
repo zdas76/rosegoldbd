@@ -17,6 +17,15 @@ const addPurcherReceived = (0, catchAsync_1.default)(async (req, res) => {
         data: result,
     });
 });
+const addPurcherReceivedPM = (0, catchAsync_1.default)(async (req, res) => {
+    const result = await journal_service_1.JurnalService.createPurchestReceivedPackingMaterialIntoDB(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        success: true,
+        message: "Purchase Received create successfully",
+        data: result,
+    });
+});
 const createSalseVoucher = (0, catchAsync_1.default)(async (req, res) => {
     const result = await journal_service_1.JurnalService.createSalesVoucher(req.body);
     (0, sendResponse_1.default)(res, {
@@ -82,6 +91,7 @@ const getTotalByAccountId = (0, catchAsync_1.default)(async (req, res) => {
 });
 exports.JournalControllers = {
     addPurcherReceived,
+    addPurcherReceivedPM,
     createSalseVoucher,
     createMaterialSaleVoucher,
     createReceiptdVoucher,

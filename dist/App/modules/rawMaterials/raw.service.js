@@ -7,7 +7,7 @@ exports.RowMaterialsService = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_codes_1 = require("http-status-codes");
-const client_1 = require("@prisma/client");
+const prisma_2 = require("../../../generated/prisma");
 const createRawMaterial = async (payload) => {
     const isExist = await prisma_1.default.rawMaterial.findFirst({
         where: {
@@ -33,13 +33,12 @@ const createRawMaterial = async (payload) => {
             unitId: Number(payload.unitId),
             unitPrice: payload.unitPrice,
             quantity: payload.quantity,
-            alertQuantity: payload.alertQuantity,
             openingDate,
             openingAmount: payload.amount,
             inventory: {
                 create: {
                     date: openingDate,
-                    department: client_1.Department.RM_STORE,
+                    department: prisma_2.Department.RM_STORE,
                     unitPrice: payload.unitPrice,
                     quantityAdd: payload.quantity,
                     debitAmount: payload.amount,
@@ -102,7 +101,7 @@ const createRawMaterialsMany = async (payloads) => {
                 inventory: {
                     create: {
                         date: openingDate,
-                        department: client_1.Department.RM_STORE,
+                        department: prisma_2.Department.RM_STORE,
                         unitPrice: payload.unitPrice ?? 0,
                         quantityAdd: payload.quantity ?? 0,
                         debitAmount: payload.amount ?? 0,
@@ -152,6 +151,7 @@ const updateRawMaterial = async (id, payload) => {
             unitPrice: payload.unitPrice,
             quantity: payload.quantity,
             openingAmount: payload.openingAmount,
+            alertQuantity: payload.alertQuantity,
         },
     });
     return result;

@@ -4,7 +4,11 @@ import { JournalControllers } from "./journal.controllers";
 const route = express.Router();
 
 route.post("/purchase", JournalControllers.addPurcherReceived);
-// route.post("/purchase-packing-material", JournalControllers.addPackingMaterial);
+
+route.post(
+  "/purchase-packing-material",
+  JournalControllers.addPurcherReceivedPM,
+);
 
 route.post("/sales", JournalControllers.createSalseVoucher);
 
@@ -19,7 +23,5 @@ route.post("/journal", JournalControllers.createJournalVoucher);
 route.post("/contra", JournalControllers.createContraVoucher);
 
 route.get("/ledgerTotal", JournalControllers.getTotalByAccountId);
-
-
 
 export const JournalRoute = route;

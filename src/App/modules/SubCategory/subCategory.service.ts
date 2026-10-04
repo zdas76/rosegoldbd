@@ -1,7 +1,7 @@
 import prisma from "../../../shared/prisma";
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errors/AppError";
-import { SubCategory } from "@prisma/client";
+import { SubCategory } from "../../../generated/prisma";
 
 
 const createSubCategoryToDB = async (payLoad: SubCategory) => {

@@ -5,7 +5,7 @@ import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PartySearchAbleFields } from "./party.constant";
 import AppError from "../../errors/AppError";
-import { Party, Prisma } from "@prisma/client";
+import { Party, Prisma } from "../../../generated/prisma";
 
 
 const getPertyLedgerInfo = async (params: any, paginat: IPaginationOptions) => {

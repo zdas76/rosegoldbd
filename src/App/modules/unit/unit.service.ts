@@ -1,5 +1,5 @@
 
-import { Unit } from "@prisma/client";
+import { Unit } from "../../../generated/prisma";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";

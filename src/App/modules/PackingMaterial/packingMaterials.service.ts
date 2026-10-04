@@ -2,7 +2,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { TpackingMaterial } from "./packingMaterials.types";
-import { Department, PackingMaterial } from "@prisma/client";
+import { Department, PackingMaterial } from "../../../generated/prisma";
 
 const createPackingMaterial = async (payload: TpackingMaterial) => {
   const isExist = await prisma.packingMaterial.findFirst({

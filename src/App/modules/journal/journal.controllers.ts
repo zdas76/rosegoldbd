@@ -15,6 +15,18 @@ const addPurcherReceived = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const addPurcherReceivedPM = catchAsync(async (req: Request, res: Response) => {
+  const result =
+    await JurnalService.createPurchestReceivedPackingMaterialIntoDB(req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Purchase Received create successfully",
+    data: result,
+  });
+});
+
 const createSalseVoucher = catchAsync(async (req: Request, res: Response) => {
   const result = await JurnalService.createSalesVoucher(req.body);
 
@@ -25,16 +37,18 @@ const createSalseVoucher = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-const createMaterialSaleVoucher = catchAsync(async (req: Request, res: Response) => {
-  const result = await JurnalService.createMaterialSaleVoucher(req.body);
+const createMaterialSaleVoucher = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await JurnalService.createMaterialSaleVoucher(req.body);
 
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: "Salse created successfully",
-    data: result,
-  });
-});
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "Salse created successfully",
+      data: result,
+    });
+  },
+);
 
 const createReceiptdVoucher = catchAsync(
   async (req: Request, res: Response) => {
@@ -46,7 +60,7 @@ const createReceiptdVoucher = catchAsync(
       message: "Receipt created successfully",
       data: result,
     });
-  }
+  },
 );
 
 const createPaymentdVoucher = catchAsync(
@@ -59,7 +73,7 @@ const createPaymentdVoucher = catchAsync(
       message: "Payment created successfully",
       data: result,
     });
-  }
+  },
 );
 
 const createJournalVoucher = catchAsync(async (req: Request, res: Response) => {
@@ -97,6 +111,7 @@ const getTotalByAccountId = catchAsync(async (req: Request, res: Response) => {
 
 export const JournalControllers = {
   addPurcherReceived,
+  addPurcherReceivedPM,
   createSalseVoucher,
   createMaterialSaleVoucher,
   createReceiptdVoucher,

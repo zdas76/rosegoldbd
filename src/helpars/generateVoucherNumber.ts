@@ -1,4 +1,4 @@
-import { VoucherType } from "@prisma/client";
+import { VoucherType } from "../generated/prisma";
 import prisma from "../shared/prisma";
 
 export const GenerateVoucherNumber = async (type: string): Promise<string> => {

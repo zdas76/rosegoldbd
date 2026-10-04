@@ -5,7 +5,7 @@ import { paginationHelper } from "../../../helpars/paginationHelpers";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PurchaseOrderSearchAbleFields } from "./purchaseOrder.constant";
 import AppError from "../../errors/AppError";
-import { Prisma, Status } from "@prisma/client";
+import { Prisma, Status } from "../../../generated/prisma";
 import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
 
 import {

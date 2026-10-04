@@ -117,6 +117,108 @@ const createPurchestReceivedIntoDB = async (payload) => {
     });
     return createPurchestVoucher;
 };
+//Create Purchase Received Voucher
+const createPurchestReceivedPackingMaterialIntoDB = async (payload) => {
+    const createPurchestVoucher = await prisma_1.default.$transaction(async (tx) => {
+        const partyExists = await tx.party.findUnique({
+            where: { id: payload.partyOrcustomerId },
+        });
+        if (!partyExists) {
+            throw new Error(`Invalid partyOrcustomerId: ${payload.partyOrcustomerId}. No matching Party found.`);
+        }
+        const voucherNo = await (0, generateVoucherNumber_1.GenerateVoucherNumber)("PRPMV");
+        // step 1. create transaction entries
+        const createTransactionInfo = await tx.transactionInfo.create({
+            data: {
+                invoiceNo: payload.invoiceNo || null,
+                voucherNo: voucherNo,
+                date: payload.date,
+                voucherType: client_1.VoucherType.PURCHASE,
+                partyId: partyExists.id,
+            },
+        });
+        // 2. create bank transaction
+        const BankTXData = [];
+        payload.creditItem.forEach((item) => {
+            if (item.bankId !== null) {
+                BankTXData.push({
+                    transectionId: createTransactionInfo.id,
+                    bankAccountId: item.bankId,
+                    date: payload.date,
+                    creditAmount: item.amount,
+                });
+            }
+        });
+        if (BankTXData.length > 0) {
+            await tx.bankTransaction.createMany({
+                data: BankTXData,
+            });
+        }
+        if (!Array.isArray(payload.items) || payload.items.length === 0) {
+            throw new Error("Invalid data: items must be a non-empty array");
+        }
+        //step 3: Prepare Inventory Data
+        const inventoryData = payload.items.map((item) => {
+            return {
+                transactionId: createTransactionInfo.id,
+                date: payload.date,
+                packingMaterialId: item.packingMaterialId,
+                perUnitQty: item.perUnitQty,
+                perUnitCost: item.perUnitCost,
+                unitPrice: item.unitPrice || 0,
+                integratedUnitPrice: item.integratedUnitPrice,
+                department: client_1.Department.PURCHASE,
+                quantityAdd: item.quantityAdd || 0,
+                discount: item?.discount || 0,
+                debitAmount: item.debitAmount,
+                integratedDebitAmount: item.integratedDebitAmount,
+            };
+        });
+        //Step 3: Insert Inventory Records
+        await Promise.all(inventoryData.map((item) => tx.pMInventory.create({
+            data: item,
+        })));
+        let journalItem = [];
+        // Step 7: Prepare Journal Credit Entries (For Payment Accounts)
+        payload.creditItem.forEach((item) => journalItem.push({
+            transectionId: createTransactionInfo.id,
+            accountsItemId: Number(item.accountsItemId),
+            checkOrRTGS: item.checkOrRTGS,
+            creditAmount: Number(item.amount),
+            integratedCreditAmount: item.integratedCreditAmount,
+            narration: item.narration ?? "",
+            date: new Date(payload.date),
+        }));
+        const debiteAccountsId = await tx.accountsItem.findFirst({
+            where: {
+                accountsItemName: {
+                    contains: "inventory",
+                },
+            },
+        });
+        if (!debiteAccountsId) {
+            throw new Error("Inventory Accounts Item not found");
+        }
+        journalItem.push({
+            transectionId: createTransactionInfo.id,
+            accountsItemId: debiteAccountsId.id,
+            debitAmount: payload.grandTotal,
+            narration: "Purchase Inventory Received",
+            date: new Date(payload.date),
+        });
+        const debitAmount = journalItem.reduce((total, item) => total + (Number(item.debitAmount) || 0), 0);
+        const creditAmount = journalItem.reduce((total, item) => total + (Number(item.creditAmount) || 0), 0);
+        if (debitAmount !== creditAmount) {
+            throw new Error("Debit and Credit amounts do not match");
+        }
+        //Step 8: Insert Journal Records
+        await tx.journal.createMany({
+            data: journalItem,
+        });
+        return createTransactionInfo;
+    });
+    return createPurchestVoucher;
+};
 // create Salse Voucher
 const createSalesVoucher = async (payload) => {
     const createSalseVoucher = await prisma_1.default.$transaction(async (tx) => {
@@ -659,6 +761,7 @@ j.accountsItemId,
 };
 exports.JurnalService = {
     createPurchestReceivedIntoDB,
+    createPurchestReceivedPackingMaterialIntoDB,
     createSalesVoucher,
     createMaterialSaleVoucher,
     createPaymentVoucher,

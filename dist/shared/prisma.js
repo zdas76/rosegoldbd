@@ -34,7 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const adapter_mariadb_1 = require("@prisma/adapter-mariadb");
-const client_1 = require("@prisma/client");
+const prisma_1 = require("../generated/prisma");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const adapter = new adapter_mariadb_1.PrismaMariaDb({
@@ -44,7 +44,7 @@ const adapter = new adapter_mariadb_1.PrismaMariaDb({
     database: process.env.DATABASE_NAME,
     connectionLimit: 5,
 });
-const prisma = new client_1.PrismaClient({
+const prisma = new prisma_1.PrismaClient({
     adapter,
     log: [
         {

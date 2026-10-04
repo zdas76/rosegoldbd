@@ -1,4 +1,4 @@
-import { AccountsItem } from "@prisma/client";
+import { AccountsItem } from "../../../generated/prisma";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";

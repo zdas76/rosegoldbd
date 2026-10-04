@@ -7,7 +7,7 @@ exports.ProductService = void 0;
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_codes_1 = require("http-status-codes");
-const client_1 = require("@prisma/client");
+const prisma_2 = require("../../../generated/prisma");
 const createProduct = async (payload) => {
     const isExist = await prisma_1.default.product.findFirst({
         where: {
@@ -30,10 +30,11 @@ const createProduct = async (payload) => {
             openingAmount: Number(payload.initialStock.amount),
             quantity: payload.initialStock.quantity,
             unitPrice: payload.initialStock.unitPrice,
+            alertQuantity: payload.alertQuantity || 0,
             inventory: {
                 create: {
                     date: payload.initialStock.date,
-                    department: client_1.Department.FG_STORE,
+                    department: prisma_2.Department.FG_STORE,
                     unitPrice: payload.initialStock.unitPrice,
                     quantityAdd: payload.initialStock.quantity,
                     debitAmount: Number(payload.initialStock.amount),

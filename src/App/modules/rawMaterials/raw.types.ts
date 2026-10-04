@@ -1,4 +1,4 @@
-import { Status } from "@prisma/client";
+import { Status } from "../../../generated/prisma";
 
 type Inventory = {
   date: string;
@@ -15,7 +15,7 @@ export type TrawMaterial = {
   name: string;
   description: string | null;
   quantity: number;
-  alertQuantity?: number;
+  alertQuantity: number;
   unitPrice: number;
   amount: number;
   status: Status;

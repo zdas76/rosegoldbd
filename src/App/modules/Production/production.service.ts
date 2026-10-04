@@ -1,4 +1,4 @@
-import { Department, Status, VoucherType } from "@prisma/client";
+import { Department, Status, VoucherType } from "../../../generated/prisma";
 import { GenerateVoucherNumber } from "../../../helpars/generateVoucherNumber";
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";

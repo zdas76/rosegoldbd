@@ -3,7 +3,7 @@ import { PurchaseOrderControllers } from "./purchaseOrder.controllers";
 import validationRequiest from "../../middlewares/validationRequest";
 import { purchaseOrderValidaton } from "./purchaseOrder.validation";
 import auth from "../../middlewares/auth";
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../../../generated/prisma";
 
 const route = express.Router();
 
