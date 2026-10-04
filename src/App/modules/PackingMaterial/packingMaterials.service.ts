@@ -217,8 +217,8 @@ const updatePackingMaterial = async (
         payload.openingAmount !== undefined
           ? Number(payload.openingAmount)
           : payload.amount !== undefined
-          ? Number(payload.amount)
-          : undefined,
+            ? Number(payload.amount)
+            : undefined,
     },
     include: {
       unit: true,

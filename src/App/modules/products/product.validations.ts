@@ -10,6 +10,7 @@ const CreateProductValidationSchema = z.object({
     minPrice: z.number().optional(),
     color: z.string().optional(),
     size: z.string().optional(),
+    alertQuantity: z.number().optional(),
   }),
 });
 
