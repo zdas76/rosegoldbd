@@ -11,16 +11,16 @@ type Inventory = {
 export type TrawMaterial = {
   id?: number;
   unitId: any;
+  date?: Date | string;
   name: string;
-  createdAt: Date;
   description: string | null;
-  isDeleted?: boolean;
   quantity: number;
+  alertQuantity?: number;
   unitPrice: number;
   amount: number;
-  date?: Date | string;
   status: Status;
+  isDeleted?: boolean;
+  createdAt: Date;
   updateAt?: Date;
   inventory?: Inventory[];
-  alertQuantity?: number;
 };

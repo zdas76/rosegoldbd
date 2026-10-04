@@ -1,4 +1,3 @@
-
 import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
@@ -23,7 +22,7 @@ const createRawMaterial = async (payload: TrawMaterial) => {
   if (!isUnitExist) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
-      `Unit with ID ${payload.unitId} does not exist. Please create the unit first.`
+      `Unit with ID ${payload.unitId} does not exist. Please create the unit first.`,
     );
   }
 
@@ -62,7 +61,7 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
   if (!Array.isArray(payloads) || payloads.length === 0) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
-      "At least one raw material is required"
+      "At least one raw material is required",
     );
   }
   const names = payloads.map((item) => item?.name?.trim());
@@ -83,7 +82,7 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
       StatusCodes.BAD_REQUEST,
       `These names are already used: ${existing
         .map((item) => item.name)
-        .join(", ")}`
+        .join(", ")}`,
     );
   }
 
@@ -106,7 +105,7 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
   if (missingUnits.length > 0) {
     throw new AppError(
       StatusCodes.BAD_REQUEST,
-      `Unit ID(s) not found in database: ${missingUnits.join(", ")}. Please create unit(s) first.`
+      `Unit ID(s) not found in database: ${missingUnits.join(", ")}. Please create unit(s) first.`,
     );
   }
 
@@ -124,6 +123,7 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
           unitId: Number(payload.unitId),
           unitPrice: payload.unitPrice ?? 0,
           quantity: payload.quantity ?? 0,
+          alertQuantity: payload.alertQuantity,
           openingDate,
           openingAmount: payload.amount ?? 0,
           inventory: {
@@ -138,7 +138,7 @@ const createRawMaterialsMany = async (payloads: TrawMaterial[]) => {
           },
         },
       });
-    })
+    }),
   );
 
   return result;
@@ -215,7 +215,6 @@ const deleteRawMaterial = async (id: number) => {
   return result;
 };
 
-
 export const RowMaterialsService = {
   createRawMaterial,
   createRawMaterialsMany,
@@ -223,5 +222,4 @@ export const RowMaterialsService = {
   getRawMaterialById,
   updateRawMaterial,
   deleteRawMaterial,
-
 };
