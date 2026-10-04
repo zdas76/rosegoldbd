@@ -186,8 +186,8 @@ const updateRawMaterial = async (id: number, payload: Partial<RawMaterial>) => {
       description: payload.description,
       unitPrice: payload.unitPrice,
       quantity: payload.quantity,
-      ingredienteQty: payload.ingredienteQty,
       openingAmount: payload.openingAmount,
+      alertQuantity: payload.alertQuantity
     },
   });
 

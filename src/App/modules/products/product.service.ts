@@ -32,6 +32,7 @@ const createProduct = async (payload: TcreateProduct) => {
       openingAmount: Number(payload.initialStock.amount),
       quantity: payload.initialStock.quantity,
       unitPrice: payload.initialStock.unitPrice,
+      alertQuantity: payload.alertQuantity || 0,
       inventory: {
         create: {
           date: payload.initialStock.date,
