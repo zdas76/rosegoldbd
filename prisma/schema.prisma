@@ -333,7 +333,7 @@ model TransactionInfo {
   batchNo                     String?                       @unique @db.VarChar(50)
   partyId                     Int?
   voucherType                 VoucherType
-  status                      Status
+  status                      TxStatus
   createdAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
   bankTransaction             BankTransaction[]
@@ -345,6 +345,14 @@ model TransactionInfo {
 
   @@index([voucherNo, voucherType, partyId])
   @@map("transaction_info")
+}
+
+enum TxStatus {
+  PENDING
+  INPGRESS
+  COMPLETE
+  DELETE
+  PUSH
 }
 
 model Journal {
@@ -467,8 +475,6 @@ enum Status {
   PUSH
   BLOCK
   PENDING
-  CHECKED
-  CLOSED
 }
 
 enum PartyType {
