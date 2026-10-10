@@ -4,6 +4,7 @@ import prisma from "../../../shared/prisma";
 import AppError from "../../errors/AppError";
 import { StatusCodes } from "http-status-codes";
 import { Production } from "./productionTypes";
+import { GenerateBatchNo } from "../../../helpars/GenerateBatchNo";
 
 const createProduction = async (
   id: number | undefined,
@@ -38,27 +39,16 @@ const createProduction = async (
       transactionInfo = await tx.transactionInfo.update({
         where: { id },
         data: {
-          batchNo: payload.batchNo,
           date: new Date(payload.date),
         },
       });
-
-      // Clear existing child items to re-create them with updated data
-      await tx.inventory.deleteMany({
-        where: { transactionId: transactionInfo.id },
-      });
-      await tx.productionExpensesInventory.deleteMany({
-        where: { transectionId: transactionInfo.id },
-      });
-      await tx.pMInventory.deleteMany({
-        where: { transactionId: transactionInfo.id },
-      });
     } else {
       const VoucherNo = await GenerateVoucherNumber("PROD");
+      const batchNo = await GenerateBatchNo(isProductExisted.id);
       transactionInfo = await tx.transactionInfo.create({
         data: {
           voucherNo: VoucherNo!,
-          batchNo: payload.batchNo,
+          batchNo: batchNo,
           date: new Date(payload.date),
           voucherType: VoucherType.PRODUCTION,
         },
@@ -72,16 +62,25 @@ const createProduction = async (
         transactionId: transactionInfo.id,
         date: new Date(payload.date),
         department: Department.PRODUCTION,
-        quantityAdd: Number(payload.productinfo.quantity) || 0,
+        quantityAdd: Number(payload.productinfo.quantityAdd) || 0,
         unitPrice: Number(payload.productinfo.unitPrice) || 0,
         debitAmount:
-          (Number(payload.productinfo.quantity) || 0) *
+          (Number(payload.productinfo.quantityAdd) || 0) *
           (Number(payload.productinfo.unitPrice) || 0),
       },
     });
 
     // 2. Add raw materials consumed to inventory
     if (payload?.rawMaterials && payload.rawMaterials.length > 0) {
+      await tx.inventory.deleteMany({
+        where: {
+          transactionId: transactionInfo.id,
+          rawId: {
+            not: null,
+          },
+        },
+      });
+
       for (const item of payload.rawMaterials) {
         const rawMaterial = await tx.rawMaterial.findFirst({
           where: {
@@ -114,6 +113,10 @@ const createProduction = async (
 
     // 3. Add production expenses
     if (payload?.productionExpenses && payload.productionExpenses.length > 0) {
+      await tx.productionExpensesInventory.deleteMany({
+        where: { transectionId: transactionInfo.id },
+      });
+
       for (const Item of payload.productionExpenses) {
         const expencesItem = await tx.productionExpenseItem.findFirst({
           where: {
@@ -145,6 +148,10 @@ const createProduction = async (
 
     // 4. Add packing materials consumed
     if (payload?.packingMaterials && payload.packingMaterials.length > 0) {
+      await tx.pMInventory.deleteMany({
+        where: { transactionId: transactionInfo.id },
+      });
+
       for (const packmaterial of payload.packingMaterials) {
         const packmaterials = await tx.packingMaterial.findFirst({
           where: {
@@ -169,6 +176,40 @@ const createProduction = async (
             perUnitCost: Number(packmaterial.perUnitCost) || 0,
             unitPrice: Number(packmaterial.unitPrice) || 0,
             quantityLess: Number(packmaterial.Qty) || 0,
+          },
+        });
+      }
+    }
+
+    // 5. Add Final packed Products
+    if (payload?.products && payload.products.length > 0) {
+      await tx.inventory.deleteMany({
+        where: { transactionId: transactionInfo.id, productId: { not: null } },
+      });
+
+      for (const product of payload.products) {
+        const isProduct = await tx.product.findFirst({
+          where: {
+            id: product.productId,
+          },
+        });
+
+        if (!isProduct) {
+          throw new AppError(
+            StatusCodes.NOT_FOUND,
+            `Packing Material Item with ID not found`,
+          );
+        }
+
+        await tx.pMInventory.create({
+          data: {
+            date: new Date(payload.date),
+            packingMaterialId: isProduct.id,
+            transactionId: transactionInfo.id,
+            department: Department.PRODUCTION,
+            unitPrice: Number(product.unitPrice) || 0,
+            quantityLess: Number(product.quantityLess) || null,
+            quantityAdd: Number(product.quantityAdd) || null,
           },
         });
       }

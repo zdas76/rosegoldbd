@@ -5,9 +5,8 @@ const router = express.Router();
 
 router.get("/", ProductionController.getProduction);
 
-router.patch("/{id}", ProductionController.createProduction);
+router.post("/{id}", ProductionController.createProduction);
 
 router.delete("/{id}", ProductionController.deleteProduction);
 
 export const ProductionRouter = router;
-

@@ -350,6 +350,7 @@ exports.Prisma.TransactionInfoScalarFieldEnum = {
   batchNo: 'batchNo',
   partyId: 'partyId',
   voucherType: 'voucherType',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -527,10 +528,7 @@ exports.Status = exports.$Enums.Status = {
   DELETED: 'DELETED',
   PUSH: 'PUSH',
   BLOCK: 'BLOCK',
-  PENDING: 'PENDING',
-  CHECKED: 'CHECKED',
-  CLOSED: 'CLOSED',
-  CONVERTED: 'CONVERTED'
+  PENDING: 'PENDING'
 };
 
 exports.PartyType = exports.$Enums.PartyType = {
@@ -558,6 +556,14 @@ exports.VoucherType = exports.$Enums.VoucherType = {
   PRODUCTION: 'PRODUCTION',
   REQUISITION: 'REQUISITION',
   FINISH_GOODS: 'FINISH_GOODS'
+};
+
+exports.TxStatus = exports.$Enums.TxStatus = {
+  PENDING: 'PENDING',
+  INPGRESS: 'INPGRESS',
+  COMPLETE: 'COMPLETE',
+  DELETE: 'DELETE',
+  PUSH: 'PUSH'
 };
 
 exports.Prisma.ModelName = {

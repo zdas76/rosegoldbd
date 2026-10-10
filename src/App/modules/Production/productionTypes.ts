@@ -3,28 +3,31 @@ export interface Production {
   batchNo: string;
   productinfo: {
     productId: number;
-    quantity?: number;
+    quantityAdd?: number;
     unitPrice?: number;
   };
   rawMaterials?: {
-    id?: number;
     rawId: number;
     quantity: number;
     unitPrice: number;
   }[];
   productionExpenses?: {
-    id?: number;
     proExpencesItemId: number;
     unitRate: number;
     expDuration: number;
     amount: number;
   }[];
   packingMaterials?: {
-    id?: number;
     packingMaterialId: number;
     unitPrice: number;
     Qty: number;
     perUnitQty: number;
     perUnitCost: number;
+  }[];
+  products?: {
+    productId: number;
+    quantityAdd?: number;
+    quantityLess?: number;
+    unitPrice: number;
   }[];
 }
