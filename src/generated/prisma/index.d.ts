@@ -154,6 +154,17 @@ export namespace $Enums {
 export type Department = (typeof Department)[keyof typeof Department]
 
 
+export const TxStatus: {
+  PENDING: 'PENDING',
+  INPGRESS: 'INPGRESS',
+  COMPLETE: 'COMPLETE',
+  DELETE: 'DELETE',
+  PUSH: 'PUSH'
+};
+
+export type TxStatus = (typeof TxStatus)[keyof typeof TxStatus]
+
+
 export const VoucherType: {
   SALES: 'SALES',
   PURCHASE: 'PURCHASE',
@@ -183,10 +194,7 @@ export const Status: {
   DELETED: 'DELETED',
   PUSH: 'PUSH',
   BLOCK: 'BLOCK',
-  PENDING: 'PENDING',
-  CHECKED: 'CHECKED',
-  CLOSED: 'CLOSED',
-  CONVERTED: 'CONVERTED'
+  PENDING: 'PENDING'
 };
 
 export type Status = (typeof Status)[keyof typeof Status]
@@ -215,6 +223,10 @@ export type ProductionType = (typeof ProductionType)[keyof typeof ProductionType
 export type Department = $Enums.Department
 
 export const Department: typeof $Enums.Department
+
+export type TxStatus = $Enums.TxStatus
+
+export const TxStatus: typeof $Enums.TxStatus
 
 export type VoucherType = $Enums.VoucherType
 
@@ -21906,6 +21918,7 @@ export namespace Prisma {
     batchNo: string | null
     partyId: number | null
     voucherType: $Enums.VoucherType | null
+    status: $Enums.TxStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -21918,6 +21931,7 @@ export namespace Prisma {
     batchNo: string | null
     partyId: number | null
     voucherType: $Enums.VoucherType | null
+    status: $Enums.TxStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -21930,6 +21944,7 @@ export namespace Prisma {
     batchNo: number
     partyId: number
     voucherType: number
+    status: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -21954,6 +21969,7 @@ export namespace Prisma {
     batchNo?: true
     partyId?: true
     voucherType?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -21966,6 +21982,7 @@ export namespace Prisma {
     batchNo?: true
     partyId?: true
     voucherType?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -21978,6 +21995,7 @@ export namespace Prisma {
     batchNo?: true
     partyId?: true
     voucherType?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -22077,6 +22095,7 @@ export namespace Prisma {
     batchNo: string | null
     partyId: number | null
     voucherType: $Enums.VoucherType
+    status: $Enums.TxStatus
     createdAt: Date
     updatedAt: Date
     _count: TransactionInfoCountAggregateOutputType | null
@@ -22108,6 +22127,7 @@ export namespace Prisma {
     batchNo?: boolean
     partyId?: boolean
     voucherType?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     bankTransaction?: boolean | TransactionInfo$bankTransactionArgs<ExtArgs>
@@ -22129,11 +22149,12 @@ export namespace Prisma {
     batchNo?: boolean
     partyId?: boolean
     voucherType?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TransactionInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "voucherNo" | "invoiceNo" | "date" | "batchNo" | "partyId" | "voucherType" | "createdAt" | "updatedAt", ExtArgs["result"]["transactionInfo"]>
+  export type TransactionInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "voucherNo" | "invoiceNo" | "date" | "batchNo" | "partyId" | "voucherType" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transactionInfo"]>
   export type TransactionInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bankTransaction?: boolean | TransactionInfo$bankTransactionArgs<ExtArgs>
     journal?: boolean | TransactionInfo$journalArgs<ExtArgs>
@@ -22162,6 +22183,7 @@ export namespace Prisma {
       batchNo: string | null
       partyId: number | null
       voucherType: $Enums.VoucherType
+      status: $Enums.TxStatus
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["transactionInfo"]>
@@ -22546,6 +22568,7 @@ export namespace Prisma {
     readonly batchNo: FieldRef<"TransactionInfo", 'String'>
     readonly partyId: FieldRef<"TransactionInfo", 'Int'>
     readonly voucherType: FieldRef<"TransactionInfo", 'VoucherType'>
+    readonly status: FieldRef<"TransactionInfo", 'TxStatus'>
     readonly createdAt: FieldRef<"TransactionInfo", 'DateTime'>
     readonly updatedAt: FieldRef<"TransactionInfo", 'DateTime'>
   }
@@ -30538,6 +30561,7 @@ export namespace Prisma {
     batchNo: 'batchNo',
     partyId: 'partyId',
     voucherType: 'voucherType',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -30855,6 +30879,13 @@ export namespace Prisma {
    * Reference to a field of type 'VoucherType'
    */
   export type EnumVoucherTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VoucherType'>
+    
+
+
+  /**
+   * Reference to a field of type 'TxStatus'
+   */
+  export type EnumTxStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TxStatus'>
     
   /**
    * Deep Input Types
@@ -32351,6 +32382,7 @@ export namespace Prisma {
     batchNo?: StringNullableFilter<"TransactionInfo"> | string | null
     partyId?: IntNullableFilter<"TransactionInfo"> | number | null
     voucherType?: EnumVoucherTypeFilter<"TransactionInfo"> | $Enums.VoucherType
+    status?: EnumTxStatusFilter<"TransactionInfo"> | $Enums.TxStatus
     createdAt?: DateTimeFilter<"TransactionInfo"> | Date | string
     updatedAt?: DateTimeFilter<"TransactionInfo"> | Date | string
     bankTransaction?: BankTransactionListRelationFilter
@@ -32369,6 +32401,7 @@ export namespace Prisma {
     batchNo?: SortOrderInput | SortOrder
     partyId?: SortOrderInput | SortOrder
     voucherType?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     bankTransaction?: BankTransactionOrderByRelationAggregateInput
@@ -32391,6 +32424,7 @@ export namespace Prisma {
     date?: DateTimeNullableFilter<"TransactionInfo"> | Date | string | null
     partyId?: IntNullableFilter<"TransactionInfo"> | number | null
     voucherType?: EnumVoucherTypeFilter<"TransactionInfo"> | $Enums.VoucherType
+    status?: EnumTxStatusFilter<"TransactionInfo"> | $Enums.TxStatus
     createdAt?: DateTimeFilter<"TransactionInfo"> | Date | string
     updatedAt?: DateTimeFilter<"TransactionInfo"> | Date | string
     bankTransaction?: BankTransactionListRelationFilter
@@ -32409,6 +32443,7 @@ export namespace Prisma {
     batchNo?: SortOrderInput | SortOrder
     partyId?: SortOrderInput | SortOrder
     voucherType?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TransactionInfoCountOrderByAggregateInput
@@ -32429,6 +32464,7 @@ export namespace Prisma {
     batchNo?: StringNullableWithAggregatesFilter<"TransactionInfo"> | string | null
     partyId?: IntNullableWithAggregatesFilter<"TransactionInfo"> | number | null
     voucherType?: EnumVoucherTypeWithAggregatesFilter<"TransactionInfo"> | $Enums.VoucherType
+    status?: EnumTxStatusWithAggregatesFilter<"TransactionInfo"> | $Enums.TxStatus
     createdAt?: DateTimeWithAggregatesFilter<"TransactionInfo"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TransactionInfo"> | Date | string
   }
@@ -34483,6 +34519,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -34501,6 +34538,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -34516,6 +34554,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -34534,6 +34573,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -34551,6 +34591,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -34561,6 +34602,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34573,6 +34615,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -36551,6 +36594,13 @@ export namespace Prisma {
     not?: NestedEnumVoucherTypeFilter<$PrismaModel> | $Enums.VoucherType
   }
 
+  export type EnumTxStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TxStatus | EnumTxStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TxStatus[]
+    notIn?: $Enums.TxStatus[]
+    not?: NestedEnumTxStatusFilter<$PrismaModel> | $Enums.TxStatus
+  }
+
   export type ProductionExpensesInventoryListRelationFilter = {
     every?: ProductionExpensesInventoryWhereInput
     some?: ProductionExpensesInventoryWhereInput
@@ -36575,6 +36625,7 @@ export namespace Prisma {
     batchNo?: SortOrder
     partyId?: SortOrder
     voucherType?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36592,6 +36643,7 @@ export namespace Prisma {
     batchNo?: SortOrder
     partyId?: SortOrder
     voucherType?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36604,6 +36656,7 @@ export namespace Prisma {
     batchNo?: SortOrder
     partyId?: SortOrder
     voucherType?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -36621,6 +36674,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumVoucherTypeFilter<$PrismaModel>
     _max?: NestedEnumVoucherTypeFilter<$PrismaModel>
+  }
+
+  export type EnumTxStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TxStatus | EnumTxStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TxStatus[]
+    notIn?: $Enums.TxStatus[]
+    not?: NestedEnumTxStatusWithAggregatesFilter<$PrismaModel> | $Enums.TxStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTxStatusFilter<$PrismaModel>
+    _max?: NestedEnumTxStatusFilter<$PrismaModel>
   }
 
   export type AccountsItemNullableScalarRelationFilter = {
@@ -38236,6 +38299,10 @@ export namespace Prisma {
     set?: $Enums.VoucherType
   }
 
+  export type EnumTxStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TxStatus
+  }
+
   export type BankTransactionUpdateManyWithoutTransactionInfoNestedInput = {
     create?: XOR<BankTransactionCreateWithoutTransactionInfoInput, BankTransactionUncheckedCreateWithoutTransactionInfoInput> | BankTransactionCreateWithoutTransactionInfoInput[] | BankTransactionUncheckedCreateWithoutTransactionInfoInput[]
     connectOrCreate?: BankTransactionCreateOrConnectWithoutTransactionInfoInput | BankTransactionCreateOrConnectWithoutTransactionInfoInput[]
@@ -39054,6 +39121,13 @@ export namespace Prisma {
     not?: NestedEnumVoucherTypeFilter<$PrismaModel> | $Enums.VoucherType
   }
 
+  export type NestedEnumTxStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TxStatus | EnumTxStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TxStatus[]
+    notIn?: $Enums.TxStatus[]
+    not?: NestedEnumTxStatusFilter<$PrismaModel> | $Enums.TxStatus
+  }
+
   export type NestedEnumVoucherTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.VoucherType | EnumVoucherTypeFieldRefInput<$PrismaModel>
     in?: $Enums.VoucherType[]
@@ -39062,6 +39136,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumVoucherTypeFilter<$PrismaModel>
     _max?: NestedEnumVoucherTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTxStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TxStatus | EnumTxStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TxStatus[]
+    notIn?: $Enums.TxStatus[]
+    not?: NestedEnumTxStatusWithAggregatesFilter<$PrismaModel> | $Enums.TxStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTxStatusFilter<$PrismaModel>
+    _max?: NestedEnumTxStatusFilter<$PrismaModel>
   }
 
   export type SubCategoryCreateWithoutCategoryInput = {
@@ -39653,6 +39737,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -39669,6 +39754,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -39744,6 +39830,7 @@ export namespace Prisma {
     batchNo?: StringNullableFilter<"TransactionInfo"> | string | null
     partyId?: IntNullableFilter<"TransactionInfo"> | number | null
     voucherType?: EnumVoucherTypeFilter<"TransactionInfo"> | $Enums.VoucherType
+    status?: EnumTxStatusFilter<"TransactionInfo"> | $Enums.TxStatus
     createdAt?: DateTimeFilter<"TransactionInfo"> | Date | string
     updatedAt?: DateTimeFilter<"TransactionInfo"> | Date | string
   }
@@ -41108,6 +41195,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     journal?: JournalCreateNestedManyWithoutTransactionInfoInput
@@ -41125,6 +41213,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     journal?: JournalUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -41185,6 +41274,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journal?: JournalUpdateManyWithoutTransactionInfoNestedInput
@@ -41202,6 +41292,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     journal?: JournalUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -41300,6 +41391,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -41317,6 +41409,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -41485,6 +41578,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -41502,6 +41596,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -41564,6 +41659,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -41581,6 +41677,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -41653,6 +41750,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -41670,6 +41768,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -42104,6 +42203,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -42121,6 +42221,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -42173,6 +42274,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -42190,6 +42292,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -42822,6 +42925,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionCreateNestedManyWithoutTransactionInfoInput
@@ -42839,6 +42943,7 @@ export namespace Prisma {
     batchNo?: string | null
     partyId?: number | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     bankTransaction?: BankTransactionUncheckedCreateNestedManyWithoutTransactionInfoInput
@@ -42891,6 +42996,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -42908,6 +43014,7 @@ export namespace Prisma {
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     partyId?: NullableIntFieldUpdateOperationsInput | number | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -43354,6 +43461,7 @@ export namespace Prisma {
     date?: Date | string | null
     batchNo?: string | null
     voucherType: $Enums.VoucherType
+    status?: $Enums.TxStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -43373,6 +43481,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUpdateManyWithoutTransactionInfoNestedInput
@@ -43389,6 +43498,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bankTransaction?: BankTransactionUncheckedUpdateManyWithoutTransactionInfoNestedInput
@@ -43405,6 +43515,7 @@ export namespace Prisma {
     date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     batchNo?: NullableStringFieldUpdateOperationsInput | string | null
     voucherType?: EnumVoucherTypeFieldUpdateOperationsInput | $Enums.VoucherType
+    status?: EnumTxStatusFieldUpdateOperationsInput | $Enums.TxStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
