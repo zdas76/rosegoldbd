@@ -333,6 +333,7 @@ model TransactionInfo {
   batchNo                     String?                       @unique @db.VarChar(50)
   partyId                     Int?
   voucherType                 VoucherType
+  status                      Status
   createdAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
   bankTransaction             BankTransaction[]
@@ -468,7 +469,6 @@ enum Status {
   PENDING
   CHECKED
   CLOSED
-  CONVERTED
 }
 
 enum PartyType {
