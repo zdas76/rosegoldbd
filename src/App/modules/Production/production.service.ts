@@ -29,7 +29,10 @@ const createProduction = async (
       });
 
       if (!existingTx) {
-        throw new AppError(StatusCodes.NOT_FOUND, "Production record not found");
+        throw new AppError(
+          StatusCodes.NOT_FOUND,
+          "Production record not found",
+        );
       }
 
       transactionInfo = await tx.transactionInfo.update({
@@ -272,7 +275,6 @@ const getProduction = async () => {
   return result;
 };
 
-
 const getProductionById = async (id: number) => {
   const result = await prisma.transactionInfo.findUnique({
     where: {
@@ -294,7 +296,6 @@ const getProductionById = async (id: number) => {
             },
           },
         },
-
       },
       pminventories: {
         include: {
