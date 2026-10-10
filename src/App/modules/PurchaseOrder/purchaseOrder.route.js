@@ -1,0 +1,49 @@
+import express from "express";
+import { PurchaseOrderControllers } from "./purchaseOrder.controllers";
+import validationRequiest from "../../middlewares/validationRequest";
+import { purchaseOrderValidaton } from "./purchaseOrder.validation";
+
+
+
+const route = express.Router();
+
+route.post(
+  "/",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  // validationRequiest(purchaseOrderValidaton.createPurchaseOrderSchema),
+  PurchaseOrderControllers.createPurchaseOrder,
+);
+
+route.get(
+  "/",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getAllPurchaseOrders,
+);
+
+
+route.get(
+  "/:id",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getPurchaseOrderById,
+);
+
+route.get(
+  "/requisition/:orderNo",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
+  PurchaseOrderControllers.getPurchaseOrderByOrderNo,
+);
+
+route.put(
+  "/:id",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validationRequiest(purchaseOrderValidaton.updatePurchaseOrderSchema),
+  PurchaseOrderControllers.updatePurchaseOrderById,
+);
+
+route.delete(
+  "/:id",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  PurchaseOrderControllers.deletePurchaseOrderById,
+);
+
+export const PurchaseOrderRoute = route;
